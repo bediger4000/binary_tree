@@ -5,21 +5,20 @@ import (
 )
 
 // Return:
-// -1 if value1 < value2
-//  0 if value1 == value2
-//  1 if value1 > value2
+// negative if value1 < value2
+//  0       if value1 == value2
+// positive if value1 > value2
 func imposeOrder(value1, value2 string, valueorder map[string]int) int {
-	if value1 == value2 {
-		return 0
-	}
-
-	if valueorder[value1] < valueorder[value2] {
-		return -1
-	}
-
-	return 1
+	return valueorder[value1] - valueorder[value2]
 }
 
+// insert as a different function than tree.Insert necessary
+// because (a) StringNode has string data, (b) the comparison
+// happens based on some given order.
+// It would be possible to write a more general tree.Insert
+// that has a comparsion function: func comparison(n1, n2 comparable) int
+// that returned negative/zero/positive based on a function of
+// interface comparable
 func insert(node *tree.StringNode, value string, valueorder map[string]int) *tree.StringNode {
 
 	if node == nil {
@@ -27,7 +26,7 @@ func insert(node *tree.StringNode, value string, valueorder map[string]int) *tre
 	}
 
 	n := &(node.Left)
-	if imposeOrder(value, node.Data, valueorder) != -1 {
+	if imposeOrder(value, node.Data, valueorder) > 0 {
 		n = &(node.Right)
 	}
 	*n = insert(*n, value, valueorder)
