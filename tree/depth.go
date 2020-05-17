@@ -23,6 +23,8 @@ func FindDepth1(node *Node, ply int, d *Depth) {
 
 // FindDepth2 traverses a binary tree, returning a pointer to the
 // deepest node of the tree it finds.
+// The flaw in this one is that when you call it on the tree's root,
+// you have to pass a zero value for ply, otherwise the depth is offset.
 func FindDepth2(node *Node, ply int) (depth int, deepnode *Node) {
 	// past leaf node
 	if node == nil {
