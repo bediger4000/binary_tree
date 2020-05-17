@@ -2,7 +2,6 @@ package main
 
 import (
 	"binary_tree/tree"
-	"fmt"
 )
 
 // Return:
@@ -33,35 +32,17 @@ func insert(node *tree.StringNode, value string, valueorder []string) *tree.Stri
 		return &tree.StringNode{Data: value}
 	}
 
-	n := &(node.left)
+	n := &(node.Left)
 	if imposeOrder(value, node.Data, valueorder) != -1 {
-		n = &(node.right)
+		n = &(node.Right)
 	}
 	*n = insert(*n, value, valueorder)
 	return node
 }
 
-func drawTree(node *TreeNode) {
-	fmt.Printf("Node%p [label=\"%s\"];\n", node, node.data)
-	if node.left != nil {
-		drawTree(node.left)
-		fmt.Printf("Node%p -> Node%p;\n", node, node.left)
-	} else {
-		fmt.Printf("Node%pL [shape=\"point\"];\n", node)
-		fmt.Printf("Node%p -> Node%pL;\n", node, node)
-	}
-	if node.right != nil {
-		drawTree(node.right)
-		fmt.Printf("Node%p -> Node%p;\n", node, node.right)
-	} else {
-		fmt.Printf("Node%pR [shape=\"point\"];\n", node)
-		fmt.Printf("Node%p -> Node%pR;\n", node, node)
-	}
-}
-
 func main() {
 
-	var root *TreeNode
+	var root *tree.StringNode
 
 	preorder := []string{"a", "b", "c", "d", "e", "f", "g"}
 	inorder := []string{"d", "b", "e", "a", "f", "c", "g"}
@@ -71,8 +52,6 @@ func main() {
 	}
 
 	if root != nil {
-		fmt.Printf("digraph g {\n")
-		drawTree(root)
-		fmt.Printf("\n}\n")
+		tree.Draw(root)
 	}
 }
