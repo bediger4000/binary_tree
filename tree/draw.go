@@ -6,9 +6,35 @@ import (
 	"os"
 )
 
+type drawable interface {
+	Left() drawable
+	Right() drawable
+	IsNil() bool
+}
+
+func (n *Node) Left() drawable {
+	return n.left
+}
+func (n *Node) Right() drawable {
+	return n.right
+}
+func (n *Node) IsNil() bool {
+	return n == nil
+}
+
+func (n *StringNode) Left() drawable {
+	return n.left
+}
+func (n *StringNode) Right() drawable {
+	return n.right
+}
+func (n *StringNode) IsNil() bool {
+	return n == nil
+}
+
 // Draw outputs GraphViz declarations for a single binary tree
 // on standard out.
-func Draw(root *Node) {
+func Draw(root drawable) {
 	fmt.Fprintf(os.Stdout, "digraph g {\n")
 	DrawPrefixed(os.Stdout, root, "N")
 	fmt.Fprintf(os.Stdout, "\n}\n")
@@ -22,20 +48,25 @@ func Draw(root *Node) {
 // the rendered shapes of trees looking right. Nodes without one or the
 // child nodes also get a point-shaped pseudo-child node for the
 // same reason.
-func DrawPrefixed(out io.Writer, node *Node, prefix string) {
-	fmt.Fprintf(out, "%s%p [label=\"%d\"];\n", prefix, node, node.data)
-	if node.left != nil {
-		DrawPrefixed(out, node.left, prefix)
-		fmt.Fprintf(out, "%s%p -> %s%p;\n", prefix, node, prefix, node.left)
-	} else {
+func DrawPrefixed(out io.Writer, node drawable, prefix string) {
+	if node.IsNil() {
+		return
+	}
+	fmt.Fprintf(out, "%s%p [label=\"%s\"];\n", prefix, node, node)
+	left := node.Left()
+	if left.IsNil() {
 		fmt.Fprintf(out, "%s%pL [shape=\"point\"];\n", prefix, node)
 		fmt.Fprintf(out, "%s%p -> %s%pL;\n", prefix, node, prefix, node)
-	}
-	if node.right != nil {
-		DrawPrefixed(out, node.right, prefix)
-		fmt.Fprintf(out, "%s%p -> %s%p;\n", prefix, node, prefix, node.right)
 	} else {
+		DrawPrefixed(out, left, prefix)
+		fmt.Fprintf(out, "%s%p -> %s%p;\n", prefix, node, prefix, left)
+	}
+	right := node.Right()
+	if right.IsNil() {
 		fmt.Fprintf(out, "%s%pR [shape=\"point\"];\n", prefix, node)
 		fmt.Fprintf(out, "%s%p -> %s%pR;\n", prefix, node, prefix, node)
+	} else {
+		DrawPrefixed(out, right, prefix)
+		fmt.Fprintf(out, "%s%p -> %s%p;\n", prefix, node, prefix, right)
 	}
 }
