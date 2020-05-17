@@ -21,9 +21,10 @@ should become:
 */
 
 import (
-	"binary_tree/tree"
 	"fmt"
 	"os"
+
+	"binary_tree/tree"
 )
 
 func main() {
