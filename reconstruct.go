@@ -8,25 +8,19 @@ import (
 // -1 if value1 < value2
 //  0 if value1 == value2
 //  1 if value1 > value2
-func imposeOrder(value1, value2 string, valueorder []string) int {
+func imposeOrder(value1, value2 string, valueorder map[string]int) int {
 	if value1 == value2 {
 		return 0
 	}
 
-	for _, val := range valueorder {
-		if val == value1 {
-			return -1
-		}
-		if val == value2 {
-			return 1
-		}
+	if valueorder[value1] < valueorder[value2] {
+		return -1
 	}
 
-	// Should probably panic here
-	return 0 // almost certainly wrong.
+	return 1
 }
 
-func insert(node *tree.StringNode, value string, valueorder []string) *tree.StringNode {
+func insert(node *tree.StringNode, value string, valueorder map[string]int) *tree.StringNode {
 
 	if node == nil {
 		return &tree.StringNode{Data: value}
@@ -47,8 +41,13 @@ func main() {
 	preorder := []string{"a", "b", "c", "d", "e", "f", "g"}
 	inorder := []string{"d", "b", "e", "a", "f", "c", "g"}
 
+	ordering := make(map[string]int)
+	for i, str := range inorder {
+		ordering[str] = i
+	}
+
 	for _, v := range preorder {
-		root = insert(root, v, inorder)
+		root = insert(root, v, ordering)
 	}
 
 	if root != nil {
