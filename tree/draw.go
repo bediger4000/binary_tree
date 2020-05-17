@@ -7,28 +7,28 @@ import (
 )
 
 type drawable interface {
-	LeftChild() drawable
-	RightChild() drawable
-	IsNil() bool
+	leftChild() drawable
+	rightChild() drawable
+	isNil() bool
 }
 
-func (n *Node) LeftChild() drawable {
+func (n *Node) leftChild() drawable {
 	return n.left
 }
-func (n *Node) RightChild() drawable {
+func (n *Node) rightChild() drawable {
 	return n.right
 }
-func (n *Node) IsNil() bool {
+func (n *Node) isNil() bool {
 	return n == nil
 }
 
-func (n *StringNode) LeftChild() drawable {
-	return n.left
+func (n *StringNode) leftChild() drawable {
+	return n.Left
 }
-func (n *StringNode) RightChild() drawable {
-	return n.right
+func (n *StringNode) rightChild() drawable {
+	return n.Right
 }
-func (n *StringNode) IsNil() bool {
+func (n *StringNode) isNil() bool {
 	return n == nil
 }
 
@@ -49,20 +49,20 @@ func Draw(root drawable) {
 // child nodes also get a point-shaped pseudo-child node for the
 // same reason.
 func DrawPrefixed(out io.Writer, node drawable, prefix string) {
-	if node.IsNil() {
+	if node.isNil() {
 		return
 	}
 	fmt.Fprintf(out, "%s%p [label=\"%s\"];\n", prefix, node, node)
-	left := node.LeftChild()
-	if left.IsNil() {
+	left := node.leftChild()
+	if left.isNil() {
 		fmt.Fprintf(out, "%s%pL [shape=\"point\"];\n", prefix, node)
 		fmt.Fprintf(out, "%s%p -> %s%pL;\n", prefix, node, prefix, node)
 	} else {
 		DrawPrefixed(out, left, prefix)
 		fmt.Fprintf(out, "%s%p -> %s%p;\n", prefix, node, prefix, left)
 	}
-	right := node.RightChild()
-	if right.IsNil() {
+	right := node.rightChild()
+	if right.isNil() {
 		fmt.Fprintf(out, "%s%pR [shape=\"point\"];\n", prefix, node)
 		fmt.Fprintf(out, "%s%p -> %s%pR;\n", prefix, node, prefix, node)
 	} else {
