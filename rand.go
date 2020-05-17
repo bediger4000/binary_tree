@@ -1,9 +1,23 @@
 package main
 
-import "binary_tree/tree"
+import (
+	"binary_tree/tree"
+	"log"
+	"os"
+	"strconv"
+)
 
 func main() {
 
-	root := tree.RandomValueTree(100, 12, true)
+	n := 12
+	if len(os.Args) > 1 {
+		var err error
+		n, err = strconv.Atoi(os.Args[1])
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	root := tree.RandomValueTree(100, n, true)
 	tree.Draw(root)
 }
