@@ -11,9 +11,9 @@ type Node struct {
 
 // StringNode is an element of a binary tree with a string value
 type StringNode struct {
-	data  string
-	left  *Node
-	right *Node
+	Data  string
+	Left  *StringNode
+	Right *StringNode
 }
 
 // Value returns whatever the node has as its data,
@@ -23,7 +23,7 @@ func (n *Node) Value() int {
 }
 
 func (n *StringNode) Value(s string) {
-	n.data = s
+	n.Data = s
 }
 
 func (n *Node) String() string {
@@ -31,5 +31,5 @@ func (n *Node) String() string {
 }
 
 func (n *StringNode) String() string {
-	return n.data
+	return n.Data
 }
