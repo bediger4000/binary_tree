@@ -1,8 +1,8 @@
 package tree
 
 type Depth struct {
-	node  *Node
-	depth int
+	Node  *Node
+	Depth int
 }
 
 // FindDepth1 traverses a binary tree, saving the maximum depth
@@ -14,9 +14,9 @@ func FindDepth1(node *Node, ply int, d *Depth) {
 	}
 
 	FindDepth1(node.left, ply+1, d)
-	if ply > d.depth {
-		d.depth = ply
-		d.node = node
+	if ply > d.Depth {
+		d.Depth = ply
+		d.Node = node
 	}
 	FindDepth1(node.right, ply+1, d)
 }
