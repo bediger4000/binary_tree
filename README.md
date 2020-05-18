@@ -58,3 +58,34 @@ The in-order traversal gives you an ordering of the elements.
 You can reconstruct the original binary tree by adding elements
 to a binary search tree in the pre-order traversal order, with "<=>"
 determined by the in-order traversal.
+
+## Return all paths from the root to leaves
+
+Another "Daily Coding Puzzle".
+
+Given a binary tree, return all paths from the root to leaves.
+
+For example, given the tree
+
+      1
+     / \
+    2   3
+       / \
+      4   5
+
+it should return [[1, 2], [1, 3, 4], [1, 3, 5]].
+
+The phrasing of the answer seems to assume the use of Python.
+My program creates a binary search tree from number representations
+on the command line,
+then traverses the newly-created tree.
+It adds each node's value to the current path when that node
+gets visited by the traverse.
+At leaf nodes, it copies the path, and keeps that copy.
+As the traverse leaves a node,
+the code trims the node's value from the current path.
+I had to write a recursive visitor function that includes
+pre-order and post-order function calls,
+and write a type that could be used to accumulate paths at leaf nodes,
+and also kept the current path updated.
+
