@@ -33,24 +33,47 @@ type NodeQueue struct {
 func main() {
 	root := tree.CreateNumeric(os.Args[1:])
 
-	queue := new(NodeQueue)
+	goingLeft := new(NodeQueue)
+	goingRight := new(NodeQueue)
 
-	queue.push(root)
+	onQueue := goingLeft
+	offQueue := goingRight
 
-	for !queue.empty() {
-		n := queue.dequeue()
-		fmt.Printf("%d ", n.Data)
-		if n.Left != nil {
-			queue.push(n.Left)
+	offQueue.enqueue(root)
+
+	for !offQueue.empty() {
+
+		switch offQueue {
+		case goingRight:
+			n := offQueue.pop()
+			fmt.Printf("%d ", n.Data)
+			onQueue.enqueue(n.Left)
+			onQueue.enqueue(n.Right)
+		case goingLeft:
+			n := offQueue.dequeue()
+			fmt.Printf("%d ", n.Data)
+			onQueue.enqueue(n.Left)
+			onQueue.enqueue(n.Right)
 		}
-		if n.Right != nil {
-			queue.push(n.Right)
+
+		if offQueue.empty() {
+			switch offQueue {
+			case goingLeft:
+				offQueue = goingRight
+				onQueue = goingLeft
+			case goingRight:
+				onQueue = goingRight
+				offQueue = goingLeft
+			}
 		}
 	}
 	fmt.Println()
 }
 
-func (nq *NodeQueue) push(n *tree.Node) {
+func (nq *NodeQueue) enqueue(n *tree.Node) {
+	if n == nil {
+		return
+	}
 	nq.array = append(nq.array, n)
 }
 
@@ -60,6 +83,17 @@ func (nq *NodeQueue) dequeue() (head *tree.Node) {
 	}
 	head = nq.array[0]
 	nq.array = nq.array[1:]
+	return
+}
+
+func (nq *NodeQueue) pop() (tail *tree.Node) {
+	l := len(nq.array)
+	if l == 0 {
+		return
+	}
+	l--
+	tail = nq.array[l]
+	nq.array = nq.array[:l]
 	return
 }
 
