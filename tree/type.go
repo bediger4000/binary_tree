@@ -33,3 +33,8 @@ func (n *Node) String() string {
 func (n *StringNode) String() string {
 	return n.Data
 }
+
+type VisitorFunc func(node *Node)
+
+func NullVisitor(node *Node) {
+}
