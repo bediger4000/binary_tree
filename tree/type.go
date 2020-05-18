@@ -4,9 +4,9 @@ import "fmt"
 
 // Node is an element of a binary tree with a numeric value
 type Node struct {
-	data  int
-	left  *Node
-	right *Node
+	Data  int
+	Left  *Node
+	Right *Node
 }
 
 // StringNode is an element of a binary tree with a string value
@@ -19,7 +19,7 @@ type StringNode struct {
 // Value returns whatever the node has as its data,
 // but just the value of that data, mind you.
 func (n *Node) Value() int {
-	return n.data
+	return n.Data
 }
 
 func (n *StringNode) Value(s string) {
@@ -27,7 +27,7 @@ func (n *StringNode) Value(s string) {
 }
 
 func (n *Node) String() string {
-	return fmt.Sprintf("%d", n.data)
+	return fmt.Sprintf("%d", n.Data)
 }
 
 func (n *StringNode) String() string {

@@ -13,10 +13,10 @@ type drawable interface {
 }
 
 func (n *Node) leftChild() drawable {
-	return n.left
+	return n.Left
 }
 func (n *Node) rightChild() drawable {
-	return n.right
+	return n.Right
 }
 func (n *Node) isNil() bool {
 	return n == nil

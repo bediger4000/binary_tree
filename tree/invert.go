@@ -6,7 +6,7 @@ func (p *Node) Invert() {
 	if p == nil {
 		return
 	}
-	p.left.Invert()
-	p.right.Invert()
-	p.left, p.right = p.right, p.left
+	p.Left.Invert()
+	p.Right.Invert()
+	p.Left, p.Right = p.Right, p.Left
 }

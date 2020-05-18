@@ -11,11 +11,11 @@ func Equals(t1, t2 *Node) bool {
 	if t2 == nil {
 		return false
 	}
-	if t1.data != t2.data {
+	if t1.Data != t2.Data {
 		return false
 	}
-	if !Equals(t1.left, t2.left) {
+	if !Equals(t1.Left, t2.Left) {
 		return false
 	}
-	return Equals(t1.right, t2.right)
+	return Equals(t1.Right, t2.Right)
 }

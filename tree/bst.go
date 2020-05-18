@@ -7,10 +7,10 @@ import "math"
 // value for LHS of tree to be greater than, and math.MaxInt32
 // as the value for RHS of tree to have values less than.
 func BstProperty(root *Node) bool {
-	if !bst(root.left, math.MinInt32, root.data) {
+	if !bst(root.Left, math.MinInt32, root.Data) {
 		return false
 	}
-	if !bst(root.right, root.data, math.MaxInt32) {
+	if !bst(root.Right, root.Data, math.MaxInt32) {
 		return false
 	}
 	return true
@@ -26,13 +26,13 @@ func bst(node *Node, min int, max int) bool {
 		return true
 	}
 
-	if !(node.data > min && node.data < max) {
+	if !(node.Data > min && node.Data < max) {
 		return false
 	}
-	if !bst(node.left, min, node.data) {
+	if !bst(node.Left, min, node.Data) {
 		return false
 	}
-	if !bst(node.right, node.data, max) {
+	if !bst(node.Right, node.Data, max) {
 		return false
 	}
 

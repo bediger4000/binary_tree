@@ -13,12 +13,12 @@ package tree
 func Insert(node *Node, value int) *Node {
 
 	if node == nil {
-		return &Node{data: value}
+		return &Node{Data: value}
 	}
 
-	n := &(node.left)
-	if value >= node.data {
-		n = &(node.right)
+	n := &(node.Left)
+	if value >= node.Data {
+		n = &(node.Right)
 	}
 	*n = Insert(*n, value)
 	return node
