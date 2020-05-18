@@ -15,110 +15,68 @@ it should return [[1, 2], [1, 3, 4], [1, 3, 5]].
 */
 
 import (
+	"binary_tree/tree"
 	"fmt"
 	"os"
 	"strconv"
 )
 
-type TreeNode struct {
-	data  int
-	left  *TreeNode
-	right *TreeNode
+// ValueAccumulator is an embellishment.
+type ValueAccumulator []int
+
+func (values *ValueAccumulator) collect(node *tree.Node) {
+	*values = append(*values, node.Data)
 }
 
-func insert(node *TreeNode, value int) *TreeNode {
-
-	if node == nil {
-		return &TreeNode{data: value}
-	}
-
-	n := &(node.left)
-	if value >= node.data {
-		n = &(node.right)
-	}
-	*n = insert(*n, value)
-	return node
+// PathAccumulator keeps track of state (currentPath) during
+// a traverse of a tree, and holds copies of the path as it
+// existed when arriving at leaf nodes.
+type PathAccumulator struct {
+	currentPath []int
+	paths       [][]int
 }
 
-func drawTree(node *TreeNode) {
-	fmt.Printf("Node%p [label=\"%d\"];\n", node, node.data)
-	if node.left != nil {
-		drawTree(node.left)
-		fmt.Printf("Node%p -> Node%p;\n", node, node.left)
-	} else {
-		fmt.Printf("Node%pL [shape=\"point\"];\n", node)
-		fmt.Printf("Node%p -> Node%pL;\n", node, node)
-	}
-	if node.right != nil {
-		drawTree(node.right)
-		fmt.Printf("Node%p -> Node%p;\n", node, node.right)
-	} else {
-		fmt.Printf("Node%pR [shape=\"point\"];\n", node)
-		fmt.Printf("Node%p -> Node%pR;\n", node, node)
+// before, called in pre-order, add the node's
+// value to the PathAccumulator's current path.
+// If this is a leaf node, it copies the current path
+// and appends that copy to the accumulator's list of paths.
+func (pa *PathAccumulator) before(node *tree.Node) {
+	pa.currentPath = append(pa.currentPath, node.Data)
+
+	if node.Left == nil && node.Right == nil {
+		path := make([]int, len(pa.currentPath))
+		copy(path, pa.currentPath)
+		pa.paths = append(pa.paths, path)
 	}
 }
 
-func inorderTraverse(node *TreeNode, values *[]int) {
-	if node == nil {
-		return
-	}
-	inorderTraverse(node.left, values)
-	*values = append(*values, node.data)
-	inorderTraverse(node.right, values)
-}
-
-// 3 9 6 5 7
-func pathTraverse(node *TreeNode, path []int, paths *[][]int) {
-	if node == nil {
-		return
-	}
-
-	// path is a slice: sometimes append()
-	// doesn't actually reallocate the backing
-	// store of the slice, so you get duplicate
-	// paths, and miss one path. Make a copy.
-	mypath := make([]int, len(path))
-	copy(mypath, path)
-
-	mypath = append(mypath, node.data)
-
-	if node.left == nil && node.right == nil {
-		*paths = append(*paths, mypath)
-		return
-	}
-
-	pathTraverse(node.left, mypath, paths)
-	pathTraverse(node.right, mypath, paths)
+// after, called in post-order, trims the node's
+// value off the PathAccumulator's current path.
+func (pa *PathAccumulator) after(node *tree.Node) {
+	pa.currentPath = pa.currentPath[:len(pa.currentPath)-1]
 }
 
 func main() {
-	var root *TreeNode
+	var root *tree.Node
 
 	for _, str := range os.Args[1:] {
 		val, err := strconv.Atoi(str)
-
 		if err == nil {
-			// fmt.Printf("insert %d\n", val)
-			root = insert(root, val)
+			root = tree.Insert(root, val)
 		} else {
-			fmt.Printf("Problem with %q: %s\n", str, err)
+			fmt.Fprintf(os.Stderr, "Problem with %q: %s\n", str, err)
 		}
 	}
 
 	if root != nil {
-		/*
-			fmt.Printf("digraph g {\n")
-			drawTree(root)
-			fmt.Printf("}\n")
-		*/
-		var values []int
-		inorderTraverse(root, &values)
+		var values ValueAccumulator
+		tree.InorderTraverseVisit(root, values.collect)
 		fmt.Printf("/* All values: %v */\n", values)
-		var path []int
-		var paths [][]int
-		pathTraverse(root, path, &paths)
-		fmt.Printf("/*\n")
-		for _, p := range paths {
+
+		p := &PathAccumulator{}
+		tree.AllorderTraverseVisit(root, p.before, tree.NullVisitor, p.after)
+		fmt.Printf("/* Paths:\n")
+		for _, p := range p.paths {
 			fmt.Printf("%v\n", p)
 		}
 		fmt.Printf("*/\n")
