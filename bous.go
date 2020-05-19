@@ -26,12 +26,17 @@ For example, given the following tree:
 You should return [1, 3, 2, 4, 5, 6, 7].
 */
 
+// Stack constitutes a push-down stack of binary tree nodes
 type Stack struct {
 	array []*tree.Node
 }
 
+// Heading indicates which direction the program currently
+// traverses a layer (nodes of the same depth) of a tree
 type Heading int
 
+// Right and Left - the two directions this program traverses
+// layers of a binary tree.
 const (
 	Right Heading = 0
 	Left  Heading = iota

@@ -20,7 +20,7 @@ func BstProperty(root *Node) bool {
 // a given node somewhere in the tree. Needs to be called
 // with max and min values so that it can do comparisons,
 // so it's not actually suitable for users to call it.
-func bst(node *Node, min int, max int) bool {
+func bst(node *Node, min, max int) bool {
 
 	if node == nil {
 		return true

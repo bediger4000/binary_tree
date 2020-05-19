@@ -9,7 +9,7 @@ import (
 // RandomValueTree constructs a binary search tree with
 // random-number-valued nodes. This is just a support function
 // for seeing operations on whole trees (invert, max depth, etc) work.
-func RandomValueTree(max int, nodeCount int, setSeed bool) (root *Node) {
+func RandomValueTree(max, nodeCount int, setSeed bool) (root *Node) {
 
 	if nodeCount > max {
 		return nil

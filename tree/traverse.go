@@ -12,7 +12,7 @@ func PreorderTraverse(node *Node) {
 	PreorderTraverse(node.Right)
 }
 
-// InorderTraverseVistor does a traverse of a binary tree,
+// InorderTraverseVisit does a traverse of a binary tree,
 // callling a function in-order at every node
 func InorderTraverseVisit(node *Node, fn VisitorFunc) {
 	if node == nil {
@@ -23,7 +23,7 @@ func InorderTraverseVisit(node *Node, fn VisitorFunc) {
 	InorderTraverseVisit(node.Right, fn)
 }
 
-// AllorderTraverseVistor does a traverse of a binary tree,
+// AllorderTraverseVisit does a traverse of a binary tree,
 // callling a function pre-order, in-order and post-order at every node
 func AllorderTraverseVisit(node *Node, preorderfn, inorderfn, postorderfn VisitorFunc) {
 	if node == nil {
@@ -36,8 +36,8 @@ func AllorderTraverseVisit(node *Node, preorderfn, inorderfn, postorderfn Visito
 	postorderfn(node)
 }
 
-// PreorderTraverseVistor does a traverse of a binary tree,
-// callling a function in-order at every node
+// PreorderTraverseVisit does a traverse of a binary tree,
+// callling a function pre-order at every node
 func PreorderTraverseVisit(node *Node, fn VisitorFunc) {
 	if node == nil {
 		return
@@ -49,10 +49,8 @@ func PreorderTraverseVisit(node *Node, fn VisitorFunc) {
 
 // InorderTraverse prints nodes' values on stdout in order.
 func InorderTraverse(node *Node) {
-	if node == nil {
-		return
-	}
-	InorderTraverse(node.Left)
+	AllorderTraverseVisit(node, NullVisitor, printNode, NullVisitor)
+}
+func printNode(node *Node) {
 	fmt.Printf(" %d", node.Data)
-	InorderTraverse(node.Right)
 }

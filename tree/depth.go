@@ -1,5 +1,7 @@
 package tree
 
+// Depth used to trace which tree's node occurs
+// at the maximum depth discovered so far.
 type Depth struct {
 	Node  *Node
 	Depth int
