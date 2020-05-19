@@ -1,8 +1,12 @@
-all: reconstruct invert rand tree_depth tree_depth2 tree_paths drawtree
+all: reconstruct invert rand tree_depth tree_depth2 tree_paths \
+	drawtree bous
 images: reconstruct.png invert.png rand.png
 
 drawtree: drawtree.go
 	go build drawtree.go
+
+bous: bous.go
+	go build bous.go
 
 reconstruct.png: reconstruct.dot
 	dot -Tpng -o reconstruct.png reconstruct.dot
