@@ -89,3 +89,38 @@ pre-order and post-order function calls,
 and write a type that could be used to accumulate paths at leaf nodes,
 and also kept the current path updated.
 
+## Daily Coding Problem: Problem #540 [Easy]
+
+In Ancient Greece, it was common to write text with the first line going
+left to right, the second line going right to left, and continuing to go
+back and forth. This style was called "boustrophedon".
+
+Given a binary tree, write an algorithm to print the nodes in
+boustrophedon order.
+
+For example, given the following tree:
+
+           1
+         /   \
+        /     \
+      2         3
+     / \       / \
+    4   5     6   7
+
+You should return [1, 3, 2, 4, 5, 6, 7].
+
+### Analysis
+
+I did this with two stacks, one to hold nodes for a rightward
+breadth-first pass, the other for a leftward breadth-first pass.
+I switched stacks from which to pop parent nodes when the current
+parent-node-stack turns up empty.
+You could probably perform the task with a single double-ended queue and
+a special marker node that indicates when to change direction.
+
+There is no way this is an "easy" whiteboarding problem.
+The child nodes in a rightward pass are the parent nodes in the
+succeeding leftward pass: you have to think an entire "layer" of the
+tree ahead to decide what operation (pop or dequeue) to do in 
+the next pass, and you have to think an entire layer behind to decide
+in what order to push or enqueue the child nodes.
