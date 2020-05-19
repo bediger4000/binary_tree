@@ -26,78 +26,75 @@ For example, given the following tree:
 You should return [1, 3, 2, 4, 5, 6, 7].
 */
 
-type NodeQueue struct {
+type Stack struct {
 	array []*tree.Node
 }
+
+type Heading int
+
+const (
+	Right Heading = 0
+	Left  Heading = iota
+)
 
 func main() {
 	root := tree.CreateNumeric(os.Args[1:])
 
-	goingLeft := new(NodeQueue)
-	goingRight := new(NodeQueue)
+	goingLeft := new(Stack)
+	goingRight := new(Stack)
 
-	onQueue := goingLeft
-	offQueue := goingRight
+	stack := goingRight
+	heading := Right
 
-	offQueue.enqueue(root)
+	stack.push(root)
 
-	for !offQueue.empty() {
+	for !stack.empty() {
 
-		switch offQueue {
-		case goingRight:
-			n := offQueue.pop()
+		switch heading {
+		case Right:
+			n := stack.pop()
 			fmt.Printf("%d ", n.Data)
-			onQueue.enqueue(n.Left)
-			onQueue.enqueue(n.Right)
-		case goingLeft:
-			n := offQueue.dequeue()
+			goingLeft.push(n.Left)
+			goingLeft.push(n.Right)
+		case Left:
+			n := stack.pop()
 			fmt.Printf("%d ", n.Data)
-			onQueue.enqueue(n.Left)
-			onQueue.enqueue(n.Right)
+			goingRight.push(n.Right)
+			goingRight.push(n.Left)
 		}
 
-		if offQueue.empty() {
-			switch offQueue {
-			case goingLeft:
-				offQueue = goingRight
-				onQueue = goingLeft
-			case goingRight:
-				onQueue = goingRight
-				offQueue = goingLeft
+		if stack.empty() {
+			switch heading {
+			case Left:
+				heading = Right
+				stack = goingRight
+			case Right:
+				heading = Left
+				stack = goingLeft
 			}
 		}
 	}
 	fmt.Println()
 }
 
-func (nq *NodeQueue) enqueue(n *tree.Node) {
+func (nq *Stack) push(n *tree.Node) {
 	if n == nil {
 		return
 	}
 	nq.array = append(nq.array, n)
 }
 
-func (nq *NodeQueue) dequeue() (head *tree.Node) {
-	if len(nq.array) == 0 {
+func (nq *Stack) pop() (tail *tree.Node) {
+	l := len(nq.array) - 1
+	if l < 0 {
 		return
 	}
-	head = nq.array[0]
-	nq.array = nq.array[1:]
-	return
-}
-
-func (nq *NodeQueue) pop() (tail *tree.Node) {
-	l := len(nq.array)
-	if l == 0 {
-		return
-	}
-	l--
 	tail = nq.array[l]
 	nq.array = nq.array[:l]
 	return
 }
 
-func (nq *NodeQueue) empty() bool {
+func (nq *Stack) empty() bool {
 	if len(nq.array) == 0 {
 		return true
 	}
