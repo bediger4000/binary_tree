@@ -26,11 +26,6 @@ For example, given the following tree:
 You should return [1, 3, 2, 4, 5, 6, 7].
 */
 
-// Stack constitutes a push-down stack of binary tree nodes
-type Stack struct {
-	array []*tree.Node
-}
-
 // Heading indicates which direction the program currently
 // traverses a layer (nodes of the same depth) of a tree
 type Heading int
@@ -45,30 +40,30 @@ const (
 func main() {
 	root := tree.CreateNumeric(os.Args[1:])
 
-	goingLeft := new(Stack)
-	goingRight := new(Stack)
+	goingLeft := new(tree.Stack)
+	goingRight := new(tree.Stack)
 
 	stack := goingRight
 	heading := Right
 
-	stack.push(root)
+	stack.Push(root)
 
-	for !stack.empty() {
+	for !stack.Empty() {
 
 		switch heading {
 		case Right:
-			n := stack.pop()
+			n := stack.Pop()
 			fmt.Printf("%d ", n.Data)
-			goingLeft.push(n.Left)
-			goingLeft.push(n.Right)
+			goingLeft.Push(n.Left)
+			goingLeft.Push(n.Right)
 		case Left:
-			n := stack.pop()
+			n := stack.Pop()
 			fmt.Printf("%d ", n.Data)
-			goingRight.push(n.Right)
-			goingRight.push(n.Left)
+			goingRight.Push(n.Right)
+			goingRight.Push(n.Left)
 		}
 
-		if stack.empty() {
+		if stack.Empty() {
 			switch heading {
 			case Left:
 				heading = Right
@@ -80,28 +75,4 @@ func main() {
 		}
 	}
 	fmt.Println()
-}
-
-func (nq *Stack) push(n *tree.Node) {
-	if n == nil {
-		return
-	}
-	nq.array = append(nq.array, n)
-}
-
-func (nq *Stack) pop() (tail *tree.Node) {
-	l := len(nq.array) - 1
-	if l < 0 {
-		return
-	}
-	tail = nq.array[l]
-	nq.array = nq.array[:l]
-	return
-}
-
-func (nq *Stack) empty() bool {
-	if len(nq.array) == 0 {
-		return true
-	}
-	return false
 }
