@@ -53,3 +53,4 @@ clean:
 	-rm -rf rand rand.png rand.dot
 	-rm -rf drawtree *.png *.dot 
 	-rm -rf tree_depth tree_depth2 tree_paths bous order search
+	-rm -rf cousins
