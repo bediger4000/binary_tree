@@ -1,6 +1,9 @@
 all: reconstruct invert rand tree_depth tree_depth2 tree_paths \
-	drawtree bous order
+	drawtree bous order search
 images: reconstruct.png invert.png rand.png
+
+cousins: cousins.go
+	go build cousins.go
 
 drawtree: drawtree.go
 	go build drawtree.go
@@ -10,6 +13,9 @@ bous: bous.go
 
 order: order.go
 	go build order.go
+
+search: search.go
+	go build search.go
 
 reconstruct.png: reconstruct.dot
 	dot -Tpng -o reconstruct.png reconstruct.dot
@@ -46,4 +52,4 @@ clean:
 	-rm -rf reconstruct reconstruct.png reconstruct.dot
 	-rm -rf rand rand.png rand.dot
 	-rm -rf drawtree *.png *.dot 
-	-rm -rf tree_depth tree_depth2 tree_paths bous order
+	-rm -rf tree_depth tree_depth2 tree_paths bous order search
