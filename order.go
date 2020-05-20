@@ -12,7 +12,7 @@ func main() {
 	if !tree.BstProperty(root) {
 		phrase = "doesn't have"
 	}
-	fmt.Printf("tree %s binary search property\n", phrase)
+	fmt.Fprintf(os.Stderr, "tree %s binary search property\n", phrase)
 	tree.InorderTraverse(root)
 	fmt.Println()
 }
