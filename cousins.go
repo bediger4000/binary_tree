@@ -76,7 +76,10 @@ func main() {
 }
 
 // Find performs binary search on argument node
-// and its sub-trees.
+// and its sub-trees. Since my trees are all Binary Search Trees,
+// this can short-circuit a mere traversal of the entire tree.
+// This is different than the example given, but I'm using what
+// I've got available.
 func findParent(node *tree.Node, value int) *tree.Node {
 	if node == nil {
 		return nil
