@@ -177,7 +177,8 @@ find all cousins of that node.
 
 #### Analysis
 
-This might actually be a good interview problem.
+At first, I thought this was a fairly bogus question,
+but this might actually be a good interview problem.
 It does contain the opportunity to do a recursive or iterative search
 of a binary tree, allowing the candidate to demonstrate algorithm knowledge.
 It has a task that requires synthesizing a solution from several parts
