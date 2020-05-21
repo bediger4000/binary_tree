@@ -32,7 +32,9 @@ func main() {
 
 	fmt.Printf("Node of interest has value %d\n", targetNodeValue)
 
-	// construct BST from all the remaining command line values
+	// Construct BST from all the remaining command line values
+	// Using a BST because by entering nodes in bread-first order,
+	// I can get any shape tree I want.
 	root := tree.CreateNumeric(os.Args[2:])
 
 	// find parent of particular node by value
