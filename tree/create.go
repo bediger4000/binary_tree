@@ -105,21 +105,28 @@ func findIdentifier(str []rune, startIdx, endIdx int) string {
 	return string(identifier)
 }
 
-func CreateByParsing(stringrep string) (root *StringNode) {
+// CreateFromString parses a single string
+// like "(abc (ghi () (jkl)) (def (pork) (beans)))"
+// and turns it into a binary tree.
+// Stupid name, will change it when I thik of something better.
+func CreateFromString(stringrep string) (root *StringNode) {
 	runes := []rune(stringrep)
 	l := len(runes)
 	return treeFromString(runes[1:l-1], 0, l)
 }
 
-func PrintStringTree(node *StringNode) {
-	if node == nil {
+// Print writes out a tree in the format that
+// CreateByParsing can turn into a tree.
+// Re-uses interface drawable, which isn't the best name apparently
+func Print(node drawable) {
+	if node.isNil() {
 		fmt.Printf("()")
 		return
 	}
-	fmt.Printf("(%s", node.Data)
-	if node.Left != nil || node.Right != nil {
-		PrintStringTree(node.Left)
-		PrintStringTree(node.Right)
+	fmt.Printf("(%s", node) // relies on node fitting fmt.Stringer
+	if !node.leftChild().isNil() || !node.rightChild().isNil() {
+		Print(node.leftChild())
+		Print(node.rightChild())
 	}
 	fmt.Print(")")
 }
