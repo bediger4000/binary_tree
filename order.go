@@ -15,4 +15,6 @@ func main() {
 	fmt.Fprintf(os.Stderr, "tree %s binary search property\n", phrase)
 	tree.InorderTraverse(root)
 	fmt.Println()
+	tree.Print(root)
+	fmt.Println()
 }
