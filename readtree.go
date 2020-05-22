@@ -1,5 +1,11 @@
 package main
 
+/*
+ * Exercize func tree.CreateByParsing, which parses a single string
+ * like "(abc(ghi()(jkl))(def(pork)(beans)))"
+ * and turns it into a binary tree.
+ */
+
 import (
 	"binary_tree/tree"
 	"fmt"
