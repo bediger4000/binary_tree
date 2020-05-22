@@ -1,7 +1,7 @@
 package main
 
 /*
- * Exercize func tree.CreateByParsing, which parses a single string
+ * Exercize func tree.CreateFromString, which parses a single string
  * like "(abc(ghi()(jkl))(def(pork)(beans)))"
  * and turns it into a binary tree.
  */
@@ -20,11 +20,11 @@ func main() {
 		stringrep = os.Args[2]
 	}
 
-	root := tree.CreateByParsing(stringrep)
+	root := tree.CreateFromString(stringrep)
 	if outputGraphViz {
 		tree.Draw(root)
 		return
 	}
-	tree.PrintStringTree(root)
+	tree.Print(root)
 	fmt.Println()
 }
