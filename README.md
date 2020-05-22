@@ -248,3 +248,53 @@ each of the sub-trees.
 This is probably a pretty good interview question,
 if you want to see if the candidate has that flash of intuition,
 which may not arrive during the pressure of a whiteboard question.
+
+### Put sorted array of integers into binary search tree
+
+I seem to have mislaid all other information about this problem
+other than this simple statement:
+
+Given a sorted array increasing order of unique integers,
+create a binary search tree with minimal height.
+
+#### Analysis
+
+Ordinarily, this would take quite a bit of work to get correct,
+but the "sorted array" clause makes it possible.
+
+[My code](minimal_ht_tree.go) take advantage of the sort by
+using the middle element of the array as the root of the root.
+The sub-arrays on either side of the middle element will be
+binary search trees of the left and right children of the root
+of the tree,
+so the code can recurse.
+The base case actually comprises 3 special cases:
+1, 2 and 3 element sorted arrays each get treated on their own.
+it was too hard to deal with a length 2 array with the general case
+code, and 3 element was too easy to not treat specially.
+Also, there's a choice of two arrangements for the length 2 case:
+
+    1
+     \
+      2
+
+or
+
+      2
+     /
+    1
+
+I have my code choosing one of them randomly, just for equity.
+
+This seems like a harder interview question,
+the interviewer should prepare to prompt the candidate.
+It requires some insight to notice that "sorted array" and
+"binary search tree" have a relationship
+via the middle-node-becomes-root,
+and that the relationship is recursive.
+Also, the choice of middle node for an even-length sorted array
+makes the actual coding a little harder.
+The candidate probably writes code to always chose one or the other.
+Calculating the middle index of a 0-indexed array causes humans troubles.
+It's easy to be off-by-one, and it's not the more familiar fence post problem.
+The interviewer shouldn't expect anything close to a good solution.
