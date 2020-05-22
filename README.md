@@ -190,3 +190,61 @@ It has the opportunity to point out test cases (can't find node, can't find
 grandparent, can't find uncle, 0 through 2 cousins),
 and it allows the candidate to demonstrate some insight (only 1 node can be
 parent of cousins, it's a binary tree).
+Given a binary tree where all nodes are either 0 or 1, prune the tree so
+that subtrees containing all 0s are removed.
+
+### Prune a tree so that subtrees containing all 0s are removed
+
+For example, given the following tree:
+
+       0
+      / \
+     1   0
+        / \
+       1   0
+      / \
+     0   0
+
+should be pruned to:
+
+       0
+      / \
+     1   0
+        /
+       1
+
+We do not remove the tree at the root or its left child because it still
+has a 1 as a descendant.
+
+#### Analysis
+
+My [code](prune_tree.go) does this with a post-order traverse
+of the entire original tree, pruning the tree as it goes.
+
+By pruning left and right children,
+then checking to see if both child nodes are null and
+the current node's data is 0,
+the code can return the node or nil.
+
+A leaf node with 0 value gets pruned by setting its parent's pointer
+to it to nil.
+If both child pointers of the parent have a nil value,
+or get set to a nil value in the traverse,
+the parent can be pruned by returning nil.
+
+Perceiving a post-order traverse as a way to prune requires
+the ability to not shy away from doing something via brute force,
+and also a willingness to put off the work of pruning until
+both of a node's subtrees have been pruned.
+
+I suspect that a lot of candidates would try to traverse the
+tree and write a function `prunable(node *Node) bool`,
+calling pruneable on each child node.
+This would get you wrapped around the axle of recursion,
+because `prunable()` would have to recurse each node's two
+child sub-trees, and then you'd want to write code to recurse into
+each of the sub-trees.
+
+This is probably a pretty good interview question,
+if you want to see if the candidate has that flash of intuition,
+which may not arrive during the pressure of a whiteboard question.
