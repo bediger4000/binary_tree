@@ -190,10 +190,11 @@ It has the opportunity to point out test cases (can't find node, can't find
 grandparent, can't find uncle, 0 through 2 cousins),
 and it allows the candidate to demonstrate some insight (only 1 node can be
 parent of cousins, it's a binary tree).
-Given a binary tree where all nodes are either 0 or 1, prune the tree so
-that subtrees containing all 0s are removed.
 
 ### Prune a tree so that subtrees containing all 0s are removed
+
+Given a binary tree where all nodes are either 0 or 1, prune the tree so
+that subtrees containing all 0s are removed.
 
 For example, given the following tree:
 
