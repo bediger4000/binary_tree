@@ -250,7 +250,7 @@ This is probably a pretty good interview question,
 if you want to see if the candidate has that flash of intuition,
 which may not arrive during the pressure of a whiteboard question.
 
-### Put sorted array of integers into binary search tree
+### Minimum height binary search tree
 
 I seem to have mislaid all other information about this problem
 other than this simple statement:
@@ -286,6 +286,12 @@ or
     1
 
 I have my code choosing one of them randomly, just for equity.
+That is, it can create different minimal height trees from
+different executios with the same input.
+
+I also write the [straightforward version](minimal_ht_tree2.go) of this.
+It's a bit clearer, but it always creates the same tree from any
+given output.
 
 This seems like a harder interview question,
 the interviewer should prepare to prompt the candidate.
@@ -299,3 +305,20 @@ The candidate probably writes code to always chose one or the other.
 Calculating the middle index of a 0-indexed array causes humans troubles.
 It's easy to be off-by-one, and it's not the more familiar fence post problem.
 The interviewer shouldn't expect anything close to a good solution.
+
+The candidate could amaze the interviewer by providing insightful test cases.
+Not only is a 1-node tree a good test case,
+but so are 2-node trees.
+Test cases that cause the algorithm to decide between two
+"middle indexes" of the array would be good.
+Something like an input of [0, 1, 2, 3] has 4 different trees of height 3.
+That's worth a test.
+"Slightly incomplete" trees, missing only 1, 2, 3 or so nodes
+from having a complete set of leaf nodes would be good test cases.
+
+The candidate could also amaze the interviewer by proposing a test
+for whether or not the tree is of minimal height.
+A complete binary tree is of depth D and has 2<sup>N</sup>-1 nodes.
+We know how many nodes are in the tree, we got an array as input.
+Find the depth of the tree, see if it's less than or equal to log2(D+1).
+[This program](testmin.go) does that.
