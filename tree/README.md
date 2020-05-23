@@ -52,7 +52,7 @@ type drawable interface {
 ```
 
 This is really the only technically interesting data type.
-With the correct methods (which exist in [draw.go](draw.go),
+With methods that satisfy `interface drawable` (which exist in [draw.go](draw.go)),
 the same function (`func DrawPrefixed(out io.Writer, node drawable, prefix string)`)
 can generate GraphViz output for trees of both `*Node` and `*StringNode`
 types.
@@ -155,3 +155,13 @@ I'm sure that interviewers have asked merely how to check
 if an input tree has this property.
 It's worth having this to demonstrate that puzzles/problems
 got solved correctly.
+
+### func FindDepth2(root \*Node, depth int) (depth int, deepnode *Node)
+
+Find the depth (or height, depending on how you want to look at it)
+of a given binary tree.
+This is the answer to one puzzle that asked merely for
+an algorithm for the depth of a tree,
+and support for the "compose minimum height tree from sorted array"
+puzzle.
+
