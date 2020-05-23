@@ -64,7 +64,7 @@ Dismayingly, `leftChild()` and `rightChild()` are both getters.
 ### Creating a binary search tree from a list of numeric string representations
 
 `func CreateNumeric(numberRepr []string) (root *Node)` creates a
-binary search tree of type `\*Node` from a slice of strings.
+binary search tree of type `*Node` from a slice of strings.
 The strings have to be representations of integers.
 
 ### Creating a tree from a list of strings
@@ -77,23 +77,17 @@ func CreateFromString(stringrep string) (root *StringNode)
 
 This function will create a tree of type `*StringNode`.
 The format of `stringrep` is something like a Lisp expression:
+An input string `(root(left(gl)(gr))(right(gL)(gR))`
+results in a tree like this:
 
-```
-(root(left(gl)(gr))(right(gL)(gR))
-``
-
-makes a tree like this:
-
-```
           root
          /    \
       left     right
       /  \     /  \
     gl   gr   gL   gR
-```
 
-No error recovery, very brittle parsing, can't tolerate whitespace.
-You have to indicate nil left children with `()`.
+No error recovery, very brittle parsing, can't tolerate whitespace,
+you have to indicate nil left children with `()` if you have non-nil right children.
 `()` is option for nil right children, due to mediocre parsing.
 
 ### GraphViz drawing of a tree
