@@ -134,7 +134,7 @@ with hard-coded arguments.
 
 ## Tree Properties
 
-### func BstProperty
+### Binary Search Tree
 
 ```go
 func BstProperty(root *Node) bool
@@ -153,7 +153,11 @@ if an input tree has this property.
 It's worth having this to demonstrate that puzzles/problems
 got solved correctly.
 
-### func FindDepth2(root \*Node, depth int) (depth int, deepnode *Node)
+### Depth (or height) of tree
+
+```go
+func FindDepth2(root \*Node, depth int) (depth int, deepnode *Node)
+```
 
 Find the depth (or height, depending on how you want to look at it)
 of a given binary tree.
