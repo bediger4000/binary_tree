@@ -8,7 +8,7 @@ and includes code that solves typical questions.
 
 ## Building
 
-Support code resides entirely in package `tree`,
+Support code resides entirely in [package tree](./tree),
 which lives in the `tree/` directory.
 Answering the questions or solving the puzzles almost always means
 doing something different than the generic support code does,
