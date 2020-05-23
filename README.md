@@ -26,6 +26,11 @@ That way you can visually check that the code does what it's supposed to do.
 
 ## Questions and programs
 
+I have a bigger binary tree question,
+recreate binary tree from its post-order traversal,
+in its [own repo](https://github.com/bediger4000/postorder-tree-traversal)
+Still can't believe they marked that one "medium".
+
 * Create a [randomly valued](random.go) tree.
 * Create a GarphViz [drawing](drawtree.go) of a tree.
 This code creates a binary search tree (BST) by inserting values as they appear on the command line.
