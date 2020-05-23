@@ -63,8 +63,11 @@ Dismayingly, `leftChild()` and `rightChild()` are both getters.
 
 ### Creating a binary search tree from a list of numeric string representations
 
-`func CreateNumeric(numberRepr []string) (root *Node)` creates a
-binary search tree of type `*Node` from a slice of strings.
+```go
+func CreateNumeric(numberRepr []string) (root *Node)
+```
+
+Creates a binary search tree of type `*Node` from a slice of strings.
 The strings have to be representations of integers.
 
 ### Creating a tree from a list of strings
@@ -113,14 +116,14 @@ trees side-by-side for comparison.
 Use is a little bit more involved than `func Draw`.
 
 ```go
- fmt.Printf("digraph g1 {\n")
-    fmt.Printf("subgraph cluster_0 {\n\tlabel=\"before\"\n")
-    tree.DrawPrefixed(os.Stdout, originalTree, "orig")
-    fmt.Printf("\n}\n") // close cluster_0
-    fmt.Printf("subgraph cluster_1 {\n\tlabel=\"after\"\n")
-    tree.DrawPrefixed(os.Stdout, changedTree, "mangled")
-    fmt.Printf("\n}\n") // close cluster_1
-    fmt.Printf("\n}\n") // close g1
+fmt.Printf("digraph g1 {\n")
+fmt.Printf("subgraph cluster_0 {\n\tlabel=\"before\"\n")
+tree.DrawPrefixed(os.Stdout, originalTree, "orig")
+fmt.Printf("\n}\n") // close cluster_0
+fmt.Printf("subgraph cluster_1 {\n\tlabel=\"after\"\n")
+tree.DrawPrefixed(os.Stdout, changedTree, "mangled")
+fmt.Printf("\n}\n") // close cluster_1
+fmt.Printf("\n}\n") // close g1
 ```
 
 Your code has to "open" and "close" the individual cluster's
