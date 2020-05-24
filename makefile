@@ -1,6 +1,6 @@
 all: reconstruct invert rand tree_depth tree_depth2 tree_paths \
 	drawtree bous order search cousins readtree bous prune_tree \
-	minimal_ht_tree minimal_ht_tree2 testmin
+	minimal_ht_tree minimal_ht_tree2 testmin lca
 
 images: reconstruct.png invert.png rand.png
 
@@ -27,6 +27,9 @@ drawtree: drawtree.go
 
 bous: bous.go
 	go build bous.go
+
+lca: lca.go
+	go build lca.go
 
 order: order.go
 	go build order.go
@@ -71,4 +74,4 @@ clean:
 	-rm -rf drawtree *.png *.dot 
 	-rm -rf tree_depth tree_depth2 tree_paths bous order search
 	-rm -rf cousins prune_tree readtree minimal_ht_tree minimal_ht_tree2
-	-rm -rf testmin
+	-rm -rf testmin lca
