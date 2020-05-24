@@ -327,3 +327,36 @@ A complete binary tree of depth D has N = 2<sup>D</sup>-1 nodes.
 We know how many nodes are in the tree, we got an array as input.
 Find the depth of the tree, see if it's less than or equal to log2(N+1).
 [This program](testmin.go) does that.
+
+### Daily Coding Problem: Problem #545 [Hard]
+
+Given a binary tree, find the lowest common ancestor (LCA) of two
+given nodes in the tree. Assume that each node in the tree also has a
+pointer to its parent.
+
+According to the definition of LCA on Wikipedia: The lowest
+common ancestor is defined between two nodes v and w as the lowest
+node in T that has both v and w as descendants (where we allow a node
+to be a descendant of itself).
+
+#### Analysis
+
+It says "binary tree", not "binary search tree",
+so you can't assume an ordering.
+
+The "assume that each node in the tree also has a pointer to its parent"
+is almost certainly a clue that they don't want the obvious solution,
+which is to find paths to V- and W-valued nodes,
+then compare paths to find the last common ancestor,
+the node that appears in both paths deepest in the tree.
+
+Apparently [this 18 page paper](https://www.cs.bgu.ac.il/~segal/PAPERS2/tarj.pdf)
+describes a sub-linear algorithm for finding the LCA,
+using back-links to parents.
+It's entirely unobvious, and I refuse to bother with it.
+
+This is a weird problem to ask in an interview.
+Unless the interviewer wants a candidate who's read, understood,
+and memorized all of Robert Tarjan's many, many algorithms,
+nobody will pass this. Everyone will do the O(n) time algorithm,
+or waste all their time trying to recreate something inobvious.
