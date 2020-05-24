@@ -6,32 +6,6 @@ import (
 	"os"
 )
 
-type drawable interface {
-	leftChild() drawable
-	rightChild() drawable
-	isNil() bool
-}
-
-func (n *Node) leftChild() drawable {
-	return n.Left
-}
-func (n *Node) rightChild() drawable {
-	return n.Right
-}
-func (n *Node) isNil() bool {
-	return n == nil
-}
-
-func (n *StringNode) leftChild() drawable {
-	return n.Left
-}
-func (n *StringNode) rightChild() drawable {
-	return n.Right
-}
-func (n *StringNode) isNil() bool {
-	return n == nil
-}
-
 // Draw outputs GraphViz declarations for a single binary tree
 // on standard out.
 func Draw(root drawable) {

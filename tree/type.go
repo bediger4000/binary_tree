@@ -39,10 +39,36 @@ func (n *StringNode) String() string {
 }
 
 // VisitorFunc types the *TraverseVisit functions in tree/traverse.go
-type VisitorFunc func(node *Node)
+type VisitorFunc func(node drawable)
 
 // NullVisitor does nothing, but it can be used to make
 // tree.AllorderTraverseVisit into pre-, post-, in-order
 // or a combination. A placeholder.
-func NullVisitor(node *Node) {
+func NullVisitor(node drawable) {
+}
+
+type drawable interface {
+	leftChild() drawable
+	rightChild() drawable
+	isNil() bool
+}
+
+func (n *Node) leftChild() drawable {
+	return n.Left
+}
+func (n *Node) rightChild() drawable {
+	return n.Right
+}
+func (n *Node) isNil() bool {
+	return n == nil
+}
+
+func (n *StringNode) leftChild() drawable {
+	return n.Left
+}
+func (n *StringNode) rightChild() drawable {
+	return n.Right
+}
+func (n *StringNode) isNil() bool {
+	return n == nil
 }
