@@ -1,8 +1,8 @@
-all: reconstruct invert rand tree_depth tree_depth2 tree_paths \
+all: reconstruct reconstruct2 invert rand tree_depth tree_depth2 tree_paths \
 	drawtree bous order search cousins readtree bous prune_tree \
 	minimal_ht_tree minimal_ht_tree2 testmin lca
 
-images: reconstruct.png invert.png rand.png
+images: reconstruct.png reconstruct2.png invert.png rand.png
 
 minimal_ht_tree: minimal_ht_tree.go
 	go build minimal_ht_tree.go
@@ -39,10 +39,15 @@ search: search.go
 
 reconstruct.png: reconstruct.dot
 	dot -Tpng -o reconstruct.png reconstruct.dot
+reconstruct2.png: reconstruct2
+	./reconstruct2 '(a(b(d(p)())(e()(q)))(c(f()(r))(g(s)(t))))' > reconstruct2.dot
+	dot -Tpng -o reconstruct2.png reconstruct2.dot
 reconstruct.dot: reconstruct
 	./reconstruct > reconstruct.dot
 reconstruct: reconstruct.go
 	go build reconstruct.go
+reconstruct2: reconstruct2.go
+	go build reconstruct2.go
 
 invert.png: invert.dot
 	dot -Tpng -o invert.png invert.dot
@@ -70,6 +75,7 @@ tree_paths: tree_paths.go
 clean:
 	-rm -rf invert invert.dot invert.png
 	-rm -rf reconstruct reconstruct.png reconstruct.dot
+	-rm -rf reconstruct2 reconstruct2.png reconstruct2.dot
 	-rm -rf rand rand.png rand.dot
 	-rm -rf drawtree *.png *.dot 
 	-rm -rf tree_depth tree_depth2 tree_paths bous order search
