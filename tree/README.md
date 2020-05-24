@@ -52,10 +52,12 @@ type drawable interface {
 ```
 
 This is really the only technically interesting data type.
-With methods that satisfy `interface drawable` (which exist in [draw.go](draw.go)),
+With methods that satisfy `interface drawable` (which exist in [types.go](types.go)),
 the same function (`func DrawPrefixed(out io.Writer, node drawable, prefix string)`)
 can generate GraphViz output for trees of both `*Node` and `*StringNode`
 types.
+
+The traversal functions also use interface drawable to be somewhat more generic.
 
 Dismayingly, `leftChild()` and `rightChild()` are both getters.
 
