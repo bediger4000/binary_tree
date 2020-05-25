@@ -16,4 +16,12 @@ func TestNumericNode_Invert(t *testing.T) {
 	if !Equals(tree1, tree2) {
 		t.Errorf("double inverted and original no equal")
 	}
+
+	tree1 = CreateNumeric([]string{"1", "0", "2"})
+	tree2 = &NumericNode{Data: 1, Left: &NumericNode{Data: 2}, Right: &NumericNode{Data: 0}}
+
+	tree1.Invert()
+	if !Equals(tree1, tree2) {
+		t.Errorf("inverted tree %v, not right %v", tree1, tree2)
+	}
 }
