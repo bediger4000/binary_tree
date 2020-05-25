@@ -14,7 +14,7 @@ import (
 // The only tricky parts are:
 // when to stop recursing, and how to cut off enough of preorder
 // array so that a recursive call to insert() has the correct preorder
-// array.
+// array, especially for the RH sub-tree.
 func insert(preorder, inorder []string) *tree.StringNode {
 	// preorder is always longer than it needs to be,
 	// not trimming off RH sub-tree values from it.
@@ -74,9 +74,18 @@ func main() {
 		fmt.Printf("\n}\n")
 		fmt.Printf("\n}\n")
 
+		phrase := ""
+		if !tree.Equals(root, orig) {
+			phrase = "not "
+		}
+		fmt.Printf("/* original and reconstructed %sequal */\n", phrase)
+
 	}
 }
 
+// StringSlice exists to allow using obj.appendString as a tree.VisitorFunc
+// type: don't have to use globals to collect arrays of strings during tree
+// traverses.
 type StringSlice []string
 
 func (ss *StringSlice) appendString(node tree.Node) {
