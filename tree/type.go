@@ -22,6 +22,7 @@ func (n *NumericNode) Value() int {
 	return n.Data
 }
 
+/*
 // Value returns the string that's the data a StringNode
 // instance carries around. Since string is a value type,
 // I think this is OK - we're not giving out data that can
@@ -29,6 +30,7 @@ func (n *NumericNode) Value() int {
 func (n *StringNode) Value(s string) {
 	n.Data = s
 }
+*/
 
 func (n *NumericNode) String() string {
 	return fmt.Sprintf("%d", n.Data)
@@ -47,6 +49,8 @@ type VisitorFunc func(node Node)
 func NullVisitor(node Node) {
 }
 
+// Node makes it possible to use the same code for StringNode
+// and NumericNode pointers when printing or traversing a tree.
 type Node interface {
 	leftChild() Node
 	rightChild() Node
