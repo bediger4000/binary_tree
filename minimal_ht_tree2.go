@@ -14,11 +14,11 @@ import (
 	"strconv"
 )
 
-func minHeightInsert(sortedArray []int) (root *tree.Node) {
+func minHeightInsert(sortedArray []int) (root *tree.NumericNode) {
 	root = nil
 	if sz := len(sortedArray); sz > 0 {
 		middle := sz / 2
-		root = &tree.Node{Data: sortedArray[middle]}
+		root = &tree.NumericNode{Data: sortedArray[middle]}
 		root.Left = minHeightInsert(sortedArray[0:middle])
 		root.Right = minHeightInsert(sortedArray[middle+1:])
 	}

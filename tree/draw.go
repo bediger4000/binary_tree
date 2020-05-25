@@ -8,7 +8,7 @@ import (
 
 // Draw outputs GraphViz declarations for a single binary tree
 // on standard out.
-func Draw(root drawable) {
+func Draw(root Node) {
 	fmt.Fprintf(os.Stdout, "digraph g {\n")
 	DrawPrefixed(os.Stdout, root, "N")
 	fmt.Fprintf(os.Stdout, "\n}\n")
@@ -22,7 +22,7 @@ func Draw(root drawable) {
 // the rendered shapes of trees looking right. Nodes without one or the
 // child nodes also get a point-shaped pseudo-child node for the
 // same reason.
-func DrawPrefixed(out io.Writer, node drawable, prefix string) {
+func DrawPrefixed(out io.Writer, node Node, prefix string) {
 	if node.isNil() {
 		return
 	}

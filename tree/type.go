@@ -2,11 +2,11 @@ package tree
 
 import "fmt"
 
-// Node is an element of a binary tree with a numeric value
-type Node struct {
+// NumericNode is an element of a binary tree with a numeric value
+type NumericNode struct {
 	Data  int
-	Left  *Node
-	Right *Node
+	Left  *NumericNode
+	Right *NumericNode
 }
 
 // StringNode is an element of a binary tree with a string value
@@ -18,7 +18,7 @@ type StringNode struct {
 
 // Value returns whatever the node has as its data,
 // but just the value of that data, mind you.
-func (n *Node) Value() int {
+func (n *NumericNode) Value() int {
 	return n.Data
 }
 
@@ -30,7 +30,7 @@ func (n *StringNode) Value(s string) {
 	n.Data = s
 }
 
-func (n *Node) String() string {
+func (n *NumericNode) String() string {
 	return fmt.Sprintf("%d", n.Data)
 }
 
@@ -39,34 +39,34 @@ func (n *StringNode) String() string {
 }
 
 // VisitorFunc types the *TraverseVisit functions in tree/traverse.go
-type VisitorFunc func(node drawable)
+type VisitorFunc func(node Node)
 
 // NullVisitor does nothing, but it can be used to make
 // tree.AllorderTraverseVisit into pre-, post-, in-order
 // or a combination. A placeholder.
-func NullVisitor(node drawable) {
+func NullVisitor(node Node) {
 }
 
-type drawable interface {
-	leftChild() drawable
-	rightChild() drawable
+type Node interface {
+	leftChild() Node
+	rightChild() Node
 	isNil() bool
 }
 
-func (n *Node) leftChild() drawable {
+func (n *NumericNode) leftChild() Node {
 	return n.Left
 }
-func (n *Node) rightChild() drawable {
+func (n *NumericNode) rightChild() Node {
 	return n.Right
 }
-func (n *Node) isNil() bool {
+func (n *NumericNode) isNil() bool {
 	return n == nil
 }
 
-func (n *StringNode) leftChild() drawable {
+func (n *StringNode) leftChild() Node {
 	return n.Left
 }
-func (n *StringNode) rightChild() drawable {
+func (n *StringNode) rightChild() Node {
 	return n.Right
 }
 func (n *StringNode) isNil() bool {

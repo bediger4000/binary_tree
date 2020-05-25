@@ -2,7 +2,7 @@ package tree
 
 // Find performs binary search on argument node
 // and its sub-trees.
-func Find(node *Node, value int) *Node {
+func Find(node *NumericNode, value int) *NumericNode {
 	if node == nil || node.Data == value {
 		return node
 	}

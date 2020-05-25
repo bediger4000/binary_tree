@@ -24,8 +24,8 @@ import (
 // ValueAccumulator is an embellishment.
 type ValueAccumulator []int
 
-func (values *ValueAccumulator) collect(node *tree.Node) {
-	*values = append(*values, node.Data)
+func (values *ValueAccumulator) collect(node tree.Node) {
+	*values = append(*values, node.(*tree.NumericNode).Data)
 }
 
 // PathAccumulator keeps track of state (currentPath) during
@@ -40,7 +40,8 @@ type PathAccumulator struct {
 // value to the PathAccumulator's current path.
 // If this is a leaf node, it copies the current path
 // and appends that copy to the accumulator's list of paths.
-func (pa *PathAccumulator) before(node *tree.Node) {
+func (pa *PathAccumulator) before(n tree.Node) {
+	node := n.(*tree.NumericNode)
 	pa.currentPath = append(pa.currentPath, node.Data)
 
 	if node.Left == nil && node.Right == nil {
@@ -52,12 +53,12 @@ func (pa *PathAccumulator) before(node *tree.Node) {
 
 // after, called in post-order, trims the node's
 // value off the PathAccumulator's current path.
-func (pa *PathAccumulator) after(node *tree.Node) {
+func (pa *PathAccumulator) after(node tree.Node) {
 	pa.currentPath = pa.currentPath[:len(pa.currentPath)-1]
 }
 
 func main() {
-	var root *tree.Node
+	var root *tree.NumericNode
 
 	for _, str := range os.Args[1:] {
 		val, err := strconv.Atoi(str)

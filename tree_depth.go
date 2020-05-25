@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	var root *tree.Node
+	var root *tree.NumericNode
 
 	for _, str := range os.Args[1:] {
 		val, err := strconv.Atoi(str)

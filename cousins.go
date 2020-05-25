@@ -53,7 +53,7 @@ func main() {
 
 	// find children of grandparent - one of these is
 	// parent of cousins
-	var uncle *tree.Node
+	var uncle *tree.NumericNode
 	if grandparentNode.Left != nil && grandparentNode.Left.Data == parentNode.Data {
 		uncle = grandparentNode.Right
 	}
@@ -82,7 +82,7 @@ func main() {
 // this can short-circuit a mere traversal of the entire tree.
 // This is different than the example given, but I'm using what
 // I've got available.
-func findParent(node *tree.Node, value int) *tree.Node {
+func findParent(node *tree.NumericNode, value int) *tree.NumericNode {
 	if node == nil {
 		return nil
 	}

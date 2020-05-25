@@ -11,7 +11,7 @@ import (
 // with integer values of data at nodes. If it has a problem
 // converting a string to an integer it prints a message on stderr
 // and moves on, ignoring the unparseable string.
-func CreateNumeric(numberRepr []string) (root *Node) {
+func CreateNumeric(numberRepr []string) (root *NumericNode) {
 
 	for _, str := range numberRepr {
 		val, err := strconv.Atoi(str)
@@ -117,8 +117,8 @@ func CreateFromString(stringrep string) (root *StringNode) {
 
 // Print writes out a tree in the format that
 // CreateByParsing can turn into a tree.
-// Re-uses interface drawable, which isn't the best name apparently
-func Print(node drawable) {
+// Re-uses interface Node
+func Print(node Node) {
 	if node.isNil() {
 		fmt.Printf("()")
 		return

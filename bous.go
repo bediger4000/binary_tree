@@ -52,12 +52,14 @@ func main() {
 
 		switch heading {
 		case Right:
-			n := stack.Pop()
+			node := stack.Pop()
+			n := node.(*tree.NumericNode)
 			fmt.Printf("%d ", n.Data)
 			goingLeft.Push(n.Left)
 			goingLeft.Push(n.Right)
 		case Left:
-			n := stack.Pop()
+			node := stack.Pop()
+			n := node.(*tree.NumericNode)
 			fmt.Printf("%d ", n.Data)
 			goingRight.Push(n.Right)
 			goingRight.Push(n.Left)

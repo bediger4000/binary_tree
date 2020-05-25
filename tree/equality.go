@@ -4,7 +4,7 @@ package tree
 // and each of their subtrees' nodes have the same values.
 // Trees that don't have the same structure (missing node(s),
 // or addtional node(s)) cause it to return false.
-func Equals(t1, t2 *Node) bool {
+func Equals(t1, t2 *NumericNode) bool {
 	if t1 == nil {
 		return t2 == nil
 	}

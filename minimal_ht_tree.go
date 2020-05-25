@@ -16,24 +16,24 @@ import (
 	"binary_tree/tree"
 )
 
-func minHeightInsert(sortedArray []int) (root *tree.Node) {
+func minHeightInsert(sortedArray []int) (root *tree.NumericNode) {
 	sz := len(sortedArray)
 	switch sz {
 	case 1:
-		root = &tree.Node{Data: sortedArray[0]}
+		root = &tree.NumericNode{Data: sortedArray[0]}
 	case 2:
 		// Arrays of size two can end up in 2 arrangements:
 		if rand.Intn(2) == 0 {
-			root = &tree.Node{Data: sortedArray[1]}
-			root.Left = &tree.Node{Data: sortedArray[0]}
+			root = &tree.NumericNode{Data: sortedArray[1]}
+			root.Left = &tree.NumericNode{Data: sortedArray[0]}
 		} else {
-			root = &tree.Node{Data: sortedArray[0]}
-			root.Right = &tree.Node{Data: sortedArray[1]}
+			root = &tree.NumericNode{Data: sortedArray[0]}
+			root.Right = &tree.NumericNode{Data: sortedArray[1]}
 		}
 	case 3:
-		root = &tree.Node{Data: sortedArray[1]}
-		root.Left = &tree.Node{Data: sortedArray[0]}
-		root.Right = &tree.Node{Data: sortedArray[2]}
+		root = &tree.NumericNode{Data: sortedArray[1]}
+		root.Left = &tree.NumericNode{Data: sortedArray[0]}
+		root.Right = &tree.NumericNode{Data: sortedArray[2]}
 	default:
 		middle := sz / 2
 		// You've got a choice of "middle" for an even
@@ -41,7 +41,7 @@ func minHeightInsert(sortedArray []int) (root *tree.Node) {
 		if (middle % 2) == 0 {
 			middle -= rand.Intn(2)
 		}
-		root = &tree.Node{Data: sortedArray[middle]}
+		root = &tree.NumericNode{Data: sortedArray[middle]}
 		root.Left = minHeightInsert(sortedArray[0:middle])
 		root.Right = minHeightInsert(sortedArray[middle+1:])
 

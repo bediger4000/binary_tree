@@ -4,11 +4,11 @@ package tree
 
 // Stack constitutes a push-down stack of binary tree nodes
 type Stack struct {
-	array []*Node
+	array []Node
 }
 
-// Pop retrieves the last *Node pushed on the Stack
-func (nq *Stack) Pop() (tail *Node) {
+// Pop retrieves the last Node pushed on the Stack
+func (nq *Stack) Pop() (tail Node) {
 	l := len(nq.array) - 1
 	if l < 0 {
 		return
@@ -18,8 +18,8 @@ func (nq *Stack) Pop() (tail *Node) {
 	return
 }
 
-// Dequeue retrieves the first *Node pushed on the Stack
-func (nq *Stack) Dequeue() (head *Node) {
+// Dequeue retrieves the first Node pushed on the Stack
+func (nq *Stack) Dequeue() (head Node) {
 	if len(nq.array) == 0 {
 		return nil
 	}
@@ -28,7 +28,7 @@ func (nq *Stack) Dequeue() (head *Node) {
 	return
 }
 
-// Empty returns true if the stack contains no *Node elements,
+// Empty returns true if the stack contains no Node elements,
 // false otherwise.
 func (nq *Stack) Empty() bool {
 	if len(nq.array) == 0 {
@@ -37,9 +37,9 @@ func (nq *Stack) Empty() bool {
 	return false
 }
 
-// Push enters a *Node at the top of the stack
-func (nq *Stack) Push(n *Node) {
-	if n == nil {
+// Push enters a Node at the top of the stack
+func (nq *Stack) Push(n Node) {
+	if n.isNil() {
 		return
 	}
 	nq.array = append(nq.array, n)

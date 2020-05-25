@@ -31,11 +31,11 @@ import (
 // the sub-array with values less than middle element as array for left
 // subtree, sub-array with values greater than middle element
 // as array for right sub-tree. Deterministic.
-func minHeightInsert(sortedArray []int) (root *tree.Node) {
+func minHeightInsert(sortedArray []int) (root *tree.NumericNode) {
 	root = nil
 	if sz := len(sortedArray); sz > 0 {
 		middle := sz / 2
-		root = &tree.Node{Data: sortedArray[middle]}
+		root = &tree.NumericNode{Data: sortedArray[middle]}
 		root.Left = minHeightInsert(sortedArray[0:middle])
 		root.Right = minHeightInsert(sortedArray[middle+1:])
 	}
@@ -43,24 +43,24 @@ func minHeightInsert(sortedArray []int) (root *tree.Node) {
 }
 
 // minHeightInsert2 is a non-deterministic version of minHeightInsert
-func minHeightInsert2(sortedArray []int) (root *tree.Node) {
+func minHeightInsert2(sortedArray []int) (root *tree.NumericNode) {
 	sz := len(sortedArray)
 	switch sz {
 	case 1:
-		root = &tree.Node{Data: sortedArray[0]}
+		root = &tree.NumericNode{Data: sortedArray[0]}
 	case 2:
 		// Arrays of size two can end up in 2 arrangements:
 		if rand.Intn(2) == 0 {
-			root = &tree.Node{Data: sortedArray[1]}
-			root.Left = &tree.Node{Data: sortedArray[0]}
+			root = &tree.NumericNode{Data: sortedArray[1]}
+			root.Left = &tree.NumericNode{Data: sortedArray[0]}
 		} else {
-			root = &tree.Node{Data: sortedArray[0]}
-			root.Right = &tree.Node{Data: sortedArray[1]}
+			root = &tree.NumericNode{Data: sortedArray[0]}
+			root.Right = &tree.NumericNode{Data: sortedArray[1]}
 		}
 	case 3:
-		root = &tree.Node{Data: sortedArray[1]}
-		root.Left = &tree.Node{Data: sortedArray[0]}
-		root.Right = &tree.Node{Data: sortedArray[2]}
+		root = &tree.NumericNode{Data: sortedArray[1]}
+		root.Left = &tree.NumericNode{Data: sortedArray[0]}
+		root.Right = &tree.NumericNode{Data: sortedArray[2]}
 	default:
 		middle := sz / 2
 		// You've got a choice of "middle" for an even
@@ -68,7 +68,7 @@ func minHeightInsert2(sortedArray []int) (root *tree.Node) {
 		if (middle % 2) == 0 {
 			middle -= rand.Intn(2)
 		}
-		root = &tree.Node{Data: sortedArray[middle]}
+		root = &tree.NumericNode{Data: sortedArray[middle]}
 		root.Left = minHeightInsert2(sortedArray[0:middle])
 		root.Right = minHeightInsert2(sortedArray[middle+1:])
 

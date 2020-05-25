@@ -3,7 +3,7 @@ package tree
 import "fmt"
 
 // PreorderTraverse prints nodes' values on stdout in pre-order.
-func PreorderTraverse(node drawable) {
+func PreorderTraverse(node Node) {
 	if node.isNil() {
 		return
 	}
@@ -14,7 +14,7 @@ func PreorderTraverse(node drawable) {
 
 // InorderTraverseVisit does a traverse of a binary tree,
 // callling a function in-order at every node
-func InorderTraverseVisit(node drawable, fn VisitorFunc) {
+func InorderTraverseVisit(node Node, fn VisitorFunc) {
 	if node.isNil() {
 		return
 	}
@@ -25,7 +25,7 @@ func InorderTraverseVisit(node drawable, fn VisitorFunc) {
 
 // AllorderTraverseVisit does a traverse of a binary tree,
 // callling a function pre-order, in-order and post-order at every node
-func AllorderTraverseVisit(node drawable, preorderfn, inorderfn, postorderfn VisitorFunc) {
+func AllorderTraverseVisit(node Node, preorderfn, inorderfn, postorderfn VisitorFunc) {
 	if node.isNil() {
 		return
 	}
@@ -38,7 +38,7 @@ func AllorderTraverseVisit(node drawable, preorderfn, inorderfn, postorderfn Vis
 
 // PreorderTraverseVisit does a traverse of a binary tree,
 // callling a function pre-order at every node
-func PreorderTraverseVisit(node drawable, fn VisitorFunc) {
+func PreorderTraverseVisit(node Node, fn VisitorFunc) {
 	if node == nil {
 		return
 	}
@@ -48,11 +48,11 @@ func PreorderTraverseVisit(node drawable, fn VisitorFunc) {
 }
 
 // InorderTraverse prints nodes' values on stdout in order.
-func InorderTraverse(node drawable) {
+func InorderTraverse(node Node) {
 	AllorderTraverseVisit(node, NullVisitor, printNode, NullVisitor)
 }
 
 // printNode relies on node fitting interface fmt.Stringer, too.
-func printNode(node drawable) {
+func printNode(node Node) {
 	fmt.Printf(" %s", node)
 }
