@@ -4,6 +4,9 @@ all: reconstruct reconstruct2 invert rand tree_depth tree_depth2 tree_paths \
 
 images: reconstruct.png reconstruct2.png invert.png rand.png
 
+test:
+	cd tree; go test -v .
+
 minimal_ht_tree: minimal_ht_tree.go
 	go build minimal_ht_tree.go
 
