@@ -11,7 +11,7 @@ func main() {
 
 	n := flag.Int("n", 12, "number of nodes")
 	max := flag.Int("m", 100, "maximum node value")
-	graphvizOutput := flag.Bool("g", false, "maximum node value")
+	graphvizOutput := flag.Bool("g", false, "GraphViz output on stdout")
 	flag.Parse()
 
 	root := tree.RandomValueTree(*max, *n, true)
