@@ -86,4 +86,4 @@ clean:
 	-rm -rf drawtree *.png *.dot 
 	-rm -rf tree_depth tree_depth2 tree_paths bous order search
 	-rm -rf cousins prune_tree readtree minimal_ht_tree minimal_ht_tree2
-	-rm -rf testmin lca
+	-rm -rf testmin lca nread
