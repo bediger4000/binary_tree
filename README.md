@@ -347,8 +347,8 @@ so you can't assume an ordering.
 The "assume that each node in the tree also has a pointer to its parent"
 is almost certainly a clue that they don't want the obvious solution,
 which is to find paths to V- and W-valued nodes,
-then compare paths to find the last common ancestor,
-the node that appears in both paths deepest in the tree.
+then compare paths to find the last common ancestor.
+The node that appears in both paths last is deepest in the tree.
 
 Apparently [this 18 page paper](https://www.cs.bgu.ac.il/~segal/PAPERS2/tarj.pdf)
 describes a sub-linear algorithm for finding the LCA,
