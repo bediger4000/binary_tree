@@ -2,6 +2,7 @@ package tree
 
 import (
 	"fmt"
+	"io"
 	"os"
 	"strconv"
 	"unicode"
@@ -93,6 +94,35 @@ func treeFromString(str []rune, startIdx, endIdx int) *StringNode {
 	return node
 }
 
+func numericTreeFromString(str []rune, startIdx, endIdx int) *NumericNode {
+	if startIdx > endIdx {
+		return nil
+	}
+
+	identifier := findIdentifier(str, startIdx, endIdx)
+	idLen := len(identifier)
+	if idLen == 0 {
+		return nil
+	}
+	num, err := strconv.ParseInt(identifier, 10, 64)
+	if err != nil {
+		return nil
+	}
+	node := &NumericNode{Data: int(num)}
+	index := -1
+
+	if startIdx+idLen <= endIdx && str[startIdx+idLen] == '(' {
+		index = findIndex(str, startIdx+idLen, endIdx)
+	}
+
+	if index != -1 {
+		node.Left = numericTreeFromString(str, startIdx+idLen+1, index)
+		node.Right = numericTreeFromString(str, index+2, endIdx)
+	}
+
+	return node
+}
+
 func findIdentifier(str []rune, startIdx, endIdx int) string {
 	var identifier []rune
 	for i := startIdx; i < endIdx; i++ {
@@ -106,27 +136,41 @@ func findIdentifier(str []rune, startIdx, endIdx int) string {
 }
 
 // CreateFromString parses a single string
-// like "(abc (ghi () (jkl)) (def (pork) (beans)))"
+// like "(abc(ghi()(jkl))(def(pork)(beans)))"
 // and turns it into a binary tree.
-// Stupid name, will change it when I thik of something better.
 func CreateFromString(stringrep string) (root *StringNode) {
 	runes := []rune(stringrep)
 	l := len(runes)
 	return treeFromString(runes[1:l-1], 0, l)
 }
 
+// CreateNumericFromString parses a single string
+// like "(2(0()(12))(34(-2)(100)))"
+// and turns it into a binary tree of the given shape.
+func CreateNumericFromString(stringrep string) (root *NumericNode) {
+	runes := []rune(stringrep)
+	l := len(runes)
+	return numericTreeFromString(runes[1:l-1], 0, l)
+}
+
 // Print writes out a tree in the format that
 // CreateByParsing can turn into a tree.
 // Re-uses interface Node
 func Print(node Node) {
+	Printf(os.Stdout, node)
+}
+
+// Printf writes a tree on "out" in the format that
+// CreateByParsing can turn into a tree.
+func Printf(out io.Writer, node Node) {
 	if node.isNil() {
-		fmt.Printf("()")
+		fmt.Fprintf(out, "()")
 		return
 	}
-	fmt.Printf("(%s", node) // relies on node fitting fmt.Stringer
+	fmt.Fprintf(out, "(%s", node) // relies on node fitting fmt.Stringer
 	if !node.leftChild().isNil() || !node.rightChild().isNil() {
-		Print(node.leftChild())
-		Print(node.rightChild())
+		Printf(out, node.leftChild())
+		Printf(out, node.rightChild())
 	}
-	fmt.Print(")")
+	fmt.Fprintf(out, ")")
 }
