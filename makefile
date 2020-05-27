@@ -1,6 +1,6 @@
 all: reconstruct reconstruct2 invert rand tree_depth tree_depth2 tree_paths \
 	drawtree bous order search cousins readtree bous prune_tree \
-	minimal_ht_tree minimal_ht_tree2 testmin lca
+	minimal_ht_tree minimal_ht_tree2 testmin lca nread
 
 images: reconstruct.png reconstruct2.png invert.png rand.png
 
@@ -21,6 +21,9 @@ prune_tree: prune_tree.go
 
 cousins: cousins.go
 	go build cousins.go
+
+nread: nread.go
+	go build nread.go
 
 readtree: readtree.go
 	go build readtree.go
