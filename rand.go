@@ -2,22 +2,23 @@ package main
 
 import (
 	"binary_tree/tree"
-	"log"
-	"os"
-	"strconv"
+	"bytes"
+	"flag"
+	"fmt"
 )
 
 func main() {
 
-	n := 12
-	if len(os.Args) > 1 {
-		var err error
-		n, err = strconv.Atoi(os.Args[1])
-		if err != nil {
-			log.Fatal(err)
-		}
-	}
+	n := flag.Int("n", 12, "number of nodes")
+	max := flag.Int("m", 100, "maximum node value")
+	graphvizOutput := flag.Bool("g", false, "maximum node value")
+	flag.Parse()
 
-	root := tree.RandomValueTree(100, n, true)
-	tree.Draw(root)
+	root := tree.RandomValueTree(*max, *n, true)
+	if *graphvizOutput {
+		tree.Draw(root)
+	}
+	var buffer bytes.Buffer
+	tree.Printf(&buffer, root)
+	fmt.Printf("/* %s */\n", buffer.String())
 }
