@@ -14,11 +14,13 @@ func main() {
 	graphvizOutput := flag.Bool("g", false, "GraphViz output on stdout")
 	flag.Parse()
 
+	hdr, trailer := "", ""
 	root := tree.RandomValueTree(*max, *n, true)
 	if *graphvizOutput {
+		hdr, trailer = "/* ", " */"
 		tree.Draw(root)
 	}
 	var buffer bytes.Buffer
 	tree.Printf(&buffer, root)
-	fmt.Printf("/* %s */\n", buffer.String())
+	fmt.Printf("%s%s%s\n", hdr, buffer.String(), trailer)
 }
