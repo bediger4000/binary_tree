@@ -325,7 +325,7 @@ The candidate could also amaze the interviewer by proposing a test
 for whether or not the tree is of minimal height.
 A complete binary tree of depth D has N = 2<sup>D</sup>-1 nodes.
 We know how many nodes are in the tree, we got an array as input.
-Find the depth of the tree, see if it's less than or equal to log2(N+1).
+Find the depth of the tree, see if it's less than or equal to log2(N+1)+1.
 [This program](testmin.go) does that.
 
 ### Daily Coding Problem: Problem #545 [Hard]
