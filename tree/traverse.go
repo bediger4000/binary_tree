@@ -15,12 +15,11 @@ func PreorderTraverse(node Node) {
 // InorderTraverseVisit does a traverse of a binary tree,
 // callling a function in-order at every node
 func InorderTraverseVisit(node Node, fn VisitorFunc) {
-	if node.isNil() {
-		return
+	for !node.isNil() {
+		InorderTraverseVisit(node.leftChild(), fn)
+		fn(node)
+		node = node.rightChild()
 	}
-	InorderTraverseVisit(node.leftChild(), fn)
-	fn(node)
-	InorderTraverseVisit(node.rightChild(), fn)
 }
 
 // AllorderTraverseVisit does a traverse of a binary tree,
@@ -50,6 +49,16 @@ func PreorderTraverseVisit(node Node, fn VisitorFunc) {
 // InorderTraverse prints nodes' values on stdout in order.
 func InorderTraverse(node Node) {
 	AllorderTraverseVisit(node, NullVisitor, printNode, NullVisitor)
+}
+
+// InorderTraverseTail prints nodes' values on stdout in order,
+// but only recurses on left child nodes - tail call optimization.
+func InorderTraverseTail(node Node) {
+	for !node.isNil() {
+		InorderTraverseTail(node.leftChild())
+		fmt.Printf("%s ", node)
+		node = node.rightChild()
+	}
 }
 
 // printNode relies on node fitting interface fmt.Stringer, too.
