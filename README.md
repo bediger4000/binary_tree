@@ -79,6 +79,21 @@ and the values are the indices of those strings when they're
 in-order in an array.
 `func insert` in this code can decide which child to recurse down
 by getting numeric values from the map and comparing those.
+`func insert` looks a lot like an ordinary recursive function that
+inserts values to create a binary search tree.
+
+This suggests that my current tree package `func Insert` could be
+generalized to accept a `Node`, a value of type `interface{}`,
+a node-creation function probably of type `func(interface{}) Node`,
+and a comparison function of type `func(interface{},interface{}) int`.
+String-valued nodes, integer-valued nodes and floating-point valued
+nodes could all be created and inserted based on what the comparison
+function returned.
+
+An interviewer asking this question would have to decide what they wanted from the candidate. 
+If a candidate had that flash of insight that let them create the clever algorithm,
+is that candidate suitable for an "enterprise" programming role where boring, grind-it-out,
+lots of boilerplate and standard following is necessary?
 
 ### Return all paths from the root to leaves
 
@@ -164,7 +179,8 @@ of depth 4.
 
 ### Cousin Nodes
 
-This was another Daily Coding Problem. Can't remember how easy it was said to be.
+This was another Daily Coding Problem.
+Can't remember how easy it was said to be.
 
 Two nodes in a binary tree can be called cousins if they are on the same level
 of the tree but have different parents.
@@ -290,13 +306,14 @@ or
      /
     1
 
-I have my code choosing one of them randomly, just for equity.
-That is, it can create different minimal height trees from
-different executios with the same input.
+I have my code choosing one of them pseudo-randomly,
+just for equity.
+That is,
+it can create different minimal height trees from different runs with the same input.
 
 I also write the [straightforward version](minimal_ht_tree2.go) of this.
-It's a bit clearer, but it always creates the same tree from any
-given output.
+It's a lot clearer,
+but it always creates the same tree from any given output.
 
 This seems like a harder interview question,
 the interviewer should prepare to prompt the candidate.
@@ -360,3 +377,21 @@ Unless the interviewer wants a candidate who's read, understood,
 and memorized all of Robert Tarjan's many, many algorithms,
 nobody will pass this. Everyone will do the O(n) time algorithm,
 or waste all their time trying to recreate something inobvious.
+
+### Daily Coding Problem: Problem #502 [Easy]
+
+Given a binary tree, determine whether or not it is height-balanced. A
+height-balanced binary tree can be defined as one in which the heights
+of the two subtrees of any node never differ by more than one.
+
+#### Analysis
+
+This is esssentially the tree depth (or tree height) problem
+framed differently.
+As such, it's prey to all of the tree depth problem's difficulties.
+The interview candidate might fall into the trap of tryig to
+write a `Balanced()` function that's recursive on its own,
+rather than finding max depth of each subtree then ensuring that
+any depth difference is not too great.
+The interviewer might not get a feel for the candidate's
+coding ability at all.
