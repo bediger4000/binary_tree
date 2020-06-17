@@ -6,6 +6,12 @@ relate to binary trees.
 This repo consolidates a number of scattered tree implementations into a Go package,
 and includes code that solves typical questions.
 
+I do have other binary tree repos that illustrate problems too big
+to fit in this repo:
+
+* [Reconstruct a binary tree from a postorder traversal](https://github.com/bediger4000/postorder-tree-traversal)
+* [AVL tree construction](https://github.com/bediger4000/avl_tree)
+
 ## Building
 
 Support code resides entirely in [package tree](./tree),
