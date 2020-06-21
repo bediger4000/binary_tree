@@ -384,6 +384,51 @@ and memorized all of Robert Tarjan's many, many algorithms,
 nobody will pass this. Everyone will do the O(n) time algorithm,
 or waste all their time trying to recreate something inobvious.
 
+### Count nodes in less than linear time
+
+Given a complete binary tree,
+count the number of nodes in faster than O(n) time.
+Recall that a complete binary tree has every level filled except the last,
+and the nodes in the last level are filled starting from the left.
+"Complete" means: every level, except possibly the last,
+is completely filled,
+and all nodes in the last level are as far left as possible.
+It can have between 1 and 2h nodes at the last level h.
+
+#### Analysis
+
+I know "complete binary tree" as "tree having the heap property".
+
+Solutions easily found on the web don't do the actual work,
+the authors merely describe how to do it.
+It's a bit harder to actually do it than wave your hands about it.
+
+Suppose you number the child pointers, 0 for left child pointers,
+1 for right child pointers.
+Give the leaf nodes labels based on which pointers the path
+to the leaf node takes.
+The leftmost leaf node is 000 in this diagram,
+the rightmost is 111.
+If you interpret the labels as binary numbers,
+the leaf nodes are labeled sequentially.
+
+![numbered binary tree](numberedtree.png?raw=true)
+
+If the leftmost depth is 1 greater than the rightmost depth,
+the tree isn't filled-in.
+You can use a binary search on leaf node labels,
+using the labels interpreted as digits of binary numbers.
+That gets you a O(log<sub>2</sub>N) search for the deepest
+rightmost node.
+
+[My code](tree_count.go) does just such a binary search.
+It also counts the number of node accesses it does to find
+the rightmost node in the final level of the tree.
+
+![time complexity of node counting](countnodes.png?raw=true)
+
+A log<sub>2</sub>(N) curve fits the experimental count of node accesses very well.
+The constant factor here is about 9 - I just eyeballed that, I didn't curve fit.
 ### Daily Coding Problem: Problem #502 [Easy]
 
 Given a binary tree, determine whether or not it is height-balanced. A
