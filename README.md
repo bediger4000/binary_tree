@@ -416,8 +416,27 @@ the leaf nodes are labeled sequentially.
 
 If the leftmost depth is 1 greater than the rightmost depth,
 the tree isn't filled-in.
-You can use a binary search on leaf node labels,
-using the labels interpreted as digits of binary numbers.
+You can do a [binary search](https://en.wikipedia.org/wiki/Binary_search_algorithm)
+on the labels of the leaf nodes,
+because the digits of the labels are also the direction of
+child node pointer on which to recurse to get to the leaf node.
+You know that the leftmost node is labeled "00...00" and the
+rightmost node is labeled "11...1"
+(in this case it is 1 digit in length less than the leftmost node's label).
+The next tree depth to probe is node node labeled (11..1 + 00..00)/2,
+when interperting node labels as numbers.
+The division-by-2 can be accomplished by shifting the digits to the right,
+minding the carry bit left from adding.
+If you don't carefully handle the carry bit,
+shifting one bit to the right will give you gibberish when
+interpreted as the left/right pointer choices.
+
+Another subtlety exists when choosing when you've found the
+target of the search: I believe you want to compare the added-and-shifted
+mid-point label to the left side of the binary search bracketing labels.
+When the added-and-shifted mid-point equals the left-bracketing-label,
+you've found the deepest rightmost node.
+
 That gets you a O(log<sub>2</sub>N) search for the deepest
 rightmost node.
 
