@@ -463,7 +463,7 @@ if your candidate has problem solving abilities.
 The node-labels-as-pointer-following-directions trick is also fairly subtle.
 I discovered it by accident.
 It's one of those "use a value as a number and also as something else" tricks
-that can give a speed to an algorithm, and clarity to an analysis,
+that can make a speedy algorithm, and give clarity to an analysis,
 but are usually hard to see without puzzling over the problem.
 
 ### Daily Coding Problem: Problem #502 [Easy]
