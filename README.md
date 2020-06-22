@@ -448,6 +448,24 @@ the rightmost node in the final level of the tree.
 
 A log<sub>2</sub>(N) curve fits the experimental count of node accesses very well.
 The constant factor here is about 9 - I just eyeballed that, I didn't curve fit.
+
+This isn't a bad interview question,
+if the interviewer is after a candidate's understanding of computer science.
+If the interviewer is satisfied with a more-or-less handwaving explanation,
+or giving this as a take-home problem, it's fine.
+It contains a lot of subtleties that would cause wasted time in a whiteboard coding experience.
+The candidate wouldn't demonstrate anything worthwhile,
+just that they can puzzle over corner cases,
+and understand how integer division works in their favorite language.
+Letting a candidate analyze the problem out loud,
+skipping over some of the details might be the best way to learn
+if your candidate has problem solving abilities.
+The node-labels-as-pointer-following-directions trick is also fairly subtle.
+I discovered it by accident.
+It's one of those "use a value as a number and also as something else" tricks
+that can give a speed to an algorithm, and clarity to an analysis,
+but are usually hard to see without puzzling over the problem.
+
 ### Daily Coding Problem: Problem #502 [Easy]
 
 Given a binary tree, determine whether or not it is height-balanced. A
