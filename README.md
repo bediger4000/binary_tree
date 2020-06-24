@@ -1,4 +1,4 @@
-# Binary Tree Intervew Questions
+# Binary Tree Interview Questions
 
 So very many of the "programming puzzle of the day",
 or "dev job interview questions"
@@ -46,12 +46,13 @@ nodes of a BST with the desired shape in breadth-first order.
 For some reason, I made `func (p *Node) Invert()` a method of tree node struct and put it in the support code.
 * First cut at [finding depth](tree_depth.go) of tree, carries a struct around.
 * Second cut at [finding depth](tree_depth2.go) of tree, completely recursive, returns deepest node.
+* [Breadth-first traverse](breadthfirst.go) iterative traverse of tree.
 
 ### Reconstruct a tree from traversals
 
 This was one of the "Daily Coding Puzzle" problems.
 A [clever solution](https://www.geeksforgeeks.org/construct-tree-from-given-inorder-and-preorder-traversal/) exists.
-Isn't this O(n^2), though?
+Isn't this O(n<sup>2</sup>), though?
 It's also a [leetcode](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/submissions/) problem.
 
 Given pre-order and in-order traversals of a binary tree, write a function to reconstruct the tree.
@@ -78,7 +79,7 @@ The in-order traversal gives you an ordering of the elements.
 You can reconstruct the original binary tree by adding elements
 to a binary search tree in the pre-order traversal order,
 with "<=>" determined by the in-order traversal,
-instead of using <, >, == built-in operators to make comparisons.
+instead of using <, >, == built-in operators on data values to make comparisons.
 [My code](reconstruct.go) constructs a `map[string]int` where the keys are strings
 from the in-order traverse
 and the values are the indices of those strings when they're
@@ -89,17 +90,18 @@ by getting numeric values from the map and comparing those.
 inserts values to create a binary search tree.
 
 This suggests that my current tree package `func Insert` could be
-generalized to accept a `Node`, a value of type `interface{}`,
-a node-creation function probably of type `func(interface{}) Node`,
+generalized to accept a `tree.Node`, a value of type `interface{}`,
+a node-creation function probably of type `func(interface{}) tree.Node`,
 and a comparison function of type `func(interface{},interface{}) int`.
 String-valued nodes, integer-valued nodes and floating-point valued
 nodes could all be created and inserted based on what the comparison
 function returned.
 
-An interviewer asking this question would have to decide what they wanted from the candidate. 
-If a candidate had that flash of insight that let them create the clever algorithm,
-is that candidate suitable for an "enterprise" programming role where boring, grind-it-out,
-lots of boilerplate and standard following is necessary?
+An interviewer asking this question would have to decide what they wanted from the candidate.
+If a candidate had that flash of insight
+that let them create the clever algorithm, is that candidate suitable
+for an "enterprise" programming role where boring, grind-it-out, lots of
+boilerplate and standard following is necessary?
 
 ### Return all paths from the root to leaves
 
@@ -317,7 +319,7 @@ just for equity.
 That is,
 it can create different minimal height trees from different runs with the same input.
 
-I also write the [straightforward version](minimal_ht_tree2.go) of this.
+I also wrote the [straightforward version](minimal_ht_tree2.go) of this.
 It's a lot clearer,
 but it always creates the same tree from any given output.
 
@@ -401,7 +403,7 @@ I know "complete binary tree" as "tree having the heap property".
 
 Solutions easily found on the web don't do the actual work,
 the authors merely describe how to do it.
-It's a bit harder to actually do it than wave your hands about it.
+It's harder to do it than wave your hands about it.
 
 Suppose you number the child pointers, 0 for left child pointers,
 1 for right child pointers.
@@ -411,6 +413,9 @@ The leftmost leaf node is 000 in this diagram,
 the rightmost is 111.
 If you interpret the labels as binary numbers,
 the leaf nodes are labeled sequentially.
+Taking the bits of the binary numbers as instructions on which
+child pointer to choose,
+a node with a given label can be found in O(D) time.
 
 ![numbered binary tree](numberedtree.png?raw=true)
 
@@ -423,13 +428,13 @@ child node pointer on which to recurse to get to the leaf node.
 You know that the leftmost node is labeled "00...00" and the
 rightmost node is labeled "11...1"
 (in this case it is 1 digit in length less than the leftmost node's label).
-The next tree depth to probe is node node labeled (11..1 + 00..00)/2,
-when interperting node labels as numbers.
+The next tree depth to probe is the node labeled (11..1 + 00..00)/2,
+when interpreting node labels as numbers.
 The division-by-2 can be accomplished by shifting the digits to the right,
 minding the carry bit left from adding.
-If you don't carefully handle the carry bit,
-shifting one bit to the right will give you gibberish when
-interpreted as the left/right pointer choices.
+If you don't correctly handle the carry bit,
+shifting the result of adding labels one bit to the right will give you gibberish when
+viewed as the left/right pointer choices.
 
 Another subtlety exists when choosing when you've found the
 target of the search: I believe you want to compare the added-and-shifted
