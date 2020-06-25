@@ -8,6 +8,7 @@ import (
 
 /*
  * Daily Coding Problem: Problem #545 [Hard]
+ * Daily Coding Problem: Problem #112
  *
  * Given a binary tree, find the lowest common ancestor (LCA) of two
  * given nodes in the tree. Assume that each node in the tree also has a
