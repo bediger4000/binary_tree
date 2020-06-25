@@ -554,8 +554,15 @@ The candidate would do well to analyze test cases first for this problem.
 That would give the candidate enough information to have a fighting
 chance to get a correct algorithm.
 
-I ended up with code that had a mangled recursive in-order traverse.
-It's one function that gets called with a `*tree.NumericNode`,
+[I ended up with code](inorder_successor.go)
+that had a complicated recursive in-order traverse.
+I interpreted "binary tree" in the problem to mean "unordered",
+not a Binary Search Tree.
+If "binary tree" means "binary search tree",
+then my code isn't the greatest: it will take forever to search
+for a given value in a large tree.
+
+The search is one function that gets called with a `*tree.NumericNode`,
 the given value,
 and an instance of a 3-valued type.
 The 3 values of this type represent:
@@ -563,6 +570,11 @@ The 3 values of this type represent:
 1. Looking for the given value
 2. Found the given value
 3. Found the inorder successor
+
+Note that the search function receives one of these 3 values
+as an argument,
+and it needs to consider what the values mean when returned
+from a recursive call.
 
 If the search function receives "found the given value" as an
 argument, the current node is the inorder successor.
@@ -586,3 +598,12 @@ This is common practice because it avoids having two checks
 and it declutters recursive traverse code.
 A nil/NULL current node pointer has to return the value of the 3-valued type argument
 it's called with, rather than "looking for the given value".
+
+Of course, the quick-and-dirty method of creating an array from
+an in-order traverse of the tree, finding the given value in the array,
+then returning the value at the next index would also work.
+It might be worth the candidate's time to mention this.
+The drawbacks?
+O(n) extra space for the array,
+O(log N) extra time for a binary search of the array.
+The recursive method only uses O(D) (D depth of tree) extra space.
