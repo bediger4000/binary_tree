@@ -488,3 +488,101 @@ rather than finding max depth of each subtree then ensuring that
 any depth difference is not too great.
 The interviewer might not get a feel for the candidate's
 coding ability at all.
+
+### Daily Coding Problem: Problem #133
+
+Given a node in a binary tree, return the next bigger element, also
+known as the inorder successor.
+
+For example, the inorder successor of 22 is 30.
+
+      10
+     /  \
+    5    30
+        /  \
+      22    35
+
+#### Analysis
+
+I thought this would be easier than it was.
+My initial idea was to just do an in-order traverse of the tree,
+and if either child node has the given value,
+return the value of the current node.
+
+This is wrong, as it misses the case where any node with 2 children
+(10 or 30 in tree above)
+is the given value.
+The successor value is the value of the right child node.
+It also misses the case where the given value is 35 in the tree above,
+the maximum value in the tree.
+It has no inorder successor.
+
+For the tree above,
+each value in the tree has these inorder successor values:
+
+|Given Value|Inorder Successor|
+|-----------+-----------------|
+|  5 | 10 |
+| 10 | 22 |
+| 30 | 35 |
+| 22 | 30 |
+| 35 | - |
+
+There's a missing case in the example tree the candidate would want to check.
+
+![example binary tree](inorder_successor.png?raw=true)
+
+If the given value is 6,
+the inorder successor node has a value of 10.
+
+I think there's another corner case,
+where the given value doesn't exist in the tree.
+I suppose you could parse the problem's language
+to declare that case doesn't exist.
+
+I declare this problem statement to be cunningly misleading.
+
+This isn't one of those "flash of insight necessary" problems.
+In that respect, it's a decent interview problem.
+The interviewer should probably tailor their expectations
+for solutions based on what the candidate claims their experience is.
+Less senior developers would be lucky to write code that partially works.
+More senior developers might get a good analysis of the problem,
+but still have trouble writing code that works on every case.
+
+The candidate would do well to analyze test cases first for this problem.
+That would give the candidate enough information to have a fighting
+chance to get a correct algorithm.
+
+I ended up with code that had a mangled recursive in-order traverse.
+It's one function that gets called with a `*tree.NumericNode`,
+the given value,
+and an instance of a 3-valued type.
+The 3 values of this type represent:
+
+1. Looking for the given value
+2. Found the given value
+3. Found the inorder successor
+
+If the search function receives "found the given value" as an
+argument, the current node is the inorder successor.
+It returns its own value and "found the inorder successor".
+
+If the current node is not the inorder successor,
+the left sub-tree can contain the given value.
+If the left child has the given value,
+the current node is the inorder successor.
+The search function can return the current node's value,
+and "found the inorder successor".
+
+If the current node has the given value,
+either the right child is the inorder successor,
+or the inorder successor is up the tree.
+
+There's a subtlety if the programmer calls the search function
+with a nil (or NULL) current node.
+This is common practice because it avoids having two checks
+(left and right child) for nil/NULL pointers,
+and it declutters recursive traverse code.
+A nil/NULL current node pointer has to return the value of the 3-valued type argument
+it's called with, rather than "looking for the given value".
