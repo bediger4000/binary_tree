@@ -521,7 +521,7 @@ For the tree above,
 each value in the tree has these inorder successor values:
 
 |Given Value|Inorder Successor|
-|-----------+-----------------|
+|-----------|-----------------|
 |  5 | 10 |
 | 10 | 22 |
 | 30 | 35 |
