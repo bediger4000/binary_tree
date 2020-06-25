@@ -62,7 +62,7 @@ func main() {
 
 func searchFor(node *tree.NumericNode, given int, what FoundIt) (int, FoundIt) {
 	if node == nil {
-		return 0, what
+		return 0, what // here's a trick.
 	}
 
 	if what == FoundValue {
