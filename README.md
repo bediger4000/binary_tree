@@ -1,6 +1,6 @@
-# Binary Tree Interview Questions
+# Binary Tree Puzzles and Interview Questions
 
-So very many of the "programming puzzle of the day",
+Many of the "programming puzzle of the day",
 or "dev job interview questions"
 relate to binary trees.
 This repo consolidates a number of scattered tree implementations into a Go package,
@@ -11,6 +11,7 @@ to fit in this repo:
 
 * [Reconstruct a binary tree from a postorder traversal](https://github.com/bediger4000/postorder-tree-traversal)
 * [AVL tree construction](https://github.com/bediger4000/avl_tree)
+* [Multi-child tree symmetry](https://github.com/bediger4000/tree_symmetry)
 
 ## Building
 
@@ -350,7 +351,7 @@ The candidate could also amaze the interviewer by proposing a test
 for whether or not the tree is of minimal height.
 A complete binary tree of depth D has N = 2<sup>D</sup>-1 nodes.
 We know how many nodes are in the tree, we got an array as input.
-Find the depth of the tree, see if it's less than or equal to log2(N+1)+1.
+Find the depth of the tree, see if it's less than or equal to log<sub>2</sub>(N+1)+1.
 [This program](testmin.go) does that.
 
 ### Daily Coding Problem: Problem #545 [Hard]
