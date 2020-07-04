@@ -508,6 +508,11 @@ For example, the inorder successor of 22 is 30.
         /  \
       22    35
 
+The example tree does have the Binary Search Tree property,
+but the written statement doesn't say that input trees have that property.
+My solution does not assume the input tree has that property.
+Perhaps it should have.
+
 #### Analysis
 
 I thought this would be easier than it was.
