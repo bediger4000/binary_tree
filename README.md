@@ -106,7 +106,7 @@ boilerplate and standard following is necessary?
 
 ### Return all paths from the root to leaves
 
-Another "Daily Coding Puzzle".
+Another daily coding puzzle, "Daily Coding Problem: Problem #587 [Medium]".
 
 Given a binary tree, return all paths from the root to leaves.
 
@@ -135,6 +135,11 @@ I had to write a recursive visitor function that includes
 pre-order and post-order function calls,
 and write a type that could be used to accumulate paths at leaf nodes,
 and also kept the current path updated.
+
+I'd say this is actually about a medium difficulty interview problem,
+suitable for whiteboarding with an above-junior-level programmer.
+The candidate would have to understand recursive functions,
+but use those recursive functions as a scaffold for the work to find the answer.
 
 ### Daily Coding Problem: Problem #540 [Easy]
 
