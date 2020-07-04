@@ -60,6 +60,10 @@ func main() {
 	}
 }
 
+// searchFor traverses a binary tree to find a given node, then returns
+// the value of the in-order successor. This function does not assume
+// that the binary tree in question has the Binary Search Tree question,
+// despite what the example shows.
 func searchFor(node *tree.NumericNode, given int, what FoundIt) (int, FoundIt) {
 	if node == nil {
 		return 0, what // here's a trick.
