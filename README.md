@@ -45,6 +45,7 @@ I believe you can create a BST of any shape by inserting the values of
 nodes of a BST with the desired shape in breadth-first order.
 * [invert](invert.go) a binary tree. I had it create a binary search tree so that the inversion is obvious.
 For some reason, I made `func (p *Node) Invert()` a method of tree node struct and put it in the support code.
+This has been at least 2 different "Daily Coding Problems", one rated "[Medium]"
 * First cut at [finding depth](tree_depth.go) of tree, carries a struct around.
 * Second cut at [finding depth](tree_depth2.go) of tree, completely recursive, returns deepest node.
 * [Breadth-first traverse](breadthfirst.go) iterative traverse of tree.
