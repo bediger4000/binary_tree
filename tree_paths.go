@@ -64,14 +64,12 @@ func main() {
 	if root != nil {
 		var values ValueAccumulator
 		tree.InorderTraverseVisit(root, values.collect)
-		fmt.Printf("/* All values: %v */\n", values)
 
 		p := &PathAccumulator{}
 		tree.AllorderTraverseVisit(root, p.before, tree.NullVisitor, p.after)
-		fmt.Printf("/* Paths:\n")
 		for _, p := range p.paths {
-			fmt.Printf("%v\n", p)
+			fmt.Printf("%v ", p)
 		}
-		fmt.Printf("*/\n")
+		fmt.Println()
 	}
 }
