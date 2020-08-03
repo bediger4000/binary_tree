@@ -43,6 +43,11 @@ func (n *StringNode) String() string {
 // VisitorFunc types the *TraverseVisit functions in tree/traverse.go
 type VisitorFunc func(node Node)
 
+// NodeCreatorFn instances turn a string into a single Node,
+// but the Node is actually of some user-defined type that fits
+// interface Node
+type NodeCreatorFn func(stringrep string) Node
+
 // NullVisitor does nothing, but it can be used to make
 // tree.AllorderTraverseVisit into pre-, post-, in-order
 // or a combination. A placeholder.
