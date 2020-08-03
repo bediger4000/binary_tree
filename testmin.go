@@ -85,7 +85,7 @@ func main() {
 	for r := 1; r < 66; r++ {
 		sortedArray = append(sortedArray, r)
 
-		// root := minHeightInsert(sortedArray)
+		// Alternatively: root := minHeightInsert(sortedArray)
 		root := minHeightInsert2(sortedArray)
 
 		depth, _ := tree.FindDepth2(root, 1)
