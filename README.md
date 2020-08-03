@@ -655,3 +655,39 @@ For this tree, for example, the bottom view could be [0, 1, 3, 6, 8, 9].
 Given the root to a binary tree, return its bottom view.
 
 #### Analysis
+
+This is a largish problem for a whiteboard,
+the candidate who gets this question should talk it out,
+put some very high level pseudocode on the whiteboard
+to show you understand it before doing any "coding".
+
+I doubt there's an actual "best solution".
+My solution:
+
+1. Build a tree with nodes that have depth and horizontal distance fields.
+2. Traverse tree, filling in depth and distance fields.
+3. Traverse tree again, filling in a Go map with the deepest
+node for any given horizontal distance.
+4. Construct an array of the deepest nodes that appear in the map.
+5. Sort the array based on horizontal distance.
+6. Print the sorted array.
+
+These steps could be condensed into a single pass:
+
+1. While building the tree, fill in depth and distance fields.
+Get this working, it's harder than either building the tree
+or filling in depth and distance.
+2. While building the tree and calculating depth and distance,
+insert nodes into the map.
+
+I guess this would be an O(n) algorithm,
+because it visits every single node in the tree.
+
+This could be a good interview question,
+if the interviewer adjusts expectations for the level of the job.
+Entry level programmers could be coaxed to discuss binary trees,
+and how they might calculate depth and distance recursively.
+Mid-level programmers might sketch an overall solution,
+and implement parts on the whiteboard.
+Senior programmers might end up implementing the whole thing,
+if allowed enough time.
