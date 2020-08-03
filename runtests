@@ -1,0 +1,143 @@
+#!/bin/bash
+set -euo pipefail
+
+# Script to run top-level, problem-solving programs,
+# as opposed to the *_test.go unit tests
+
+# Take a shot at having the executables
+if [[ ! -x ./bottomview ]]
+then
+	make all
+fi
+
+
+BOTTOM=$(./bottomview '(5(3(1(0)())(4))(7(6)(9(8)())))')
+ANSWER='0 1 3 6 8 9 '
+if [[ $BOTTOM != $ANSWER ]]
+then
+	echo "bottom view of tree failed"
+	echo "Answer: '$BOTTOM'"
+	echo "Desired: '$ANSWER'"
+	exit 1
+fi
+
+BOUSTROPHEDON=$(./bous 4 2 6 1 3 5 7)
+ANSWER='4 6 2 1 3 5 7 '
+if [[ $BOUSTROPHEDON != $ANSWER ]]
+then
+	echo "boustrophedon view of tree failed"
+	echo "Answer: '$BOTTOM'"
+	echo "Desired: '$ANSWER'"
+	exit 1
+fi
+
+PATHS=$(./tree_paths 1 0 4 3 5)
+ANSWER='[1 0] [1 4 3] [1 4 5] '
+if [[ "$PATHS" != "$ANSWER" ]]
+then
+	echo "finding all paths through tree failed"
+	echo "Answer:  '$PATHS'"
+	echo "Desired: '$ANSWER'"
+	exit 1
+fi
+
+DEPTH=$(./tree_depth 4 2 6 1 3 5 7 10)
+ANSWER='Max depth 3, node value at depth 10'
+if [[ "$DEPTH" != "$ANSWER" ]]
+then
+	echo "depth finder 1 failed"
+	echo "Answer:  '$DEPTH'"
+	echo "Desired: '$ANSWER'"
+	exit 1
+fi
+
+DEPTH2=$(./tree_depth2 4 2 6 1 3 5 7 10)
+ANSWER='Max depth 3, node value at depth 10'
+if [[ "$DEPTH2" != "$ANSWER" ]]
+then
+	echo "depth finder 2 failed"
+	echo "Answer:  '$DEPTH2'"
+	echo "Desired: '$ANSWER'"
+	exit 1
+fi
+
+LCA=$(./lca 1 3 '(4(2(1)(3))(6(5)(7)))' | grep 'Last common ancestor')
+ANSWER='Last common ancestor "2"'
+if [[ "$LCA" != "$ANSWER" ]]
+then
+	echo "last common ancestor failed"
+	echo "Answer:  '$ANSWER'"
+	echo "Desired: '$LCA'"
+	exit 1
+fi
+LCA=$(./lca 7 1 '(4(2(1)(3))(6(5)(7)))' | grep 'Last common ancestor')
+ANSWER='Last common ancestor "4"'
+if [[ "$LCA" != "$ANSWER" ]]
+then
+	echo "last common ancestor failed"
+	echo "Answer:  '$ANSWER'"
+	echo "Desired: '$LCA'"
+	exit 1
+fi
+
+COUSIN=$(./cousins  9 4 2 1 3 6 5 7 9 )
+ANSWER='Node of interest has value 9
+parent of node of interest has value 7
+grandparent of node of interest has value 6
+uncle node has value 5'
+if [[ "$COUSIN" != "$ANSWER" ]]
+then
+	echo "cousins 1 failed"
+	echo "Answer:  '$ANSWER'"
+	echo "Desired: '$COUSIN'"
+	exit 1
+fi
+
+COUSIN=$(./cousins  5 4 2 1 3 6 5 7 9 )
+ANSWER='Node of interest has value 5
+parent of node of interest has value 6
+grandparent of node of interest has value 4
+uncle node has value 2
+Cousin has value 1
+Cousin has value 3'
+if [[ "$COUSIN" != "$ANSWER" ]]
+then
+	echo "cousins 2 failed"
+	echo "Answer:  '$ANSWER'"
+	echo "Desired: '$COUSIN'"
+	exit 1
+fi
+
+COUSIN=$(./cousins   1 4 2 1 3 6 5 )
+ANSWER='Node of interest has value 1
+parent of node of interest has value 2
+grandparent of node of interest has value 4
+uncle node has value 6
+Cousin has value 5'
+if [[ "$COUSIN" != "$ANSWER" ]]
+then
+	echo "cousins 3 failed"
+	echo "Answer:  '$ANSWER'"
+	echo "Desired: '$COUSIN'"
+	exit 1
+fi
+
+BALANCED=$( ./ht_balanced '(1()(2()(3)))' | grep 'input tree' )
+ANSWER='input tree is not balanced'
+if [[ "$BALANCED" != "$ANSWER" ]]
+then
+	echo "balanced 1 failed"
+	echo "Answer:  '$ANSWER'"
+	echo "Desired: '$BALANCED'"
+	exit 1
+fi
+
+BALANCED=$( ./ht_balanced '(4(2(1)(3))(6(5)(7)))' | grep 'input tree' )
+ANSWER='input tree is balanced'
+if [[ "$BALANCED" != "$ANSWER" ]]
+then
+	echo "balanced 1 failed"
+	echo "Answer:  '$ANSWER'"
+	echo "Desired: '$BALANCED'"
+	exit 1
+fi
