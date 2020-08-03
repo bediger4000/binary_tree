@@ -4,7 +4,6 @@ import (
 	"binary_tree/tree"
 	"fmt"
 	"os"
-	"strconv"
 )
 
 /*
@@ -20,19 +19,7 @@ import (
  */
 
 func main() {
-	var root *tree.NumericNode
-
-	for _, str := range os.Args[1:] {
-		val, err := strconv.Atoi(str)
-
-		if err == nil {
-			fmt.Printf("insert %d\n", val)
-			// tree.Insert creates a binary search tree
-			root = tree.Insert(root, val)
-		} else {
-			fmt.Printf("Problem with %q: %s\n", str, err)
-		}
-	}
+	root := tree.CreateNumeric(os.Args[1:])
 
 	if root != nil {
 		depth, node := tree.FindDepth2(root, 0)
