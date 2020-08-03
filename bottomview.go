@@ -134,7 +134,7 @@ func traverse(node *ViewNode, m map[int]*ViewNode) {
 
 // decorate traverses a binary tree, adding depth in tree
 // and horizonal distance to every node it visits.
-func decorate(node *ViewNode, depth int, distance int) {
+func decorate(node *ViewNode, depth, distance int) {
 	if node == nil {
 		return
 	}
