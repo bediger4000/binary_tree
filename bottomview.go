@@ -4,6 +4,7 @@ import (
 	"binary_tree/tree"
 	"fmt"
 	"os"
+	"sort"
 	"strconv"
 )
 
@@ -82,10 +83,57 @@ func main() {
 
 	root := tree.GeneralCreateFromString(os.Args[1], CreateViewNode)
 	decorate(root.(*ViewNode), 0, 0)
-	tree.Printf(os.Stdout, root)
+	m := make(map[int]*ViewNode)
+
+	traverse(root.(*ViewNode), m)
+
+	// m now contains "lowest node at given horizontal difference"
+	// but unordered.
+
+	var nodeArray []*ViewNode
+	for _, node := range m {
+		nodeArray = append(nodeArray, node)
+	}
+	sort.Sort(NodeArray(nodeArray))
+
+	for _, node := range nodeArray {
+		// fmt.Printf("%d/%d\t%d\n", node.Distance, node.Depth, node.Data)
+		fmt.Printf("%d ", node.Data)
+	}
 	fmt.Println()
 }
 
+// traverse walks a tree of ViewNodes, filling in
+// the map m with the deepest ViewNode at any given
+// horizontal distance.
+// Keys of map m constitute horizontal distance.
+func traverse(node *ViewNode, m map[int]*ViewNode) {
+	if node == nil {
+		return
+	}
+
+	/*
+		The bottom view of a tree, then,
+		consists of the lowest node at each horizontal distance.
+		If there are two nodes at the same depth and horizontal distance,
+		either is acceptable.
+	*/
+	dist := node.Distance
+	if prevNode, ok := m[dist]; ok {
+		// Could use '>' here, but example wants '>='
+		if node.Depth >= prevNode.Depth {
+			m[dist] = node
+		}
+	} else {
+		m[dist] = node
+	}
+
+	traverse(node.Left, m)
+	traverse(node.Right, m)
+}
+
+// decorate traverses a binary tree, adding depth in tree
+// and horizonal distance to every node it visits.
 func decorate(node *ViewNode, depth int, distance int) {
 	if node == nil {
 		return
@@ -95,3 +143,9 @@ func decorate(node *ViewNode, depth int, distance int) {
 	decorate(node.Left, node.Depth+1, node.Distance-1)
 	decorate(node.Right, node.Depth+1, node.Distance+1)
 }
+
+type NodeArray []*ViewNode
+
+func (na NodeArray) Len() int           { return len(na) }
+func (na NodeArray) Swap(i, j int)      { na[i], na[j] = na[j], na[i] }
+func (na NodeArray) Less(i, j int) bool { return na[i].Distance < na[j].Distance }
