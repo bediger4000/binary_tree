@@ -1,6 +1,7 @@
 all: reconstruct reconstruct2 invert rand tree_depth tree_depth2 tree_paths \
 	drawtree bous order search cousins readtree bous prune_tree \
-	minimal_ht_tree minimal_ht_tree2 testmin lca nread bottomview
+	minimal_ht_tree minimal_ht_tree2 testmin lca nread bottomview \
+	ht_balanced
 
 images: reconstruct.png reconstruct2.png invert.png rand.png
 
@@ -81,6 +82,9 @@ tree_paths: tree_paths.go
 bottomview: bottomview.go
 	go build bottomview.go
 
+ht_balanced: ht_balanced.go
+	go build ht_balanced.go
+
 clean:
 	-rm -rf invert invert.dot invert.png
 	-rm -rf reconstruct reconstruct.png reconstruct.dot
@@ -89,4 +93,4 @@ clean:
 	-rm -rf drawtree *.dot 
 	-rm -rf tree_depth tree_depth2 tree_paths bous order search
 	-rm -rf cousins prune_tree readtree minimal_ht_tree minimal_ht_tree2
-	-rm -rf testmin lca nread bottomview
+	-rm -rf testmin lca nread bottomview ht_balanced
