@@ -39,6 +39,13 @@ For this tree, for example, the bottom view could be [0, 1, 3, 6, 8, 9].
 Given the root to a binary tree, return its bottom view.
 */
 
+/* Uses tree.GeneralCreateFromString() to make a tree.
+ * That means conforming to interface Node, and having a
+ * function to create a ViewNode from a string.
+ * struct ViewNode is almost a tree.NumericNode, but it
+ * has Depth and Distance elements. That allows this program
+ * to do the decorate-sort-undecorate pattern of behavior.
+ */
 type ViewNode struct {
 	Data     int
 	Left     *ViewNode
@@ -81,10 +88,15 @@ func (n *ViewNode) String() string {
 
 func main() {
 
+	// create a tree of *ViewNode
 	root := tree.GeneralCreateFromString(os.Args[1], CreateViewNode)
+
+	// Decorate the tree with depth in tree and "horizontal distance"
 	decorate(root.(*ViewNode), 0, 0)
 	m := make(map[int]*ViewNode)
 
+	// Fill in a map with keys of nodes' horizontal distance,
+	// and values of deepest *ViewNode at any given distance.
 	traverse(root.(*ViewNode), m)
 
 	// m now contains "lowest node at given horizontal difference"
@@ -132,8 +144,10 @@ func traverse(node *ViewNode, m map[int]*ViewNode) {
 	traverse(node.Right, m)
 }
 
-// decorate traverses a binary tree, adding depth in tree
+// decorate traverses a binary tree, setting depth in tree
 // and horizonal distance to every node it visits.
+// This could be done during tree construction, but I wanted
+// to use the generic tree-construction function.
 func decorate(node *ViewNode, depth, distance int) {
 	if node == nil {
 		return
