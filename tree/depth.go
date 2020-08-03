@@ -52,19 +52,19 @@ func FindDepth2(node *NumericNode, ply int) (depth int, deepnode *NumericNode) {
 // LeftDepth returns the depth of the leftmost node
 // in a binary tree.
 func LeftDepth(node Node) int {
-	if node.isNil() {
+	if node.IsNil() {
 		return 0
 	}
-	return LeftDepth(node.leftChild()) + 1
+	return LeftDepth(node.LeftChild()) + 1
 }
 
 // RightDepth returns the depth of the rightmost node
 // in a binary tree.
 func RightDepth(node Node) int {
-	if node.isNil() {
+	if node.IsNil() {
 		return 0
 	}
-	return RightDepth(node.rightChild()) + 1
+	return RightDepth(node.RightChild()) + 1
 }
 
 // FindDepth gives back a number indicating how deep
@@ -74,13 +74,13 @@ func RightDepth(node Node) int {
 // value a node carries.
 func FindDepth(node Node, ply int) (depth int) {
 	// past leaf node, return depth of leaf node
-	if node.isNil() {
+	if node.IsNil() {
 		return ply
 	}
 
 	// interior node
-	ldepth := FindDepth(node.leftChild(), ply+1)
-	rdepth := FindDepth(node.rightChild(), ply+1)
+	ldepth := FindDepth(node.LeftChild(), ply+1)
+	rdepth := FindDepth(node.RightChild(), ply+1)
 
 	if ldepth > rdepth {
 		return ldepth

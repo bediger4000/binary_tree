@@ -7,10 +7,10 @@ package tree
 func Equals(t1, t2 Node) bool {
 	// The both-nil and one-not-nil tests will answer
 	// incorrectly if t1 and t2 are not of the same type.
-	if t1.isNil() {
-		return t2.isNil()
+	if t1.IsNil() {
+		return t2.IsNil()
 	}
-	if t2.isNil() {
+	if t2.IsNil() {
 		return false
 	}
 
@@ -34,8 +34,8 @@ func Equals(t1, t2 Node) bool {
 			return false
 		}
 	}
-	if !Equals(t1.leftChild(), t2.leftChild()) {
+	if !Equals(t1.LeftChild(), t2.LeftChild()) {
 		return false
 	}
-	return Equals(t1.rightChild(), t2.rightChild())
+	return Equals(t1.RightChild(), t2.RightChild())
 }
