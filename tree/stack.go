@@ -39,7 +39,7 @@ func (nq *Stack) Empty() bool {
 
 // Push enters a Node at the top of the stack
 func (nq *Stack) Push(n Node) {
-	if n.isNil() {
+	if n.IsNil() {
 		return
 	}
 	nq.array = append(nq.array, n)

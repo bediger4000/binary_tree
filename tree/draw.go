@@ -23,20 +23,20 @@ func Draw(root Node) {
 // child nodes also get a point-shaped pseudo-child node for the
 // same reason.
 func DrawPrefixed(out io.Writer, node Node, prefix string) {
-	if node.isNil() {
+	if node.IsNil() {
 		return
 	}
 	fmt.Fprintf(out, "%s%p [label=\"%s\"];\n", prefix, node, node)
-	left := node.leftChild()
-	if left.isNil() {
+	left := node.LeftChild()
+	if left.IsNil() {
 		fmt.Fprintf(out, "%s%pL [shape=\"point\"];\n", prefix, node)
 		fmt.Fprintf(out, "%s%p -> %s%pL;\n", prefix, node, prefix, node)
 	} else {
 		DrawPrefixed(out, left, prefix)
 		fmt.Fprintf(out, "%s%p -> %s%p;\n", prefix, node, prefix, left)
 	}
-	right := node.rightChild()
-	if right.isNil() {
+	right := node.RightChild()
+	if right.IsNil() {
 		fmt.Fprintf(out, "%s%pR [shape=\"point\"];\n", prefix, node)
 		fmt.Fprintf(out, "%s%p -> %s%pR;\n", prefix, node, prefix, node)
 	} else {

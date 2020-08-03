@@ -52,27 +52,41 @@ func NullVisitor(node Node) {
 // Node makes it possible to use the same code for StringNode
 // and NumericNode pointers when printing or traversing a tree.
 type Node interface {
-	leftChild() Node
-	rightChild() Node
-	isNil() bool
+	LeftChild() Node
+	RightChild() Node
+	SetLeftChild(Node)
+	SetRightChild(Node)
+	IsNil() bool
 }
 
-func (n *NumericNode) leftChild() Node {
+func (n *NumericNode) LeftChild() Node {
 	return n.Left
 }
-func (n *NumericNode) rightChild() Node {
+func (n *NumericNode) RightChild() Node {
 	return n.Right
 }
-func (n *NumericNode) isNil() bool {
+func (n *NumericNode) SetLeftChild(node Node) {
+	n.Left = node.(*NumericNode)
+}
+func (n *NumericNode) SetRightChild(node Node) {
+	n.Right = node.(*NumericNode)
+}
+func (n *NumericNode) IsNil() bool {
 	return n == nil
 }
 
-func (n *StringNode) leftChild() Node {
+func (n *StringNode) LeftChild() Node {
 	return n.Left
 }
-func (n *StringNode) rightChild() Node {
+func (n *StringNode) RightChild() Node {
 	return n.Right
 }
-func (n *StringNode) isNil() bool {
+func (n *StringNode) SetLeftChild(node Node) {
+	n.Left = node.(*StringNode)
+}
+func (n *StringNode) SetRightChild(node Node) {
+	n.Right = node.(*StringNode)
+}
+func (n *StringNode) IsNil() bool {
 	return n == nil
 }
