@@ -1,6 +1,8 @@
 package tree
 
-import "fmt"
+import (
+	"fmt"
+)
 
 // NumericNode is an element of a binary tree with a numeric value
 type NumericNode struct {
@@ -71,9 +73,15 @@ func (n *NumericNode) RightChild() Node {
 	return n.Right
 }
 func (n *NumericNode) SetLeftChild(node Node) {
+	if node == nil {
+		return
+	}
 	n.Left = node.(*NumericNode)
 }
 func (n *NumericNode) SetRightChild(node Node) {
+	if node == nil {
+		return
+	}
 	n.Right = node.(*NumericNode)
 }
 func (n *NumericNode) IsNil() bool {
@@ -87,9 +95,15 @@ func (n *StringNode) RightChild() Node {
 	return n.Right
 }
 func (n *StringNode) SetLeftChild(node Node) {
+	if node == nil {
+		return
+	}
 	n.Left = node.(*StringNode)
 }
 func (n *StringNode) SetRightChild(node Node) {
+	if node == nil {
+		return
+	}
 	n.Right = node.(*StringNode)
 }
 func (n *StringNode) IsNil() bool {
