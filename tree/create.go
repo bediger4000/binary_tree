@@ -94,35 +94,6 @@ func treeFromString(str []rune, startIdx, endIdx int) *StringNode {
 	return node
 }
 
-func numericTreeFromString(str []rune, startIdx, endIdx int) *NumericNode {
-	if startIdx > endIdx {
-		return nil
-	}
-
-	identifier := findIdentifier(str, startIdx, endIdx)
-	idLen := len(identifier)
-	if idLen == 0 {
-		return nil
-	}
-	num, err := strconv.ParseInt(identifier, 10, 64)
-	if err != nil {
-		return nil
-	}
-	node := &NumericNode{Data: int(num)}
-	index := -1
-
-	if startIdx+idLen <= endIdx && str[startIdx+idLen] == '(' {
-		index = findIndex(str, startIdx+idLen, endIdx)
-	}
-
-	if index != -1 {
-		node.Left = numericTreeFromString(str, startIdx+idLen+1, index)
-		node.Right = numericTreeFromString(str, index+2, endIdx)
-	}
-
-	return node
-}
-
 func findIdentifier(str []rune, startIdx, endIdx int) string {
 	var identifier []rune
 	for i := startIdx; i < endIdx; i++ {
@@ -139,18 +110,41 @@ func findIdentifier(str []rune, startIdx, endIdx int) string {
 // like "(abc(ghi()(jkl))(def(pork)(beans)))"
 // and turns it into a binary tree.
 func CreateFromString(stringrep string) (root *StringNode) {
-	runes := []rune(stringrep)
-	l := len(runes)
-	return treeFromString(runes[1:l-1], 0, l)
+	generic := GeneralCreateFromString(stringrep, createStringNode)
+	var ok bool
+	if root, ok = generic.(*StringNode); ok {
+		return
+	}
+	return nil
+}
+
+func createStringNode(stringValue string) Node {
+	return &StringNode{Data: stringValue}
+}
+
+// createNumericNode fills in a struct NumericNode
+// from a string argument, then returns a pointer to that NumericNode,
+// except as something that fits interface Node.
+func createNumericNode(stringValue string) Node {
+	n, err := strconv.Atoi(stringValue)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "creating tree.Numeric node from %q: %v\n",
+			stringValue, err)
+		return nil
+	}
+	return &NumericNode{Data: n}
 }
 
 // CreateNumericFromString parses a single string
 // like "(2(0()(12))(34(-2)(100)))"
 // and turns it into a binary tree of the given shape.
 func CreateNumericFromString(stringrep string) (root *NumericNode) {
-	runes := []rune(stringrep)
-	l := len(runes)
-	return numericTreeFromString(runes[1:l-1], 0, l)
+	generic := GeneralCreateFromString(stringrep, createNumericNode)
+	var ok bool
+	if root, ok = generic.(*NumericNode); ok {
+		return
+	}
+	return nil
 }
 
 // Print writes out a tree in the format that
@@ -160,8 +154,8 @@ func Print(node Node) {
 	Printf(os.Stdout, node)
 }
 
-// Printf writes a tree on "out" in the format that
-// CreateByParsing can turn into a tree.
+// Printf writes a tree on "out" in the format that CreateFromString or
+// CreateNumericFromString can turn into a tree.
 func Printf(out io.Writer, node Node) {
 	if node.IsNil() {
 		fmt.Fprintf(out, "()")
@@ -175,6 +169,11 @@ func Printf(out io.Writer, node Node) {
 	fmt.Fprintf(out, ")")
 }
 
+// GeneralCreateFromString uses a func argument to create a tree
+// of type Node. It returns the root Node, on which the caller should
+// do a type assertion to get the correct type. This func basically
+// sets up to call genericTreeFromString with details that the caller
+// shouldn't have to know.
 func GeneralCreateFromString(stringrep string, nc NodeCreatorFn) Node {
 	runes := []rune(stringrep)
 	l := len(runes)
