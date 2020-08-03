@@ -174,3 +174,34 @@ func Printf(out io.Writer, node Node) {
 	}
 	fmt.Fprintf(out, ")")
 }
+
+func GeneralCreateFromString(stringrep string, nc NodeCreatorFn) Node {
+	runes := []rune(stringrep)
+	l := len(runes)
+	return genericTreeFromString(runes[1:l-1], 0, l, nc)
+}
+
+func genericTreeFromString(str []rune, startIdx, endIdx int, nodeCreator NodeCreatorFn) Node {
+	if startIdx > endIdx {
+		return nil
+	}
+
+	identifier := findIdentifier(str, startIdx, endIdx)
+	idLen := len(identifier)
+	if idLen == 0 {
+		return nil
+	}
+	node := nodeCreator(identifier)
+	index := -1
+
+	if startIdx+idLen <= endIdx && str[startIdx+idLen] == '(' {
+		index = findIndex(str, startIdx+idLen, endIdx)
+	}
+
+	if index != -1 {
+		node.SetLeftChild(genericTreeFromString(str, startIdx+idLen+1, index, nodeCreator))
+		node.SetRightChild(genericTreeFromString(str, index+2, endIdx, nodeCreator))
+	}
+
+	return node
+}
