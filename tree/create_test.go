@@ -54,19 +54,38 @@ func TestCreateFromString(t *testing.T) {
 		wantRoot *StringNode
 	}{
 		{
-			name:     "single string tree",
+			name:     "single string tree 1",
+			args:     args{stringrep: "(a)"},
+			wantRoot: &StringNode{Data: "a"},
+		},
+		{
+			name:     "single string tree 2",
 			args:     args{stringrep: "(a()())"},
 			wantRoot: &StringNode{Data: "a"},
 		},
 		{
-			name:     "left child tree",
+			name:     "left child string tree",
 			args:     args{stringrep: "(a(b)())"},
 			wantRoot: &StringNode{Data: "a", Left: &StringNode{Data: "b"}},
 		},
 		{
-			name:     "right child tree",
+			name:     "right child string tree",
 			args:     args{stringrep: "(a()(c))"},
 			wantRoot: &StringNode{Data: "a", Right: &StringNode{Data: "c"}},
+		},
+		{
+			name: "big string tree with whitespace",
+			args: args{stringrep: " ( a ( b (d) (e (f)(g))) ( c ) ) "},
+			wantRoot: &StringNode{Data: "a",
+				Left: &StringNode{Data: "b",
+					Left: &StringNode{Data: "d"},
+					Right: &StringNode{Data: "e",
+						Left:  &StringNode{Data: "f"},
+						Right: &StringNode{Data: "g"},
+					},
+				},
+				Right: &StringNode{Data: "c"},
+			},
 		},
 	}
 	for _, tt := range tests {
@@ -88,7 +107,12 @@ func TestCreateNumericFromString(t *testing.T) {
 		wantRoot *NumericNode
 	}{
 		{
-			name:     "single string numeric tree",
+			name:     "single item numeric tree 1",
+			args:     args{stringrep: "(42)"},
+			wantRoot: &NumericNode{Data: 42},
+		},
+		{
+			name:     "single item numeric tree 2",
 			args:     args{stringrep: "(42()())"},
 			wantRoot: &NumericNode{Data: 42},
 		},
@@ -105,6 +129,11 @@ func TestCreateNumericFromString(t *testing.T) {
 		{
 			name:     "arbitrary numeric tree",
 			args:     args{stringrep: "(90(12()(3))(6(4)(90()(9))))"},
+			wantRoot: &NumericNode{Data: 90, Left: &NumericNode{Data: 12, Right: &NumericNode{Data: 3}}, Right: &NumericNode{Data: 6, Left: &NumericNode{Data: 4}, Right: &NumericNode{Data: 90, Right: &NumericNode{Data: 9}}}},
+		},
+		{
+			name:     "arbitrary numeric tree with whitespace",
+			args:     args{stringrep: " ( 90 ( 12 () (3 ) )(6 (4) (90 ( )( 9 ) ) ) )"},
 			wantRoot: &NumericNode{Data: 90, Left: &NumericNode{Data: 12, Right: &NumericNode{Data: 3}}, Right: &NumericNode{Data: 6, Left: &NumericNode{Data: 4}, Right: &NumericNode{Data: 90, Right: &NumericNode{Data: 9}}}},
 		},
 	}
