@@ -29,7 +29,14 @@ func main() {
 
 	sortedArray := make([]int, 0)
 
-	for _, str := range os.Args[1:] {
+	N := 1
+	outputGraphViz := false
+	if os.Args[1] == "-g" {
+		N = 2
+		outputGraphViz = true
+	}
+
+	for _, str := range os.Args[N:] {
 		val, err := strconv.Atoi(str)
 		if err == nil {
 			sortedArray = append(sortedArray, val)
@@ -43,17 +50,19 @@ func main() {
 	root := minHeightInsert(sortedArray)
 
 	if root != nil {
-		depth, _ := tree.FindDepth2(root, 0)
+		depth, _ := tree.FindDepth2(root, 1)
 		D := math.Log2(float64(len(sortedArray)) + 1.0)
 		f := float64(depth)
 		if f >= D && f <= D+1.0 {
-			fmt.Println("/* minimal height tree */")
+			fmt.Printf("/* minimal height tree %.3f <= %.3f <= %.3f */\n", D, f, D+1.0)
 		}
 
 		fmt.Printf("/* In order traverse: ")
 		tree.InorderTraverse(root)
 		fmt.Printf(" */\n")
-		tree.Draw(root)
+		if outputGraphViz {
+			tree.Draw(root)
+		}
 		if tree.BstProperty(root) {
 			fmt.Printf("/* This is a binary search tree */\n")
 		}

@@ -137,7 +137,17 @@ ANSWER='input tree is balanced'
 if [[ "$BALANCED" != "$ANSWER" ]]
 then
 	echo "balanced 1 failed"
-	echo "Answer:  '$ANSWER'"
-	echo "Desired: '$BALANCED'"
+	echo "Answer: '$BALANCED'"
+	echo "Desired:  '$ANSWER'"
+	exit 1
+fi
+
+MINIMAL=$(./minimal_ht_tree2 1 2 3 4 5 6 7 | grep 'minimal height tree')
+ANSWER='/* minimal height tree 3.000 <= 3.000 <= 4.000 */'
+if [[ "$MINIMAL" != "$ANSWER" ]]
+then
+	echo "minimal ht tree 2 failed"
+	echo "Answer:  '$MINIMAL'"
+	echo "Desired: '$ANSWER'"
 	exit 1
 fi
