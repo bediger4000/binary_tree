@@ -1,0 +1,12 @@
+set title "Binary Tree Depth"
+set xlabel 'Binary tree node count'
+set ylabel 'Binary tree depth'
+set key left
+set term png size 700,400
+set out 'minht.png'
+plot \
+'min.dat' using 1:2 title 'real tree depth', \
+'min.dat' using 1:3 with lines title 'log2(N)', \
+'min.dat' using 1:4 with lines title 'log2(N)+1'
+
+

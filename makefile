@@ -44,6 +44,10 @@ order: order.go
 search: search.go
 	go build search.go
 
+minht.png: testmin.load testmin
+	./testmin > min.dat
+	gnuplot < testmin.load
+
 reconstruct.png: reconstruct.dot
 	dot -Tpng -o reconstruct.png reconstruct.dot
 reconstruct2.png: reconstruct2
@@ -94,3 +98,4 @@ clean:
 	-rm -rf tree_depth tree_depth2 tree_paths bous order search
 	-rm -rf cousins prune_tree readtree minimal_ht_tree minimal_ht_tree2
 	-rm -rf testmin lca nread bottomview ht_balanced
+	-rm -rf min.dat
