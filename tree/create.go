@@ -27,85 +27,6 @@ func CreateNumeric(numberRepr []string) (root *NumericNode) {
 	return
 }
 
-type runeStack struct {
-	array []rune
-}
-
-func (rs *runeStack) push(r rune) {
-	rs.array = append(rs.array, r)
-}
-
-func (rs *runeStack) empty() bool {
-	return len(rs.array) == 0
-}
-
-func (rs *runeStack) pop() rune {
-	l := len(rs.array) - 1
-	r := rs.array[l]
-	rs.array = rs.array[:l]
-	return r
-}
-
-func findIndex(str []rune, startIdx, endIdx int) int {
-	if startIdx > endIdx {
-		return -1
-	}
-
-	stk := &runeStack{}
-
-	for i := startIdx; i <= endIdx; i++ {
-		if str[i] == '(' {
-			stk.push(str[i])
-		} else if str[i] == ')' {
-			if stk.array[len(stk.array)-1] == '(' {
-				stk.pop()
-
-				if stk.empty() {
-					return i
-				}
-			}
-		}
-	}
-	return -1
-}
-
-func treeFromString(str []rune, startIdx, endIdx int) *StringNode {
-	if startIdx > endIdx {
-		return nil
-	}
-
-	identifier := findIdentifier(str, startIdx, endIdx)
-	idLen := len(identifier)
-	if idLen == 0 {
-		return nil
-	}
-	node := &StringNode{Data: identifier}
-	index := -1
-
-	if startIdx+idLen <= endIdx && str[startIdx+idLen] == '(' {
-		index = findIndex(str, startIdx+idLen, endIdx)
-	}
-
-	if index != -1 {
-		node.Left = treeFromString(str, startIdx+idLen+1, index)
-		node.Right = treeFromString(str, index+2, endIdx)
-	}
-
-	return node
-}
-
-func findIdentifier(str []rune, startIdx, endIdx int) string {
-	var identifier []rune
-	for i := startIdx; i < endIdx; i++ {
-		if unicode.IsLetter(str[i]) || unicode.IsDigit(str[i]) {
-			identifier = append(identifier, str[i])
-		} else {
-			return string(identifier)
-		}
-	}
-	return string(identifier)
-}
-
 // CreateFromString parses a single string
 // like "(abc(ghi()(jkl))(def(pork)(beans)))"
 // and turns it into a binary tree.
@@ -176,31 +97,111 @@ func Printf(out io.Writer, node Node) {
 // shouldn't have to know.
 func GeneralCreateFromString(stringrep string, nc NodeCreatorFn) Node {
 	runes := []rune(stringrep)
-	l := len(runes)
-	return genericTreeFromString(runes[1:l-1], 0, l, nc)
+	root, _ := genericTreeFromString(runes, 0, len(runes), nc)
+	return root
 }
 
-func genericTreeFromString(str []rune, startIdx, endIdx int, nodeCreator NodeCreatorFn) Node {
-	if startIdx > endIdx {
-		return nil
+func genericTreeFromString(runes []rune, offset, end int, nodeCreator NodeCreatorFn) (Node, int) {
+	xoffset := eatWhiteSpace(runes, offset, end)
+	if runes[xoffset] != '(' {
+		fmt.Fprintf(os.Stderr, "no leading ( on %q at offset %d\n", string(runes), xoffset)
+	}
+	xend := findRightParen(runes, xoffset)
+	xoffset++ // skip '('
+
+	// eat whitespace after '(' but before string or number or whatever
+	xoffset = eatWhiteSpace(runes, xoffset, xend)
+
+	str, xoffset := readStuff(runes, xoffset, xend)
+
+	var node Node
+	if len(str) > 0 {
+		node = nodeCreator(str)
+	} else {
+		xoffset = eatWhiteSpace(runes, xoffset, xend)
+		xoffset++ // eat ')'
+		return nil, xoffset
 	}
 
-	identifier := findIdentifier(str, startIdx, endIdx)
-	idLen := len(identifier)
-	if idLen == 0 {
-		return nil
-	}
-	node := nodeCreator(identifier)
-	index := -1
+	// eat whitespace after string or number or whatever, before '(' or ')'
+	xoffset = eatWhiteSpace(runes, xoffset, xend)
 
-	if startIdx+idLen <= endIdx && str[startIdx+idLen] == '(' {
-		index = findIndex(str, startIdx+idLen, endIdx)
+	if runes[xoffset] == ')' {
+		xoffset++
+		return node, xoffset
 	}
 
-	if index != -1 {
-		node.SetLeftChild(genericTreeFromString(str, startIdx+idLen+1, index, nodeCreator))
-		node.SetRightChild(genericTreeFromString(str, index+2, endIdx, nodeCreator))
+	leftChild, xoffset := genericTreeFromString(runes, xoffset, xend, nodeCreator)
+	node.SetLeftChild(leftChild)
+
+	if runes[xoffset] == ')' {
+		xoffset++
+		return node, xoffset
 	}
 
-	return node
+	rightChild, xoffset := genericTreeFromString(runes, xoffset, xend, nodeCreator)
+	node.SetRightChild(rightChild)
+
+	xoffset = eatWhiteSpace(runes, xoffset, xend)
+	xoffset++ // eat trailing ')'
+
+	return node, xoffset
+}
+
+// readStuff returns a non-whitespace, non-parentheses string
+// from runes []rune, and an index of where that string ends.
+func readStuff(runes []rune, offset int, end int) (string, int) {
+	var valueRunes []rune
+	for {
+		if runes[offset] == '(' {
+			break
+		}
+		if runes[offset] == ')' {
+			break
+		}
+		if offset == end {
+			break
+		}
+		if unicode.IsSpace(runes[offset]) {
+			break
+		}
+		valueRunes = append(valueRunes, runes[offset])
+		offset++
+	}
+
+	return string(valueRunes), offset
+}
+
+// eatWhiteSpace starts at index offset in runes,
+// and returns the index of the next non-whitespace rune.
+func eatWhiteSpace(runes []rune, offset int, end int) int {
+	for unicode.IsSpace(runes[offset]) {
+		offset++
+		if offset == end {
+			break
+		}
+	}
+	return offset
+}
+
+// findRightParen takes an array of runes, where '(' is at
+// index 0, and a matching ')' is at some greater index.
+// Returns that greater index
+func findRightParen(r []rune, offset int) int {
+	stack := make([]rune, 1)
+	stack[0] = r[offset]
+	end := offset
+
+	for idx := offset + 1; len(stack) > 0; idx++ {
+		switch r[idx] {
+		case '(':
+			stack = append(stack, '(')
+		case ')':
+			if stack[len(stack)-1] == '(' {
+				stack = stack[0 : len(stack)-1]
+			}
+		}
+		end++
+	}
+	return end + 1
 }
