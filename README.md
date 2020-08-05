@@ -362,6 +362,8 @@ We know how many nodes are in the tree, we got an array as input.
 Find the depth of the tree, see if it's less than or equal to log<sub>2</sub>(N+1)+1.
 [This program](testmin.go) does that.
 
+![binary tree ht vs node count](minht.png?raw=true)
+
 ### Daily Coding Problem: Problem #545 [Hard]
 
 Given a binary tree, find the lowest common ancestor (LCA) of two
