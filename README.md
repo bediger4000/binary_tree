@@ -21,11 +21,12 @@ Answering the questions or solving the puzzles almost always means
 doing something different than the generic support code does,
 so the code or algorithms to solve problems lives in the top level directory.
 
-Build and use goes something like this:
+Build and test goes something like this:
 
-    $ go build invert.go
-    $ ./invert > invert.dot
-    $ dot -Tpng -o invert.png invert.dot
+    $ make all
+    $ ./runtests
+    $ cd tree
+    $ go test -v .
 
 A lot of the programs output [GraphViz](https://graphviz.org/) [dot-format](https://graphviz.gitlab.io/_pages/doc/info/lang.html) descriptions
 of the answers.
