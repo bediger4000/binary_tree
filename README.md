@@ -499,6 +499,8 @@ coding ability at all.
 
 ### Daily Coding Problem: Problem #133
 
+Also, Daily Coding Problem: Problem #609 [Medium].
+
 Given a node in a binary tree, return the next bigger element, also
 known as the inorder successor.
 
@@ -509,6 +511,10 @@ For example, the inorder successor of 22 is 30.
     5    30
         /  \
       22    35
+
+The Problem #609 version also says:
+
+    You can assume each node has a parent pointer.
 
 The example tree does have the Binary Search Tree property,
 but the written statement doesn't say that input trees have that property.
@@ -620,6 +626,14 @@ The drawbacks?
 O(n) extra space for the array,
 O(log N) extra time for a binary search of the array.
 The recursive method only uses O(D) (D depth of tree) extra space.
+
+I'm not at all sure what difference the parent pointers of the
+Problem #609 version would make.
+The "missing case" of the inorder successor of 6 in the tree above
+basically makes the parent pointer useless.
+I guess you could find the first number, then folow parent pointers
+until you find the next node with a bigger value than the first number,
+but off hand, I can't say that would always work.
 
 ### Daily Coding Problem: Problem #490 [Medium]
 
