@@ -359,10 +359,18 @@ The candidate could also amaze the interviewer by proposing a test
 for whether or not the tree is of minimal height.
 A complete binary tree of depth D has N = 2<sup>D</sup>-1 nodes.
 We know how many nodes are in the tree, we got an array as input.
-Find the depth of the tree, see if it's less than or equal to log<sub>2</sub>(N+1)+1.
+Find the depth of the tree,
+see if it's less than or equal to log<sub>2</sub>(N+1)+1.
 [This program](testmin.go) does that.
 
 ![binary tree ht vs node count](minht.png?raw=true)
+
+The above image shows that the actual, discrete,
+tree heights follow a step function.
+Height of a tree is constant while filling in the bottom row of leaves.
+Complete binary trees have a height matching log<sub>2</sub>(N+1).
+Binary trees with one leaf in the bottom row of leaveshave a height matching log<sub>2</sub>(N+1)+1.
+All other trees have a height between the two values.
 
 ### Daily Coding Problem: Problem #545 [Hard]
 
