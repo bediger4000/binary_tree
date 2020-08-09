@@ -716,3 +716,52 @@ Mid-level programmers might sketch an overall solution,
 and implement parts on the whiteboard.
 Senior programmers might end up implementing the whole thing,
 if allowed enough time.
+
+### Daily Coding Problem: Problem #490 [Medium]
+
+This question was asked by Apple.
+
+Given a binary tree, find a minimum path sum from root to a leaf.
+
+For example, the minimum path in this tree is [10, 5, 1, -1], which
+has sum 15.
+
+      10
+     /  \
+    5    5
+     \     \
+       2    1
+           /
+         -1
+
+### Analysis
+
+First off, the request is phrased poorly:
+do they want the sum, the path or both?
+The candidate would be wise to ask.
+Returning the path is more work than just the sum.
+
+Since the problem seems to allow negative numbers as node values,
+there's no way to short-circuit a complete traverse of the tree.
+The recursion needs to carry around a minimum sum found so far,
+and the associated path because of this.
+
+Depending on what language the candidate does this problem,
+solving it may entail some array management code
+to keep from re-appending pieces of the paths through the tree.
+That's really the only tricky piece to the recursion.
+
+The candidate could distinguish themself by suggesting
+test case input trees - a single element tree would be 
+a decent test case,
+as would extreme left- and right-hand-side minimum-sum-paths.
+Maybe a tree with a large negative value in the leaf node would be
+a good test case.
+
+The interviewer should only expect a simple recursive solution.
+There's no opportunity for cleverness or short-circuiting a
+traverse of the entire tree.
+
+This might actually count as a medium-difficulty problem.
+It requires no great insight to solve, but the candidate would
+have to incorporate a few extras in an otherwise simple recursive solution.
