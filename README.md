@@ -47,9 +47,39 @@ nodes of a BST with the desired shape in breadth-first order.
 * [invert](invert.go) a binary tree. I had it create a binary search tree so that the inversion is obvious.
 For some reason, I made `func (p *Node) Invert()` a method of tree node struct and put it in the support code.
 This has been at least 2 different "Daily Coding Problems", one rated "[Medium]"
+* [Breadth-first traverse](breadthfirst.go) iterative traverse of tree.
+
+### Daily Coding Problem: Problem #622 [Easy]
+
+This problem was asked by Google.
+
+Given the root of a binary tree, return a deepest node. For example, in the following tree, return d.
+
+        a
+       / \
+      b   c
+     /
+    d
+
+#### Analysis
+
 * First cut at [finding depth](tree_depth.go) of tree, carries a struct around.
 * Second cut at [finding depth](tree_depth2.go) of tree, completely recursive, returns deepest node.
-* [Breadth-first traverse](breadthfirst.go) iterative traverse of tree.
+
+This is a question for an entry-level position interview.
+It involves a traverse of a binary tree where the value of the
+nodes is only for identification,
+so pre-, post- or in-order doesn't matter.
+The only things to do are recognize a leaf node,
+and keep track of depth in the tree.
+The interviewer could look for orderly design process,
+neat and tidy coding,
+entry-level things like that.
+
+If the candidate were to suggest test cases,
+a single-node tree, left-heavy like the example,
+a complementary right-deep test,
+and some case in the middle might be in order.
 
 ### Reconstruct a tree from traversals
 
@@ -765,3 +795,63 @@ traverse of the entire tree.
 This might actually count as a medium-difficulty problem.
 It requires no great insight to solve, but the candidate would
 have to incorporate a few extras in an otherwise simple recursive solution.
+
+### Daily Coding Problem: Problem #482 [Medium]
+
+This problem was asked by Google.
+
+Given a binary search tree and a range [a, b] (inclusive), return the sum
+of the elements of the binary search tree within the range.
+
+For example, given the following tree:
+
+        5
+       / \
+      3   8
+     / \ / \
+    2  4 6  10
+
+and the range [4, 9], return 23 (5 + 4 + 6 + 8).
+
+#### Analysis
+
+The problem statement isn't entirely clear:
+does "elements ... within the range" mean all nodes in a particular
+(in-order, post-order) traverse of the tree,
+or all nodes whose data values are within ends of the range?
+The example maybe says the latter,
+but an in-order traverse would also give you 4+5+6+8.
+
+I'm not sure why the problem statement says "binary search tree", either.
+
+### Daily Coding Problem: Problem #475 [Medium]
+
+This problem was asked by Google.
+
+Implement locking in a binary tree.
+A binary tree node can be locked or unlocked only if all of its descendants
+or ancestors are not locked.
+
+Design a binary tree node class with the following methods:
+
+* is_locked, which returns whether the node is locked
+* lock, which attempts to lock the node.
+If it cannot be locked,
+then it should return false.
+Otherwise, it should lock it and return true.
+* unlock, which unlocks the node.
+If it cannot be unlocked, then it should return false.
+Otherwise, it should unlock it and return true.
+
+You may augment the node to add parent pointers or any other property you
+would like. You may assume the class is used in a single-threaded program,
+so there is no need for actual locks or mutexes. Each method should run in
+O(h), where h is the height of the tree.
+
+#### Analysis
+
+Locking in this problem is a surrogate for some other more complicated tree property,
+or maybe it's just a MacGuffin, a way to get someone to write a program
+they've never written before.
+Because it's weird that "locking" takes places in single-threaded
+programs with no need for actual locks or mutexes.
