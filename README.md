@@ -815,14 +815,35 @@ and the range [4, 9], return 23 (5 + 4 + 6 + 8).
 
 #### Analysis
 
-The problem statement isn't entirely clear:
-does "elements ... within the range" mean all nodes in a particular
-(in-order, post-order) traverse of the tree,
-or all nodes whose data values are within ends of the range?
-The example maybe says the latter,
-but an in-order traverse would also give you 4+5+6+8.
+The obvious solution is to do a full traverse of the input tree, 
+carrying around a pointer to an int, the sum so far.
+At each node, check if the value is in the range [a, b],
+and add it to the pointed-to-int.
+I did this in `func visit1` of my [solution code](bst_value_sum.go).
 
-I'm not sure why the problem statement says "binary search tree", either.
+The problem says "Given a binary search tree".
+That means that a program can use that property to avoid visiting
+nodes that have values less than a and greater than b.
+I did this in `func visit2` of my [solution](bst_value_sum.go).
+
+My thought is that any time a binary tree problem or puzzle
+says that the tree has the binary search property,
+it's worth considering how to make that problem faster
+using the BST property.
+Seeing a candidate recognize and use that property is probably
+what this question is all about, for an interviewer.
+
+The candidate should consider test cases,
+like giving a range that doesn't match any node's value,
+or excludes all nodes, or includes only one node.
+The shape of the input tree could also matter,
+so consider a tree that's effectively a linked list:
+all of the right-hand-children are non-null,
+but none of the left-hand-children are.
+
+I don't believe this qualifies as a "medium" hard question.
+Consider Daily Coding Problem #475, which follows.
+That's a "medium" too, and much more difficult.
 
 ### Daily Coding Problem: Problem #475 [Medium]
 
