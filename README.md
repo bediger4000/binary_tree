@@ -876,3 +876,12 @@ or maybe it's just a MacGuffin, a way to get someone to write a program
 they've never written before.
 Because it's weird that "locking" takes places in single-threaded
 programs with no need for actual locks or mutexes.
+
+The problem statment says:
+
+    A binary tree node can be locked or unlocked only if all of its descendants
+    or ancestors are not locked.
+
+A strict reading of this means that only one lock is necessary, that of the root node,
+since every node's ancestors includes the root node.
+Locking any single node means that no other node can be locked,
