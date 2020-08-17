@@ -871,17 +871,48 @@ O(h), where h is the height of the tree.
 
 #### Analysis
 
-Locking in this problem is a surrogate for some other more complicated tree property,
-or maybe it's just a MacGuffin, a way to get someone to write a program
-they've never written before.
-Because it's weird that "locking" takes places in single-threaded
-programs with no need for actual locks or mutexes.
+It's weird that "locking" takes places in a single-threaded program
+with no need for actual locks or mutexes.
+I suspect this is to avoid all the ugliness of what needs to get locked, and when.
 
 The problem statment says:
 
     A binary tree node can be locked or unlocked only if all of its descendants
     or ancestors are not locked.
 
-A strict reading of this means that only one lock is necessary, that of the root node,
-since every node's ancestors includes the root node.
-Locking any single node means that no other node can be locked,
+This translates to "locking a node locks the sub-tree below it",
+and "you can't lock a node inside a locked sub-tree".
+
+The problem has a giveaway hint:
+
+    You may augment the node to add parent pointers or any other property you would like.
+
+If you add parent pointers,
+finding out if any ancestors are locked is O(log<sub>2</sub>(N+1)),
+where N is the number of nodes in the tree, i.e. the depth of the tree.
+
+I created a locking binary tree type,
+and a program that lets you interactively create trees, lock and unlock nodes, and inspect trees and nodes.
+
+    ./locktree
+    Locked binary tree explorer
+    > ?
+    locking node binary tree explorer
+    Operations:
+    print - print lisp-like string rep of tree
+    checkall - show lock status of all nodes
+    check N - show lock status of node with value N
+    lock N - lock node with value N
+    unlock N - unlock node with value N
+    find N - print info about node with value N
+    create (...) - parse lisp-like tree rep, use it thereafter
+    > create (0(1()(2))(3()()))
+    > lock 2
+    locked node with value 2 at 0xc0000983f0
+    > print
+    (0/U(1/U()(2/L))(3/U))
+    > lock 1
+    did not lock node with value 1 at 0xc0000983c0
+
+The program didn't lock node with value 1 because node with value 2,
+in it's right sub-tree, was already locked.
