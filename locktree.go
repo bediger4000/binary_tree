@@ -94,6 +94,7 @@ func (node *LockNode) Lock() bool {
 	// no ancestors are locked
 
 	if node.LockedDescendants > 0 {
+		// one or more descendants are locked
 		return false
 	}
 
@@ -105,6 +106,8 @@ func (node *LockNode) Lock() bool {
 }
 
 // descendantsLocked returns true if node or any descendant of node are locked.
+// This is the unoptimized, whole-sub-tree-search version that doesn't
+// fit the O(h) requirement.
 func descendantsLocked(node *LockNode) bool {
 	if node == nil {
 		return false
@@ -135,6 +138,7 @@ func (node *LockNode) Unlock() bool {
 	fmt.Printf("ancestors of node value %d unlocked\n", node.Data)
 
 	if node.LockedDescendants > 0 {
+		// one or more descendants are locked
 		return false
 	}
 
