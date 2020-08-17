@@ -4,6 +4,7 @@ import (
 	"binary_tree/tree"
 	"fmt"
 	"io"
+	"log"
 	"os"
 	"strconv"
 )
@@ -48,6 +49,26 @@ func (node *LockNode) String() string {
 	return fmt.Sprintf("%d/%c", node.Data, note)
 }
 
+func createViewNode(str string) tree.Node {
+	n, err := strconv.Atoi(str)
+	if err != nil {
+		log.Print(err)
+		return nil
+	}
+	return &LockNode{Data: n}
+}
+
+func addParents(node *LockNode) {
+	if node.Left != nil {
+		node.Left.Parent = node
+		addParents(node.Left)
+	}
+	if node.Right != nil {
+		node.Right.Parent = node
+		addParents(node.Right)
+	}
+}
+
 // IsLocked returns whether the node is locked
 func (node *LockNode) IsLocked() bool {
 	return node.Locked
@@ -67,8 +88,11 @@ func (node *LockNode) Lock() bool {
 	}
 	// no ancestors are locked
 
-	// this call will not allow the tree to be locked if this node is already locked
-	if descendantsLocked(node) {
+	// check if any descendents are locked
+	if descendantsLocked(node.Left) {
+		return false
+	}
+	if descendantsLocked(node.Right) {
 		return false
 	}
 
@@ -76,8 +100,7 @@ func (node *LockNode) Lock() bool {
 	return true
 }
 
-// descendantsLocked returns true is any descendant of node
-// is locked.
+// descendantsLocked returns true if node or any descendant of node are locked.
 func descendantsLocked(node *LockNode) bool {
 	if node == nil {
 		return false
@@ -167,21 +190,25 @@ func Insert(node *LockNode, value int) *LockNode {
 
 func main() {
 	var root *LockNode
-	for _, str := range os.Args[1:] {
-		n, err := strconv.Atoi(str)
-		if err == nil {
-			root = Insert(root, n)
+	if len(os.Args) > 1 {
+		for _, str := range os.Args[1:] {
+			n, err := strconv.Atoi(str)
+			if err == nil {
+				root = Insert(root, n)
+			}
 		}
+		fmt.Println("Input tree: ")
+		tree.Printf(os.Stdout, root)
+		fmt.Println()
 	}
-	tree.Printf(os.Stdout, root)
-	fmt.Println()
 
+	fmt.Printf("Locked binary tree explorer\n")
 READLOOP:
 	for {
-		fmt.Printf("%d > ", root.Data)
-		var value int
+		fmt.Printf("> ")
+		var valueString string
 		var operation string
-		nscanned, err := fmt.Scanf("%s %d\n", &operation, &value)
+		nscanned, err := fmt.Scanf("%s %s\n", &operation, &valueString)
 		if err == io.EOF {
 			fmt.Printf("EOF on read\n")
 			return
@@ -190,10 +217,25 @@ READLOOP:
 			fmt.Printf("Failed to read: %v\n", err)
 			return
 		}
+		var value int
+		switch operation {
+		case "find", "check", "lock", "unlock":
+			value, err = strconv.Atoi(valueString)
+			if err != nil {
+				log.Print(err)
+			}
+		}
 
 		switch operation {
+		case "?":
+			usage()
 		case "quit":
 			break READLOOP
+
+		case "create":
+			tmp := tree.GeneralCreateFromString(valueString, createViewNode)
+			root = tmp.(*LockNode)
+			addParents(root)
 
 		case "find":
 			node := Find(root, value)
@@ -248,4 +290,15 @@ READLOOP:
 			fmt.Printf("Value: %d\n", value)
 		}
 	}
+}
+func usage() {
+	fmt.Printf("locking node binary tree explorer\n")
+	fmt.Printf("Operations:\n")
+	fmt.Printf("print - print lisp-like string rep of tree\n")
+	fmt.Printf("checkall - show lock status of all nodes\n")
+	fmt.Printf("check N - show lock status of node with value N\n")
+	fmt.Printf("lock N - lock node with value N\n")
+	fmt.Printf("unlock N - unlock node with value N\n")
+	fmt.Printf("find N - print info about node with value N\n")
+	fmt.Printf("create (...) - parse lisp-like tree rep, use it thereafter\n")
 }
