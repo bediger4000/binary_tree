@@ -13,11 +13,12 @@ import (
 // descendants or ancestors are not locked.
 
 type LockNode struct {
-	Data   int
-	Left   *LockNode
-	Right  *LockNode
-	Parent *LockNode
-	Locked bool
+	Data              int
+	Left              *LockNode
+	Right             *LockNode
+	Parent            *LockNode
+	Locked            bool
+	LockedDescendants int
 }
 
 func (node *LockNode) IsNil() bool {
@@ -46,9 +47,11 @@ func (node *LockNode) String() string {
 	if node.Locked {
 		note = 'L'
 	}
-	return fmt.Sprintf("%d/%c", node.Data, note)
+	return fmt.Sprintf("%d/%c/%d", node.Data, note, node.LockedDescendants)
 }
 
+// createViewNode used when parsing a string from the "create"
+// tree explorer operation.
 func createViewNode(str string) tree.Node {
 	n, err := strconv.Atoi(str)
 	if err != nil {
@@ -58,6 +61,9 @@ func createViewNode(str string) tree.Node {
 	return &LockNode{Data: n}
 }
 
+// addParents called after tree.GeneralCreateFromString invocation,
+// since that function doesn't think it's doing trees with nodes
+// with a parent back pointer.
 func addParents(node *LockNode) {
 	if node.Left != nil {
 		node.Left.Parent = node
@@ -79,24 +85,22 @@ func (node *LockNode) IsLocked() bool {
 func (node *LockNode) Lock() bool {
 	// A binary tree node can be locked only if all of its ancestors are not
 	// locked.
-	ancestor := node.Parent
-	for ancestor != nil {
+
+	for ancestor := node.Parent; ancestor != nil; ancestor = ancestor.Parent {
 		if ancestor.IsLocked() {
 			return false
 		}
-		ancestor = ancestor.Parent
 	}
 	// no ancestors are locked
 
-	// check if any descendents are locked
-	if descendantsLocked(node.Left) {
-		return false
-	}
-	if descendantsLocked(node.Right) {
+	if node.LockedDescendants > 0 {
 		return false
 	}
 
 	node.Locked = true
+	for ancestor := node.Parent; ancestor != nil; ancestor = ancestor.Parent {
+		ancestor.LockedDescendants++
+	}
 	return true
 }
 
@@ -120,29 +124,24 @@ func descendantsLocked(node *LockNode) bool {
 func (node *LockNode) Unlock() bool {
 	// A binary tree node can be unlocked only if all of its ancestors are not
 	// locked.
-	ancestor := node.Parent
-	for ancestor != nil {
+	for ancestor := node.Parent; ancestor != nil; ancestor = ancestor.Parent {
 		if ancestor.IsLocked() {
 			fmt.Printf("ancestor of node value %d,  value %d, locked\n", node.Data, ancestor.Data)
 			return false
 		}
-		ancestor = ancestor.Parent
+
 	}
 	// no ancestors are locked
 	fmt.Printf("ancestors of node value %d unlocked\n", node.Data)
 
-	if descendantsLocked(node.Left) {
-		fmt.Printf("left descendants of node value %d locked\n", node.Data)
+	if node.LockedDescendants > 0 {
 		return false
 	}
-	fmt.Printf("left descendants of node value %d unlocked\n", node.Data)
-	if descendantsLocked(node.Right) {
-		fmt.Printf("right descendants of node value %d locked\n", node.Data)
-		return false
-	}
-	fmt.Printf("right descendants of node value %d unlocked\n", node.Data)
 
 	node.Locked = false
+	for ancestor := node.Parent; ancestor != nil; ancestor = ancestor.Parent {
+		ancestor.LockedDescendants--
+	}
 	return true
 }
 
@@ -157,7 +156,7 @@ func CheckAll(node *LockNode) {
 	}
 
 	CheckAll(node.Left)
-	fmt.Printf("node value %d %slocked\n", node.Data, lockphrase)
+	fmt.Printf("node value %d @ %p, parent %p %slocked\n", node.Data, node, node.Parent, lockphrase)
 	CheckAll(node.Right)
 }
 
@@ -233,6 +232,9 @@ READLOOP:
 			break READLOOP
 
 		case "create":
+			if valueString == "" {
+				break
+			}
 			tmp := tree.GeneralCreateFromString(valueString, createViewNode)
 			root = tmp.(*LockNode)
 			addParents(root)
@@ -244,6 +246,9 @@ READLOOP:
 			}
 
 		case "checkall":
+			if root != nil {
+				fmt.Printf("root is node with value %d\n", root.Data)
+			}
 			CheckAll(root)
 
 		case "check":
