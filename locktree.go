@@ -21,10 +21,11 @@ type LockNode struct {
 	LockedDescendants int
 }
 
+// IsNil, LeftChild, RightChild, SetLeftChild, SetRightChild
+// make *LockNode fit interface tree.Node.
 func (node *LockNode) IsNil() bool {
 	return node == nil
 }
-
 func (node *LockNode) LeftChild() tree.Node {
 	return node.Left
 }
@@ -42,6 +43,8 @@ func (node *LockNode) SetRightChild(child tree.Node) {
 	}
 }
 
+// String makes a *LockNode into a fmt.Strinter,
+// which is what tree.Printf expects.
 func (node *LockNode) String() string {
 	note := 'U'
 	if node.Locked {
@@ -50,9 +53,9 @@ func (node *LockNode) String() string {
 	return fmt.Sprintf("%d/%c/%d", node.Data, note, node.LockedDescendants)
 }
 
-// createViewNode used when parsing a string from the "create"
+// createLockNode used when parsing a string from the "create"
 // tree explorer operation.
-func createViewNode(str string) tree.Node {
+func createLockNode(str string) tree.Node {
 	n, err := strconv.Atoi(str)
 	if err != nil {
 		log.Print(err)
@@ -75,27 +78,31 @@ func addParents(node *LockNode) {
 	}
 }
 
+// funcs IsLocked, Lock, Unlock meet the requirements of this problem
+
 // IsLocked returns whether the node is locked
 func (node *LockNode) IsLocked() bool {
 	return node.Locked
 }
 
-// lock, which attempts to lock the node.  If it cannot be locked,
+// Lock, which attempts to lock the node.  If it cannot be locked,
 // then it should return false.
 func (node *LockNode) Lock() bool {
+
+	if node.LockedDescendants > 0 {
+		// one or more descendants are locked
+		fmt.Printf("%d descendants locked\n", node.LockedDescendants)
+		return false
+	}
+
 	// A binary tree node can be locked only if all of its ancestors are not
 	// locked.
 
 	for ancestor := node.Parent; ancestor != nil; ancestor = ancestor.Parent {
 		if ancestor.IsLocked() {
+			fmt.Printf("ancestor with value %d locked\n", ancestor.Data)
 			return false
 		}
-	}
-	// no ancestors are locked
-
-	if node.LockedDescendants > 0 {
-		// one or more descendants are locked
-		return false
 	}
 
 	node.Locked = true
@@ -125,21 +132,21 @@ func descendantsLocked(node *LockNode) bool {
 // should return false.  Otherwise, it should unlock it and return
 // true.
 func (node *LockNode) Unlock() bool {
+
+	if node.LockedDescendants > 0 {
+		// one or more descendants are locked
+		fmt.Printf("%d descendants locked\n", node.LockedDescendants)
+		return false
+	}
+
 	// A binary tree node can be unlocked only if all of its ancestors are not
 	// locked.
 	for ancestor := node.Parent; ancestor != nil; ancestor = ancestor.Parent {
 		if ancestor.IsLocked() {
-			fmt.Printf("ancestor of node value %d,  value %d, locked\n", node.Data, ancestor.Data)
+			fmt.Printf("ancestor with value %d locked\n", ancestor.Data)
 			return false
 		}
 
-	}
-	// no ancestors are locked
-	fmt.Printf("ancestors of node value %d unlocked\n", node.Data)
-
-	if node.LockedDescendants > 0 {
-		// one or more descendants are locked
-		return false
 	}
 
 	node.Locked = false
@@ -148,6 +155,10 @@ func (node *LockNode) Unlock() bool {
 	}
 	return true
 }
+
+// func CheckAll, Find, used in the "tree explorer" part
+// of the code. Most of the tree explorer just calls library
+// functions, or Lock and Unlock
 
 func CheckAll(node *LockNode) {
 	if node == nil {
@@ -160,7 +171,7 @@ func CheckAll(node *LockNode) {
 	}
 
 	CheckAll(node.Left)
-	fmt.Printf("node value %d @ %p, parent %p %slocked\n", node.Data, node, node.Parent, lockphrase)
+	fmt.Printf("node value %d @ %p (%d), parent %p %slocked\n", node.Data, node, node.LockedDescendants, node.Parent, lockphrase)
 	CheckAll(node.Right)
 }
 
@@ -177,6 +188,7 @@ func Find(root *LockNode, value int) *LockNode {
 	return Find(root.Right, value)
 }
 
+// Insert puts nodes into a tree, keeping Binary Search Tree property
 func Insert(node *LockNode, value int) *LockNode {
 	if node == nil {
 		return &LockNode{Data: value}
@@ -239,7 +251,7 @@ READLOOP:
 			if valueString == "" {
 				break
 			}
-			tmp := tree.GeneralCreateFromString(valueString, createViewNode)
+			tmp := tree.GeneralCreateFromString(valueString, createLockNode)
 			root = tmp.(*LockNode)
 			addParents(root)
 
