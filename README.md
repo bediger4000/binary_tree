@@ -890,6 +890,12 @@ The problem has a giveaway hint:
 If you add parent pointers,
 finding out if any ancestors are locked is O(log<sub>2</sub>(N+1)),
 where N is the number of nodes in the tree, i.e. the depth of the tree.
+The nodes can keep a count of locked descendants,
+eliminating the need for traversing sub-trees to find any locked nodes..
+Any node, even unlocked nodes,
+that have more than zero locked descendants aren't eligible to lock.
+Unlocking a node involves chasing parent pointers to the root,
+decrementing the count of locked descendants.
 
 I created a locking binary tree type,
 and a program that lets you interactively create trees, lock and unlock nodes, and inspect trees and nodes.
@@ -916,3 +922,29 @@ and a program that lets you interactively create trees, lock and unlock nodes, a
 
 The program didn't lock node with value 1 because node with value 2,
 in it's right sub-tree, was already locked.
+
+The conditions on locking and unlocking are to keep a sub-tree of a given
+node locked, and not re-lock sub-trees of nodes in the locked sub-tree.
+It's good that the problem says not to use mutexes,
+and that the code is to be used in single-threaded programs,
+because actually locking a node would seem to involve
+locking the entire tree to chase parent pointers.
+I'm at a loss to explain what's going on with this problem,
+except that maybe it's nonsensical nature is to get candidates
+to solve a problem they've never seen before.
+
+From that standpoint,
+the interviewer has to watch for 2 things:
+
+1. That the candidate has the insight that a parent point
+can allow O(h) lock and unlocks by chasing those parent pointers.
+2. Programming mechanics.
+Chasing pointers might be unfamiliar to people who don't do C or Go
+any more. The C++ subculture is such that raw pointers seem to be
+considered taboo.
+Maybe this problem exists to seperate the pointer-familiar sheep,
+from the pointer-less goats.
+
+Perhaps the interviewer is supposed to be satisifed with a design,
+or a design and an implementation with some flaws that would get ironed out
+by a little testing.
