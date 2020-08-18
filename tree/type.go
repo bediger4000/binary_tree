@@ -64,6 +64,7 @@ type Node interface {
 	SetLeftChild(Node)
 	SetRightChild(Node)
 	IsNil() bool
+	String() string
 }
 
 func (n *NumericNode) LeftChild() Node {
