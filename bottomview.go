@@ -54,6 +54,9 @@ type ViewNode struct {
 	Depth    int
 }
 
+// Compiler checks if *ViewNode matches interface tree.Node
+var _ tree.Node = (*ViewNode)(nil)
+
 func (node *ViewNode) IsNil() bool {
 	return node == nil
 }

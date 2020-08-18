@@ -21,6 +21,10 @@ type LockNode struct {
 	LockedDescendants int
 }
 
+// If *LockNode doesn't match interface tree.Node,
+// this fails.
+var _ tree.Node = (*LockNode)(nil)
+
 // IsNil, LeftChild, RightChild, SetLeftChild, SetRightChild
 // make *LockNode fit interface tree.Node.
 func (node *LockNode) IsNil() bool {
