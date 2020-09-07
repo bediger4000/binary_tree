@@ -1013,6 +1013,10 @@ do the make the current node the root of a unival subtree.
 One child might be the root of a unival subtree,
 but have a different value than the current node.
 
+The candidate could score points by noting that one child
+could be the root of a unival subtree,
+while the other isn't,
+so more testing is required to verify correctness.
 
 ### Daily Coding Problem: Problem #442 [Hard]  
 
