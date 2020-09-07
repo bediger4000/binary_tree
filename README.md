@@ -949,6 +949,71 @@ Perhaps the interviewer is supposed to be satisifed with a design,
 or a design and an implementation with some flaws that would get ironed out
 by a little testing.
 
+### Daily Coding Problem: Problem #644 [Easy]
+
+A unival tree (which stands for "universal value") is a tree where all
+nodes under it have the same value.
+
+Given the root to a binary tree, count the number of unival subtrees.
+
+For example, the following tree has 5 unival subtrees:
+
+```
+   0
+  / \
+ 1   0
+    / \
+   1   0
+  / \
+ 1   1
+```
+
+<!--
+In package tree lisp-like tree notation, that's:
+(0 (1) (0 (1 (1) (1)) (0)))
+-->
+
+#### Build and run Unival tree program
+
+```sh
+$ go build unival.go
+$ .unival '(0 (1) (0 (1 (1) (1)) (0)))'
+
+5 unival subtrees
+```
+
+#### Unival tree analysis
+
+I think I see the 5 unival subtress: 4 leaf nodes, which are vacuously unival trees, since all of their subtrees,
+of which there are zero, have the same value.
+The final unival tree is the all-1-value subtree.
+
+The solution actually took me 1 decent false start,
+and some thinking.
+The solution is entirely recursive,
+although the problem statement hides it.
+
+Leaf nodes have no children, therefore they have the same data
+value as their children.
+A leaf node is a unival tree.
+If the current node has the same value as its left and right children,
+and the child nodes are roots of unival subtress,
+the current node and its subtress form a unival subtree.
+You can do this in a post-order traverse,
+but there's a complicated decision about whether the
+current node is the root of a unival subtree.
+
+I'm going to go with this problem is under-rated.
+It's at least a medium,
+given the complicated tests to decide if the current node
+heads a unival subtree.
+You've got to handle either or both child nodes don't exist,
+and you've got to decide if they exist,
+do the make the current node the root of a unival subtree.
+One child might be the root of a unival subtree,
+but have a different value than the current node.
+
+
 ### Daily Coding Problem: Problem #442 [Hard]  
 
 This problem was asked by Netflix.
