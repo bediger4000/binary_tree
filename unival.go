@@ -16,24 +16,32 @@ import (
 func main() {
 	if len(os.Args) != 2 {
 		fmt.Printf("Count the number of univalue subtrees in a tree\n")
-		fmt.Printf("Usage: %s ''(0 (1) (0 (1 (1) (1)) (0)))'\n", os.Args[0])
+		fmt.Printf("Usage: %s '(0 (1) (0 (1 (1) (1)) (0)))'\n", os.Args[0])
 		return
 	}
 	root := tree.CreateNumericFromString(os.Args[1])
-	cnt := countUnival(root)
+	cnt, _ := countUnival(root)
 	fmt.Printf("%d unival subtrees\n", cnt)
 }
 
-func countUnival(node *tree.NumericNode) int {
+func countUnival(node *tree.NumericNode) (subtreeCount int, inUnivalTree bool) {
+	// make this callable on a nil *tree.NumericNode to avoid
+	// testing for nil before each call to countUnival()
 	if node == nil {
-		return 0
-	}
-	subtreecount := countUnival(node.Left)
-	subtreecount += countUnival(node.Right)
-	if (node.Left == nil || node.Data == node.Left.Data) &&
-		(node.Right == nil || node.Data == node.Right.Data) {
-		subtreecount++
+		return 0, false
 	}
 
-	return subtreecount
+	leftSubtreeCount, leftTreeUnival := countUnival(node.Left)
+	rightSubtreeCount, rightTreeUnival := countUnival(node.Right)
+
+	subtreeCount = leftSubtreeCount + rightSubtreeCount
+	inUnivalTree = false
+
+	if (node.Left == nil || (node.Data == node.Left.Data && leftTreeUnival)) &&
+		(node.Right == nil || (node.Data == node.Right.Data && rightTreeUnival)) {
+		subtreeCount++
+		inUnivalTree = true
+	}
+
+	return
 }
