@@ -1018,6 +1018,47 @@ could be the root of a unival subtree,
 while the other isn't,
 so more testing is required to verify correctness.
 
+### Daily Coding Problem: Problem #651 [Medium]
+
+This problem was asked by LinkedIn.
+
+Determine whether a tree is a valid binary search tree.
+
+A binary search tree is a tree with two children, left and right, and
+satisfies the constraint that the key in the left child must be less
+than or equal to the root and the key in the right child must be greater
+than or equal to the root.
+
+#### Analysis
+
+This particular problem statement seems sloppily worded.
+It reads as if they only want the candidate to consider
+3-node trees.
+It also conflates "value of node's data" with "node itself".
+Sloppiness like that will lead to amazing bugs.
+
+The other oddity in the problem statement is that it says:
+
+```
+the key in the left child must be less than or equal to the root and the
+key in the right child must be greater than or equal to the root.
+```
+
+When building such a tree, you get to make a decision:
+does a value equal to that of the current node become the left
+child node's value, or the right child node's value?
+
+I'm not even going to implement this one: it's garbage.
+This could be implemented by 2 if-then-else tests.
+There's no art or craft to this one.
+
+The only reason to ask this question, if my reading is correct,
+is to see if a candidate can withstand ambiguity and do a really
+dumb task without complaining.
+Candidates who are asked to do this problem should reject that
+corporation's job offer. There's better environments to work in,
+don't take the job.
+
 ### Daily Coding Problem: Problem #442 [Hard]  
 
 This problem was asked by Netflix.
