@@ -245,6 +245,8 @@ find all cousins of that node.
 
 #### Analysis
 
+[My solution](cousins.go).
+
 At first, I thought this was a fairly bogus question,
 but this might actually be a good interview problem.
 It does contain the opportunity to do a recursive or iterative search
@@ -415,6 +417,8 @@ to be a descendant of itself).
 
 #### Analysis
 
+[My code](lca.go).
+
 It says "binary tree", not "binary search tree",
 so you can't assume an ordering.
 
@@ -528,10 +532,12 @@ of the two subtrees of any node never differ by more than one.
 
 #### Analysis
 
+[My code](ht_balanced.go).
+
 This is esssentially the tree depth (or tree height) problem
 framed differently.
 As such, it's prey to all of the tree depth problem's difficulties.
-The interview candidate might fall into the trap of tryig to
+The interview candidate might fall into the trap of trying to
 write a `Balanced()` function that's recursive on its own,
 rather than finding max depth of each subtree then ensuring that
 any depth difference is not too great.
@@ -563,6 +569,8 @@ My solution does not assume the input tree has that property.
 Perhaps it should have.
 
 #### Analysis
+
+[My code](inorder_successor.go).
 
 I thought this would be easier than it was.
 My initial idea was to just do an in-order traverse of the tree,
@@ -717,7 +725,7 @@ put some very high level pseudocode on the whiteboard
 to show you understand it before doing any "coding".
 
 I doubt there's an actual "best solution".
-My solution:
+[My solution](bottomview.go):
 
 1. Build a tree with nodes that have depth and horizontal distance fields.
 2. Traverse tree, filling in depth and distance fields.
@@ -765,6 +773,8 @@ has sum 15.
          -1
 
 ### Analysis
+
+[My solution](minpathsum.go).
 
 First off, the request is phrased poorly:
 do they want the sum, the path or both?
@@ -896,6 +906,8 @@ Any node, even unlocked nodes,
 that have more than zero locked descendants aren't eligible to lock.
 Unlocking a node involves chasing parent pointers to the root,
 decrementing the count of locked descendants.
+
+[My solution](locktree.go).
 
 I created a locking binary tree type,
 and a program that lets you interactively create trees, lock and unlock nodes, and inspect trees and nodes.
@@ -1081,3 +1093,5 @@ For example, given the sequence [3, 2, 6, 1, 9], the resulting Cartesian tree wo
 Given a sequence S, construct the corresponding Cartesian tree.
 
 #### Analysis
+
+I haven't done this one yet.
