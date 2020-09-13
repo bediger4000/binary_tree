@@ -83,10 +83,7 @@ and some case in the middle might be in order.
 
 ### Reconstruct a tree from traversals
 
-This was one of the "Daily Coding Puzzle" problems.
-A [clever solution](https://www.geeksforgeeks.org/construct-tree-from-given-inorder-and-preorder-traversal/) exists.
-Isn't this O(n<sup>2</sup>), though?
-It's also a [leetcode](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/submissions/) problem.
+This is Daily Coding Problem: Problem #435 [Medium]
 
 Given pre-order and in-order traversals of a binary tree, write a function to reconstruct the tree.
 
@@ -107,6 +104,10 @@ You should return the following tree:
     d  e f  g
 
 #### Analysis
+
+A [clever solution](https://www.geeksforgeeks.org/construct-tree-from-given-inorder-and-preorder-traversal/) exists.
+Isn't this O(n<sup>2</sup>), though?
+It's also a [leetcode](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/submissions/) problem.
 
 The in-order traversal gives you an ordering of the elements.
 You can reconstruct the original binary tree by adding elements
@@ -1095,3 +1096,26 @@ Given a sequence S, construct the corresponding Cartesian tree.
 #### Analysis
 
 I haven't done this one yet.
+
+### Daily Coding Problem: Problem #422 [Easy] 
+
+This problem was asked by Salesforce.
+
+Write a program to merge two binary trees.
+Each node in the new tree should hold a value equal to the sum of the values of
+the corresponding nodes of the input trees.
+
+If only one input tree has a node in a given position,
+the corresponding node in the new tree should match that input node.
+
+#### Analysis
+
+I haven't done this one yet.
+
+### Daily Coding Problem: Problem #405 [Hard]
+
+This problem was asked by Apple.
+
+Given a tree, find the largest tree/subtree that is a BST.
+
+Given a tree, return the size of the largest tree/subtree that is a BST.
