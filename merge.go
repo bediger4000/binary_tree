@@ -2,6 +2,8 @@ package main
 
 import (
 	"binary_tree/tree"
+	"flag"
+	"fmt"
 	"os"
 )
 
@@ -19,10 +21,30 @@ the corresponding node in the new tree should match that input node.
 */
 
 func main() {
-	root1 := tree.CreateNumericFromString(os.Args[1])
-	root2 := tree.CreateNumericFromString(os.Args[2])
+	graphViz := flag.Bool("g", false, "GraphViz dot output on stdout")
+	flag.Parse()
+
+	root1 := tree.CreateNumericFromString(flag.Args()[0])
+	root2 := tree.CreateNumericFromString(flag.Args()[1])
 
 	merged := merge(root1, root2)
+
+	if *graphViz {
+
+		fmt.Printf("digraph g1 {\n")
+		fmt.Printf("subgraph cluster_0 {\n\tlabel=\"1st\"\n")
+		tree.DrawPrefixed(os.Stdout, root1, "a")
+		fmt.Printf("\n}\n")
+		fmt.Printf("subgraph cluster_1 {\n\tlabel=\"2nd\"\n")
+		tree.DrawPrefixed(os.Stdout, root2, "b")
+		fmt.Printf("\n}\n")
+		fmt.Printf("subgraph cluster_2 {\n\tlabel=\"merged\"\n")
+		tree.DrawPrefixed(os.Stdout, merged, "m")
+		fmt.Printf("\n}\n")
+		fmt.Printf("\n}\n")
+
+		return
+	}
 	tree.Print(merged)
 }
 
