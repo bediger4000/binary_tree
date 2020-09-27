@@ -1110,7 +1110,69 @@ the corresponding node in the new tree should match that input node.
 
 #### Analysis
 
-I haven't done this one yet.
+[My version of it](merge.go) requires 2 trees on the command line,
+each in a lisp-like syntax.
+The "-g" flag gives you [GraphViz](https://graphviz.org/) dot-language output,
+which can be converted into an image for viewing.
+
+```sh
+$ go build merge.o
+$ ./merge -g '(1()(3(3)(3)))' '(1(2(2)(2))())'  > m.dot
+$ dot -Tpng -o m.png m.dot
+$ feh m.png # Or whatever your favorite viewer is
+```
+
+![2 trees and merged tree](merge.png?raw=true)
+
+This makes a good interview problem for a candidate for a junior-level job.
+It's just nonsensical enough that nobody has done it on the job,
+but it requires some Computer Science and some experience.
+
+The problem can be handled with standard binary-tree-recursive thinking.
+Realize that you need a recursive function,
+find the base case where recursion stops,
+handle the recursive call(s).
+There may be more than one base case,
+where a nil argument pointer gets passed in to avoid duplicate tests for nil
+where it handles recursive call(s).
+
+The "merge" function takes two nodes (one from first tree, one from second tree)
+and returns a merged node.
+
+* If the merge function gets two nil nodes, it returns nil.
+This is the case where recursion stops.
+* If the merge functions get a non-nil and a nil node,
+it creates a new node with the value of the non-nil node,
+and calls the merge function on the non-nil node's children
+to fill in left and right children of the new node.
+Return the new node.
+This is 2 cases in the code, left tree nil, right tree non-nil,
+and vice versa.
+* If the merge function gets 2 non-nil node,
+it creates a new node with the sum of the values nodes,
+call the merge function on the left children of each node
+to create the left child of the new node.
+Call the merge function on the right children of each node
+to create the right child of the new node,
+Return the new node.
+
+This does require a little insight to realize that the
+requirement for
+```
+If only one input tree has a node in a given position,
+the corresponding node in the new tree should match that input node.
+```
+means chasing only the non-nil child.
+You don't have to write a `CopyTree` function,
+the merge function can take care of it.
+
+The interviewer can watch for experience indicators,
+like having the merge function handle both arguments nil
+rather than having duplicated tests for non-nil in the code.
+The interviewer could elicit more from the candidate by
+asking for test cases,
+or if the candidate has missed a trick,
+suggesting a test case that triggers undesired behavior.
 
 ### Daily Coding Problem: Problem #405 [Hard]
 
