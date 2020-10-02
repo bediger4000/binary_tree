@@ -681,7 +681,7 @@ I'm not at all sure what difference the parent pointers of the
 Problem #609 version would make.
 The "missing case" of the inorder successor of 6 in the tree above
 basically makes the parent pointer useless.
-I guess you could find the first number, then folow parent pointers
+I guess you could find the first number, then follow parent pointers
 until you find the next node with a bigger value than the first number,
 but off hand, I can't say that would always work.
 
