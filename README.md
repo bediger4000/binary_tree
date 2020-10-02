@@ -1184,7 +1184,60 @@ Given a tree, return the size of the largest tree/subtree that is a BST.
 
 #### Analysis
 
-I haven't done this one yet.
+[My version](largest_bst.go) does this from the bottom up:
+
+* A nil pointer (it's in Go) is a zero-sized BST.
+* A leaf node is a 1-node-sized BST.
+* If a node's value is greater than it's left-child's value,
+and less than it's right-child's value,
+and both right and left sub-trees are BSTs,
+then the size of the BST is 1 + size of left-subtree + size of right-subtree.
+* It's possible for a node to not be the root of a Binary Search Tree,
+or one or the other children to not have the BST property.
+In that case, the code decides to use the largest of the 2 sub-tress
+that have the BST property.
+
+I used Go's multiple returns from a function to indicate the size of the largest
+BST in the sub-tree, and whether or not the node is the root of a BST.
+
+My faith in checking for nil pointers on entrance to the recursive function only grows.
+This lets you keep your code cleaner,
+without redundant left- and righ-child checks for nil that visually clutter the code.
+
+I think this algorithm runs in O(n) where n is the number of nodes in the whole tree.
+I don't think there's a better run time,
+given that the algorithm has to check every interior node's value against the values of the left and right child nodes.
+
+As far as an interview problem goes,
+it's pretty good.
+A candidate can solve it using the usual recursive algorithm reasoning,
+finding a base case (nil pointer or leaf node) as the formal argument node,
+then working through what the recursive function has to do to provide
+the desired answer.
+
+The recursive function has to watch for a few cases,
+like one child pointer nil, the other non-nil,
+and the cases of current node as root of BST vs not root of BST.
+
+My solution assumes that the interviewer wants to find binary search trees
+that go all the way to the leaf nodes.
+It's possible that the interviewer wanted a BST that encompasses only part of the entire tree.
+That would be a harder problem,
+but the candidate could probably do some elaborate checking on left and right
+child values even if they don't comprise roots of BSTs themselves.
+This seems kind of nonsensical, though.
+
+It looks to me like the interviewer could watch a candidate reason out the
+recursive function,
+especially the "one nil, one non-nil child node" cases to see if the candidate
+has a good grasp of algorithms.
+There's enough code to write to ensure that the candidate can actually write
+programs in the language in question.
+The problem of finding sub-trees that have the BST property is probably not one
+that many candidates will have run into at work,
+so it'probably a good problem in the sense that nobody has a memorized solution.
+
+Compared to other "hard" problems, this one really isn't. It's probably just a "medium".
 
 ### Daily Coding Problem: Problem #664 [Easy]
 
