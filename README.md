@@ -3,8 +3,8 @@
 Many of the "programming puzzle of the day",
 or "dev job interview questions"
 relate to binary trees.
-This repo consolidates a number of scattered tree implementations into a Go package,
-and includes code that solves typical questions.
+This repo contains a binary tree implementation in a Go package,
+as well as code that solves puzzle-or-problem-of-the-day questions.
 
 I do have other binary tree repos that illustrate problems too big
 to fit in this repo:
@@ -12,6 +12,9 @@ to fit in this repo:
 * [Reconstruct a binary tree from a postorder traversal](https://github.com/bediger4000/postorder-tree-traversal)
 * [AVL tree construction](https://github.com/bediger4000/avl_tree)
 * [Multi-child tree symmetry](https://github.com/bediger4000/tree_symmetry)
+
+Some of the problems and puzzles below should be their own repos because of their size,
+but the convenience of a single binary tree package is too great to break them out.
 
 ## Building
 
@@ -1078,8 +1081,10 @@ This problem was asked by Netflix.
 
 A Cartesian tree with sequence S is a binary tree defined by the following two properties:
 
-* It is heap-ordered, so that each parent value is strictly less than that of its children.
-* An in-order traversal of the tree produces nodes with values that correspond exactly to S.
+* It is heap-ordered,
+so that each parent value is strictly less than that of its children.
+* An in-order traversal of the tree produces nodes with values that correspond
+exactly to S.
 
 For example, given the sequence [3, 2, 6, 1, 9], the resulting Cartesian tree would be:
 
