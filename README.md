@@ -52,6 +52,8 @@ For some reason, I made `func (p *Node) Invert()` a method of tree node struct a
 This has been at least 2 different "Daily Coding Problems", one rated "[Medium]"
 * [Breadth-first traverse](breadthfirst.go) iterative traverse of tree.
 
+---
+
 ### Daily Coding Problem: Problem #622 [Easy]
 
 This problem was asked by Google.
@@ -83,6 +85,8 @@ If the candidate were to suggest test cases,
 a single-node tree, left-heavy like the example,
 a complementary right-deep test,
 and some case in the middle might be in order.
+
+---
 
 ### Reconstruct a tree from traversals
 
@@ -140,6 +144,8 @@ that let them create the clever algorithm, is that candidate suitable
 for an "enterprise" programming role where boring, grind-it-out, lots of
 boilerplate and standard following is necessary?
 
+---
+
 ### Return all paths from the root to leaves
 
 Another daily coding puzzle, "Daily Coding Problem: Problem #587 [Medium]".
@@ -176,6 +182,8 @@ I'd say this is actually about a medium difficulty interview problem,
 suitable for whiteboarding with an above-junior-level programmer.
 The candidate would have to understand recursive functions,
 but use those recursive functions as a scaffold for the work to find the answer.
+
+---
 
 ### Daily Coding Problem: Problem #540 [Easy]
 
@@ -227,6 +235,8 @@ and with a partial deepest layer.
 should show you a boustrophedon traverse of a complete binary search tree
 of depth 4.
 
+---
+
 ### Cousin Nodes
 
 #### Daily Coding Problem: Problem #487 [Medium]
@@ -264,6 +274,8 @@ It has the opportunity to point out test cases (can't find node, can't find
 grandparent, can't find uncle, 0 through 2 cousins),
 and it allows the candidate to demonstrate some insight (only 1 node can be
 parent of cousins, it's a binary tree).
+
+---
 
 ### Prune a tree so that subtrees containing all 0s are removed
 
@@ -323,6 +335,8 @@ each of the sub-trees.
 This is probably a pretty good interview question,
 if you want to see if the candidate has that flash of intuition,
 which may not arrive during the pressure of a whiteboard question.
+
+---
 
 ### Minimum height binary search tree
 
@@ -408,6 +422,8 @@ Complete binary trees have a height matching log<sub>2</sub>(N+1).
 Binary trees with one leaf in the bottom row of leaveshave a height matching log<sub>2</sub>(N+1)+1.
 All other trees have a height between the two values.
 
+---
+
 ### Daily Coding Problem: Problem #545 [Hard]
 
 Given a binary tree, find the lowest common ancestor (LCA) of two
@@ -442,6 +458,8 @@ Unless the interviewer wants a candidate who's read, understood,
 and memorized all of Robert Tarjan's many, many algorithms,
 nobody will pass this. Everyone will do the O(n) time algorithm,
 or waste all their time trying to recreate something inobvious.
+
+---
 
 ### Count nodes in less than linear time
 
@@ -528,6 +546,8 @@ It's one of those "use a value as a number and also as something else" tricks
 that can make a speedy algorithm, and give clarity to an analysis,
 but are usually hard to see without puzzling over the problem.
 
+---
+
 ### Daily Coding Problem: Problem #502 [Easy]
 
 Given a binary tree, determine whether or not it is height-balanced. A
@@ -547,6 +567,8 @@ rather than finding max depth of each subtree then ensuring that
 any depth difference is not too great.
 The interviewer might not get a feel for the candidate's
 coding ability at all.
+
+---
 
 ### Daily Coding Problem: Problem #133
 
@@ -688,6 +710,8 @@ I guess you could find the first number, then follow parent pointers
 until you find the next node with a bigger value than the first number,
 but off hand, I can't say that would always work.
 
+---
+
 ### Daily Coding Problem: Problem #490 [Medium]
 
 This problem was asked by Yelp.
@@ -759,6 +783,8 @@ and implement parts on the whiteboard.
 Senior programmers might end up implementing the whole thing,
 if allowed enough time.
 
+---
+
 ### Daily Coding Problem: Problem #490 [Medium]
 
 This question was asked by Apple.
@@ -776,7 +802,7 @@ has sum 15.
            /
          -1
 
-### Analysis
+#### Analysis
 
 [My solution](minpathsum.go).
 
@@ -809,6 +835,8 @@ traverse of the entire tree.
 This might actually count as a medium-difficulty problem.
 It requires no great insight to solve, but the candidate would
 have to incorporate a few extras in an otherwise simple recursive solution.
+
+---
 
 ### Daily Coding Problem: Problem #482 [Medium]
 
@@ -858,6 +886,8 @@ but none of the left-hand-children are.
 I don't believe this qualifies as a "medium" hard question.
 Consider Daily Coding Problem #475, which follows.
 That's a "medium" too, and much more difficult.
+
+---
 
 ### Daily Coding Problem: Problem #475 [Medium]
 
@@ -965,6 +995,8 @@ Perhaps the interviewer is supposed to be satisifed with a design,
 or a design and an implementation with some flaws that would get ironed out
 by a little testing.
 
+---
+
 ### Daily Coding Problem: Problem #644 [Easy]
 
 A unival tree (which stands for "universal value") is a tree where all
@@ -1034,6 +1066,8 @@ could be the root of a unival subtree,
 while the other isn't,
 so more testing is required to verify correctness.
 
+---
+
 ### Daily Coding Problem: Problem #651 [Medium]
 
 This problem was asked by LinkedIn.
@@ -1075,6 +1109,8 @@ Candidates who are asked to do this problem should reject that
 corporation's job offer. There's better environments to work in,
 don't take the job.
 
+---
+
 ### Daily Coding Problem: Problem #442 [Hard]  
 
 This problem was asked by Netflix.
@@ -1101,6 +1137,8 @@ Given a sequence S, construct the corresponding Cartesian tree.
 #### Analysis
 
 I haven't done this one yet.
+
+---
 
 ### Daily Coding Problem: Problem #422 [Easy] 
 
@@ -1179,6 +1217,8 @@ asking for test cases,
 or if the candidate has missed a trick,
 suggesting a test case that triggers undesired behavior.
 
+---
+
 ### Daily Coding Problem: Problem #405 [Hard]
 
 This problem was asked by Apple.
@@ -1243,6 +1283,8 @@ that many candidates will have run into at work,
 so it'probably a good problem in the sense that nobody has a memorized solution.
 
 Compared to other "hard" problems, this one really isn't. It's probably just a "medium".
+
+---
 
 ### Daily Coding Problem: Problem #664 [Easy]
 
