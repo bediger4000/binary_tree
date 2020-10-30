@@ -70,8 +70,9 @@ func RightDepth(node Node) int {
 // FindDepth gives back a number indicating how deep
 // a tree godes from the given node. You can make it
 // return depth from some other node by passing a value
-// of the ply argument. Uses interface Node, indepdent of
-// value a node carries.
+// of the ply argument. Call with ply = 0 to find the
+// depth from the root of the tree.
+// Uses interface Node, indepdent of value a node carries.
 func FindDepth(node Node, ply int) (depth int) {
 	// past leaf node, return depth of leaf node
 	if node.IsNil() {
