@@ -22,9 +22,32 @@ func main() {
 	root := tree.CreateFromString(os.Args[1])
 
 	phrase := " not"
-	if tree.Balanced(root) {
+	if Balanced(root) {
 		phrase = ""
 	}
 
 	fmt.Printf("input tree is%s balanced\n", phrase)
+}
+
+// Balanced decides whether or not its argument is height-balanced. A
+// height-balanced binary tree can be defined as one in which the
+// heights of the two subtrees of any node never differ by more than
+// one.
+func Balanced(node tree.Node) bool {
+	if node.IsNil() {
+		return true
+	}
+
+	leftDepth := tree.FindDepth(node.LeftChild(), 0)
+	fmt.Printf("Left depth %d\n", leftDepth)
+	rightDepth := tree.FindDepth(node.RightChild(), 0)
+	fmt.Printf("Right depth %d\n", rightDepth)
+
+	depthDiff := leftDepth - rightDepth
+
+	if depthDiff >= -1 && depthDiff <= 1 {
+		return true
+	}
+
+	return false
 }
