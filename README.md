@@ -463,6 +463,8 @@ or waste all their time trying to recreate something inobvious.
 
 ### Count nodes in less than linear time
 
+This also appears as Daily Coding Problem: Problem #736 [Easy]
+
 Given a complete binary tree,
 count the number of nodes in faster than O(n) time.
 Recall that a complete binary tree has every level filled except the last,
@@ -533,6 +535,7 @@ This isn't a bad interview question,
 if the interviewer is after a candidate's understanding of computer science.
 If the interviewer is satisfied with a more-or-less handwaving explanation,
 or giving this as a take-home problem, it's fine.
+But it's not "easy" after the hand-waving
 It contains a lot of subtleties that would cause wasted time in a whiteboard coding experience.
 The candidate wouldn't demonstrate anything worthwhile,
 just that they can puzzle over corner cases,
@@ -544,7 +547,7 @@ The node-labels-as-pointer-following-directions trick is also fairly subtle.
 I discovered it by accident.
 It's one of those "use a value as a number and also as something else" tricks
 that can make a speedy algorithm, and give clarity to an analysis,
-but are usually hard to see without puzzling over the problem.
+but are usually hard to see without lengthy puzzling over the problem.
 
 ---
 
@@ -1298,3 +1301,36 @@ and does not need to go through the root.
 #### Analysis
 
 I haven't done this one yet.
+
+---
+
+### Daily Coding Problem: Problem #702 [Medium]
+
+This problem was asked by Google.
+
+Given the root to a binary tree,
+implement serialize(root),
+which serializes the tree into a string,
+and deserialize(s),
+which deserializes the string back into the tree.
+
+For example, given the following Node class
+
+```
+class Node:
+    def __init__(self, val, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+```
+
+The following test should pass:
+
+```
+node = Node('root', Node('left', Node('left.left')), Node('right'))
+assert deserialize(serialize(node)).left.left.val == 'left.left'
+```
+
+#### Analysis
+
+"Medium"!?!
