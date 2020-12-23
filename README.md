@@ -1334,3 +1334,97 @@ assert deserialize(serialize(node)).left.left.val == 'left.left'
 #### Analysis
 
 "Medium"!?!
+
+---
+
+### Daily Coding Problem: Problem #748 [Easy]
+
+This problem was asked by Apple.
+
+Given the root of a binary tree,
+find the most frequent subtree sum.
+The subtree sum of a node is the sum of all values under a node,
+including the node itself.
+
+For example, given the following tree:
+
+```
+  5
+ / \
+2  -5
+```
+
+Return 2 as it occurs twice: once as the left leaf,
+and once as the sum of 2 + 5 - 5.
+
+#### Analysis
+
+---
+
+### Daily Coding Problem: Problem #750 [Medium]
+
+This problem was asked by Jane Street.
+
+Generate a finite,
+but an arbitrarily large binary tree quickly in O(1).
+
+That is, generate() should return a tree whose size is
+unbounded but finite.
+
+#### Analysis
+
+[Code](rando1.go)
+
+I was unsatisfied wit this,
+and after writing it,
+re-reading the problem statement makes me think
+my solution isn't what they want at all. 
+Setting the number of nodes in the "random" tree
+might not be what the interviewer desires.
+
+Beyond that, what is the "O(1)" associated with?
+For sorting, the number of swaps is important.
+For making a bunch of "random" things
+you have to generate a bunch of at least pseudo-random numbers,
+maybe to have randomly-valued nodes in the binary tree,
+or maybe to decide which branch of a node to add any
+further nodes.
+
+If we use "choosing random numbers" as the things
+we track O() for, my program misses the goal.
+My program creates O(n) random numbers for node values.
+It also creates O(log<sub>2</sub>n) random numbers to
+decide how to partition an array of node values into
+sub-trees.
+I failed this interview.
+
+#### Around the web
+
+* [Stackoverflow](https://stackoverflow.com/questions/49502112/construct-binary-tree-in-o1) solutions
+* [Daily Coding Problem](https://www.dailycodingproblem.com/blog/big-tree/https://www.dailycodingproblem.com/blog/big-tree/) blog solutions
+
+The consensus appears to be te solution is "generate the tree lazily".
+That is, node-generation only happens if and when a
+node gets accessed.
+This strikes me as cheating.
+
+### Interview Analysis
+
+Are you willing to cheat to pass an interview?
+Maybe that's a good thing for something like a pen testing position,
+but outside of that, I don't know.
+I would be unlikely to come up with lazy tree generation as a solution
+during an interview.
+Maybe I could find it if this was a take-home problem.
+
+In any case, lazy generation seems like it's very vaguely gestured to
+by the problem statement.
+If the candidate should decide on lazy generation,
+they should probably ask questions of the interviewer to see if
+that's what's desired.
+
+It's entirely possible that the question is deliberately loosely phrased to
+encourage candidates to ask questions, allowing the interviewer to see how a
+candidate thinks.
+
+---
