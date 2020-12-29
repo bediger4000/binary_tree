@@ -50,7 +50,44 @@ nodes of a BST with the desired shape in breadth-first order.
 * [invert](invert.go) a binary tree. I had it create a binary search tree so that the inversion is obvious.
 For some reason, I made `func (p *Node) Invert()` a method of tree node struct and put it in the support code.
 This has been at least 2 different "Daily Coding Problems", one rated "[Medium]"
-* [Breadth-first traverse](breadthfirst.go) iterative traverse of tree.
+
+---
+
+### Daily Coding Problem: Problem #752 [Easy]
+
+Also, Problem #107.
+
+This problem was asked by Microsoft.
+
+Print the nodes in a binary tree level-wise.
+For example, the following should print 1, 2, 3, 4, 5.
+
+```
+  1
+ / \
+2   3
+   / \
+  4   5
+```
+
+#### Analysis
+
+[Breadth-first traverse](breadthfirst.go) iterative traverse of tree.
+
+This is an old one: instead of using a stack
+(implicit function call stack, or an explicit data structure),
+the algorithm uses a FIFO queue to keep track of
+its place in the traverse of the tree.
+
+```sh
+$ go build breadthfirst.go
+$ ./breadthirst '(1(2(4)(5))(3(6)(7)))'
+1 2 3 4 5 6 7
+$
+```
+
+Due to the simplicity of this problem,
+maybe interviewers should use it only on entry-level candidates.
 
 ---
 
