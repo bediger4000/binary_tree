@@ -1412,8 +1412,8 @@ unbounded but finite.
 
 [Code](rando1.go)
 
-I was unsatisfied wit this,
-and after writing it,
+I was unsatisfied with this program.
+After writing it,
 re-reading the problem statement makes me think
 my solution isn't what they want at all. 
 Setting the number of nodes in the "random" tree
@@ -1427,8 +1427,8 @@ maybe to have randomly-valued nodes in the binary tree,
 or maybe to decide which branch of a node to add any
 further nodes.
 
-If we use "choosing random numbers" as the things
-we track O() for, my program misses the goal.
+If we use "choosing a random number" as the operation we track O() for,
+my program misses the goal.
 My program creates O(n) random numbers for node values.
 It also creates O(log<sub>2</sub>n) random numbers to
 decide how to partition an array of node values into
@@ -1441,8 +1441,8 @@ I failed this interview.
 * [Daily Coding Problem](https://www.dailycodingproblem.com/blog/big-tree/https://www.dailycodingproblem.com/blog/big-tree/) blog solutions
 
 The consensus appears to be te solution is "generate the tree lazily".
-That is, node-generation only happens if and when a
-node gets accessed.
+That is,
+node-generation only happens if and when a node gets accessed.
 This strikes me as cheating.
 
 ### Interview Analysis
