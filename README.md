@@ -167,13 +167,24 @@ by getting numeric values from the map and comparing those.
 `func insert` looks a lot like an ordinary recursive function that
 inserts values to create a binary search tree.
 
-This suggests that my current tree package `func Insert` could be
-generalized to accept a `tree.Node`, a value of type `interface{}`,
+This suggested that my tree package `func Insert` could be generalized.
+Originally, type `tree.Node` carried an int value.
+I changed the int-valued struct to `tree.NumericNode`,
+and made `tree.Node` into a Golang interface.
+Later I added `tree.StringNode`,
+for problems that require a binary tree of strings.
+I haven't generalized value insertion
+
+A generalized insert would
+accept a `tree.Node`, a value of type `interface{}`,
 a node-creation function probably of type `func(interface{}) tree.Node`,
 and a comparison function of type `func(interface{},interface{}) int`.
 String-valued nodes, integer-valued nodes and floating-point valued
 nodes could all be created and inserted based on what the comparison
 function returned.
+I still haven't done this.
+
+#### Interview Analysis
 
 An interviewer asking this question would have to decide what they wanted from the candidate.
 If a candidate had that flash of insight
