@@ -1329,11 +1329,14 @@ especially the "one nil, one non-nil child node" cases to see if the candidate
 has a good grasp of algorithms.
 There's enough code to write to ensure that the candidate can actually write
 programs in the language in question.
-The problem of finding sub-trees that have the BST property is probably not one
+The problem of finding sub-trees that have the BST property
+is probably not one
 that many candidates will have run into at work,
-so it'probably a good problem in the sense that nobody has a memorized solution.
+so it'probably a good problem in the sense that nobody
+has a memorized solution.
 
-Compared to other "hard" problems, this one really isn't. It's probably just a "medium".
+Compared to other "hard" problems, this one really isn't.
+It's probably just a "medium".
 
 ---
 
