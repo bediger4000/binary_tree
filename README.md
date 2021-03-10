@@ -1538,3 +1538,32 @@ You should convert it to:
 #### Analysis
 #### Interview Analysis
 ---
+### Daily Coding Problem: Problem #307
+
+This problem was asked by Oracle.
+
+Given a binary search tree,
+find the floor and ceiling of a given integer.
+The floor is the highest element in the tree
+less than or equal to an integer,
+while the ceiling is the lowest element in the tree
+greater than or equal to an integer.
+
+If either value does not exist, return None.
+
+#### Analysis
+#### Interview Analysis
+
+---
+
+### Daily Coding Problem: Problem #36
+
+This problem was asked by Dropbox.
+
+Given the root to a binary search tree,
+find the second largest node in the tree.
+
+#### Analysis
+#### Interview Analysis
+
+---
