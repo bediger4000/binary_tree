@@ -47,9 +47,66 @@ Still can't believe they marked that one "medium".
 This code creates a binary search tree (BST) by inserting values as they appear on the command line.
 I believe you can create a BST of any shape by inserting the values of
 nodes of a BST with the desired shape in breadth-first order.
-* [invert](invert.go) a binary tree. I had it create a binary search tree so that the inversion is obvious.
-For some reason, I made `func (p *Node) Invert()` a method of tree node struct and put it in the support code.
-This has been at least 2 different "Daily Coding Problems", one rated "[Medium]"
+
+---
+
+### Daily Coding Problem: Problem #842 [Medium]  
+
+This problem was asked by Google.
+
+Invert a binary tree.
+
+For example, given the following tree:
+
+```
+    a
+   / \
+  b   c
+ / \  /
+d   e f
+```
+
+should become:
+
+```
+  a
+ / \
+ c  b
+ \  / \
+  f e  d
+```
+
+[Code #1](invert.go)
+
+[Code #2](invert2.go)
+
+For attempt #1,
+I had it create a binary search tree of random-valued
+nodes so that the inversion is obvious.
+I wrote this one before generalizing `tree.NumericNode` and `tree.StringNode`
+into interface `tree.Node`.
+At that time, the data and left, right child pointers weren't exported,
+nor did access functions exist.
+I made `func (p *NumericNode) Invert()` a method of tree node struct and put it in the support code.
+
+Attempt #2 I wrote well after generalizing numeric and string node types,
+but I chose to use `tree.StringNode` so that I could get exactly
+the output tree that the problem statement specifies.
+I also used `func invert(node *tree.StringNode)` instead of
+a method on the node's type.
+I'm torn about object oriented programming,
+and "inverting a tree" seems less like a operation performed on
+a node, which would seem to need a method,
+and more like operating on the entire data structure.
+
+In both attempts, I found that checking for a nil node pointer
+is best done in function or method `invert`,
+to avoid complicating the inversion function with 2 tests for nil
+children.
+This has become a recurring motif.
+
+This has been at least 3 different "Daily Coding Problems",
+two rated "[Medium]"
 
 ---
 
