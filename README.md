@@ -346,7 +346,7 @@ of depth 4.
 
 ---
 
-### Cousin Nodes
+### Cousin Nodes #1
 
 #### Daily Coding Problem: Problem #487 [Medium]
 
@@ -368,6 +368,9 @@ find all cousins of that node.
 
 #### Analysis
 
+This solution doesn't meet the problem statement.
+See Cousin Nodes #2, below.
+
 [My solution](cousins.go).
 
 At first, I thought this was a fairly bogus question,
@@ -383,6 +386,62 @@ It has the opportunity to point out test cases (can't find node, can't find
 grandparent, can't find uncle, 0 through 2 cousins),
 and it allows the candidate to demonstrate some insight (only 1 node can be
 parent of cousins, it's a binary tree).
+
+---
+
+### Cousin Nodes #2
+
+This problem was asked by Yext. Whoever Yext is.
+
+Two nodes in a binary tree can be called cousins if they are on the same level
+of the tree but have different parents.
+For example,
+in the following diagram 4 and 6 are cousins.
+
+        1
+       / \
+      2   3
+     / \   \
+    4   5   6
+
+Given a binary tree and a particular node,
+find all cousins of that node.
+
+#### Analysis
+
+[My solution](cousins2.go).
+
+I see that I did Cousin Nodes #1 incorrectly.
+I misread the problem statement: cousin nodes aren't
+nodes that share a grandparent node, they're not biological cousins.
+Cousin nodes are just in the same depth in the tree.
+
+The solution has 3 parts:
+
+1. Construct the tree
+2. Find depth of the "particular node".
+3. Traverse tree, printing out or otherwise collecting
+all nodes at the same depth as the "particular node".
+
+This is actually easier than the problem that I made up
+when I misread the problem statement.
+Finding the depth of the "particular" node,
+and finding all nodes at the same depth as that node
+are completely recursive, and can be written compactly.
+With a little care about recursion termination,
+you can be pretty confident you've got the right answers.
+
+I'm less certain this is a good interview question.
+The heart of the difficulty is calling the nodes you want
+to find "cousin" nodes.
+"Cousin" has a well-defined biological meaning,
+and it's not what this problem wants.
+The explanatory diagram isn't helpful,
+in that it implies that a biologically-inspired reading is correct.
+It seems to me that this problem statement is the difficulty,
+and that the interviewer might find out programming skill,
+but will mainly be sarcastically amused when most of the candidates
+don't get the correct answer because of that.
 
 ---
 
