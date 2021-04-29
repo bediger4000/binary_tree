@@ -420,8 +420,9 @@ The solution has 3 parts:
 
 1. Construct the tree
 2. Find depth of the "particular node".
-3. Traverse tree, printing out or otherwise collecting
-all nodes at the same depth as the "particular node".
+3. Find the parent of the "particular node".
+4. Traverse tree, printing out or otherwise collecting
+all nodes at the same depth as the "particular node"
 
 This is actually easier than the problem that I made up
 when I misread the problem statement.
