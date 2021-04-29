@@ -37,45 +37,55 @@ func main() {
 	// I can get any shape tree I want.
 	root := tree.CreateNumericFromString(os.Args[2])
 
-	d := findDepth(root, targetNodeValue, 0)
+	d, p := findDepth(root, targetNodeValue, 0)
 
-	fmt.Printf("Particular node of value %d at depth %d\n",
-		targetNodeValue, d)
+	fmt.Printf("Particular node of value %d at depth %d, parent %d\n",
+		targetNodeValue, d, p)
 
-	nodesAtDepth(root, targetNodeValue, d, 0)
+	nodesAtDepth(root, targetNodeValue, p, d, 0)
 }
 
 // findDepth returns the depth in the tree (root has depth 0)
 // of a node with data value of value (argument),
-// or -1 if value not found
-func findDepth(node *tree.NumericNode, value int, depth int) int {
+// or -1 if value not found. Also return the value of the parent node.
+func findDepth(node *tree.NumericNode, value int, depth int) (int, int) {
 	if node == nil {
-		return -1
+		return -1, 0
 	}
 	if node.Data == value {
-		return depth
+		return depth, 0
 	}
-	d := findDepth(node.Left, value, depth+1)
+	d, p := findDepth(node.Left, value, depth+1)
 	if d > -1 {
-		return d
+		if d == depth+1 {
+			// this is the parent node
+			return d, node.Data
+		}
+		return d, p
 	}
-	return findDepth(node.Right, value, depth+1)
+	d, p = findDepth(node.Right, value, depth+1)
+	if d > -1 {
+		if d == depth+1 {
+			// this is the parent node
+			return d, node.Data
+		}
+	}
+	return d, p
 }
 
 // nodesAtDepth prints the value of nodes at depth desiredDepth,
 // but not the node with data value cousin. That's the "particular node"
 // itself.
-func nodesAtDepth(node *tree.NumericNode, cousin, desiredDepth, depth int) {
-	if node == nil {
-		return
-	}
-	if node.Data == cousin {
+func nodesAtDepth(node *tree.NumericNode, parentValue, cousin, desiredDepth, depth int) {
+	if node == nil ||
+		node.Data == cousin ||
+		node.Data == parentValue {
 		return
 	}
 	if desiredDepth == depth {
 		fmt.Printf("Cousin node %d\n", node.Data)
 		return
 	}
-	nodesAtDepth(node.Left, cousin, desiredDepth, depth+1)
-	nodesAtDepth(node.Right, cousin, desiredDepth, depth+1)
+	nodesAtDepth(node.Left, parentValue, cousin, desiredDepth, depth+1)
+	nodesAtDepth(node.Right, parentValue, cousin, desiredDepth, depth+1)
 }
