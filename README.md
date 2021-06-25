@@ -370,6 +370,8 @@ find all cousins of that node.
 
 This solution doesn't meet the problem statement.
 See Cousin Nodes #2, below.
+I was misled by my intuition of what "cousins" means
+geneologically in the USA and by the example given.
 
 [My solution](cousins.go).
 
