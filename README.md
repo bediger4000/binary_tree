@@ -1655,6 +1655,13 @@ You should convert it to:
 ```
 
 #### Analysis
+
+This can be solved recursively,
+by removing single-children from the bottom up.
+Recurse to leaf nodes,
+then on the way back up the tree,
+delete nodes with only 1 child.
+
 #### Interview Analysis
 ---
 ### Daily Coding Problem: Problem #307
@@ -1669,18 +1676,6 @@ while the ceiling is the lowest element in the tree
 greater than or equal to an integer.
 
 If either value does not exist, return None.
-
-#### Analysis
-#### Interview Analysis
-
----
-
-### Daily Coding Problem: Problem #36
-
-This problem was asked by Dropbox.
-
-Given the root to a binary search tree,
-find the second largest node in the tree.
 
 #### Analysis
 #### Interview Analysis
