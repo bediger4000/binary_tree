@@ -1507,7 +1507,18 @@ assert deserialize(serialize(node)).left.left.val == 'left.left'
 
 #### Analysis
 
-"Medium"!?!
+"Medium"!?! The serializing isn't particularly difficult,
+but deserializing any Lisp S-expression type representation will be tough.
+If you allow whitespace, it becomes a lot more difficult.
+
+My `tree` package implements this in [create.go](tree/create.go).
+Specifically, functions `tree.CreateFromString`, `tree.CreateNumericFromString`
+do the deserialization,
+and function `tree.Printf` does the serialization.
+These functions get used in many of the other problem solutions.
+
+[My code](serialize.go) is in Go, not Python as above,
+but it meets the problem statement.
 
 ---
 
