@@ -1519,6 +1519,15 @@ These functions get used in many of the other problem solutions.
 
 [My code](serialize.go) is in Go, not Python as above,
 but it meets the problem statement.
+The [utility program](readtree.go) to create GraphViz output of a tree
+almost meets the problem statement.
+
+As an interview question this might not be bad.
+The interviewer gets to see a lot of coding for the de-serialization part.
+The candidate can note where corner cases like "Missing ')'" might cause problems.
+A node with a right child, but no left child is also a test case.
+This would be a harsh problem for whiteboarding - it's harder than many other
+"[Hard]" coding problems.
 
 ---
 
