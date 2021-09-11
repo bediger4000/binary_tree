@@ -46,7 +46,9 @@ func main() {
 
 	buf := &bytes.Buffer{}
 	tree.Printf(buf, root)
-	newroot := tree.CreateFromString(buf.String())
+	treeAsString := buf.String()
+	fmt.Printf("Tree as string: %q\n", treeAsString)
+	newroot := tree.CreateFromString(treeAsString)
 
 	if newroot.Left.Left.Data != "left.left" {
 		log.Fatal("test failed")
