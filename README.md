@@ -186,7 +186,8 @@ and some case in the middle might be in order.
 
 This is Daily Coding Problem: Problem #435 [Medium]
 
-Given pre-order and in-order traversals of a binary tree, write a function to reconstruct the tree.
+Given pre-order and in-order traversals of a binary tree,
+write a function to reconstruct the tree.
 
 For example, given the following preorder traversal:
 
@@ -224,22 +225,22 @@ by getting numeric values from the map and comparing those.
 `func insert` looks a lot like an ordinary recursive function that
 inserts values to create a binary search tree.
 
-This suggested that my tree package `func Insert` could be generalized.
+At the time I encountered this problem,
+it suggested that my tree package `func Insert` could be generalized.
 Originally, type `tree.Node` carried an int value.
 I changed the int-valued struct to `tree.NumericNode`,
 and made `tree.Node` into a Golang interface.
 Later I added `tree.StringNode`,
 for problems that require a binary tree of strings.
-I haven't generalized value insertion
 
-A generalized insert would
-accept a `tree.Node`, a value of type `interface{}`,
-a node-creation function probably of type `func(interface{}) tree.Node`,
-and a comparison function of type `func(interface{},interface{}) int`.
-String-valued nodes, integer-valued nodes and floating-point valued
-nodes could all be created and inserted based on what the comparison
-function returned.
-I still haven't done this.
+I created a generalized binary tree node,
+type `tree.Node`, a Go interface type.
+Types `tree.NumericNode` and `tree.StringNode`,
+both structs,
+have accompanying methods that make them satisfy the `tree.Node` interface.
+Function `tree.GeneralCreateFromString` can and is used to
+create binary trees with integer value nodes (`func CreateNumericFromString`)
+and string value nodes (`func CreateFromString`).
 
 #### Interview Analysis
 
