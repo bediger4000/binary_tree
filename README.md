@@ -1311,7 +1311,11 @@ Given a sequence S, construct the corresponding Cartesian tree.
 
 #### Analysis
 
-I haven't done this one yet.
+There are [several](https://en.wikipedia.org/wiki/Cartesian_tree#Efficient_construction)
+methods for constructing a Cartesian tree,
+none of them obvious.
+
+I haven't done this yet.
 
 ---
 
