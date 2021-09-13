@@ -438,14 +438,14 @@ you can be pretty confident you've got the right answers.
 I'm less certain this is a good interview question.
 The heart of the difficulty is calling the nodes you want
 to find "cousin" nodes.
-"Cousin" has a well-defined biological meaning,
+"Cousin" has a well-defined familial or geneological meaning,
 and it's not what this problem wants.
-The explanatory diagram isn't helpful,
+The explanatory diagram is misleading,
 in that it implies that a biologically-inspired reading is correct.
 It seems to me that this problem statement is the difficulty,
 and that the interviewer might find out programming skill,
 but will mainly be sarcastically amused when most of the candidates
-don't get the correct answer because of that.
+don't get the correct answer.
 
 ---
 
@@ -552,10 +552,10 @@ it can create different minimal height trees from different runs with the same i
 
 I also wrote the [straightforward version](minimal_ht_tree2.go) of this.
 It's a lot clearer,
-but it always creates the same tree from any given output.
+but it always creates the same tree every time from any given output.
 
-This seems like a harder interview question,
-the interviewer should prepare to prompt the candidate.
+This seems like a harder interview question.
+The interviewer should prepare to prompt the candidate.
 It requires some insight to notice that "sorted array" and
 "binary search tree" have a relationship
 via the middle-node-becomes-root,
@@ -1366,8 +1366,8 @@ to fill in left and right children of the new node.
 Return the new node.
 This is 2 cases in the code, left tree nil, right tree non-nil,
 and vice versa.
-* If the merge function gets 2 non-nil node,
-it creates a new node with the sum of the values nodes,
+* If the merge function gets 2 non-nil nodes,
+ereate a new node with the sum of the input nodes' values,
 call the merge function on the left children of each node
 to create the left child of the new node.
 Call the merge function on the right children of each node
@@ -1385,7 +1385,7 @@ You don't have to write a `CopyTree` function,
 the merge function can take care of it.
 
 The interviewer can watch for experience indicators,
-like having the merge function handle both arguments nil
+like having the merge function handle both nil arguments
 rather than having duplicated tests for non-nil in the code.
 The interviewer could elicit more from the candidate by
 asking for test cases,
@@ -1677,6 +1677,8 @@ You should convert it to:
 
 #### Analysis
 
+I haven't done this one yet.
+
 This can be solved recursively,
 by removing single-children from the bottom up.
 Recurse to leaf nodes,
@@ -1699,6 +1701,9 @@ greater than or equal to an integer.
 If either value does not exist, return None.
 
 #### Analysis
+
+I haven't done this one yet.
+
 #### Interview Analysis
 
 ---
@@ -1711,7 +1716,54 @@ Given the root to a binary search tree,
 find the second largest node in the tree.
 
 #### Analysis
+
+The largest valued node in a binary search tree is the right-most node.
+The second-largest-valued node depends on the shape of the tree.
+
+```
+    1        2        1
+   / \      /          \
+  0   2    1            2
+```
+
+The largest valued node in the above 3 trees has the value 2,
+but the second-largest-value can be its parent or its left child.
+
+[My code](secondlargest.go) prints the largest and second-largest values.
+
 #### Interview Analysis
+
+The problem statement is problematic. 
+"Second largest node in the tree"
+confuses "node" with "value of node's data".
+So what does "find the second largest node" mean?
+I'm sure most people will find the 2nd-largest-value of nodes
+in the tree, but it's certainly possible to decide that the
+"second largest node" is the parent of the 2nd-largest population subtree.
+Does "find the node" mean return a pointer to that node,
+or returning the second-largest-value of nodes in the tree,
+or just printing out the second-largest-value as I did?
+
+This problem statement should be re-phrased
+to ask for something less ambiguous.
+An interviewer asking this question will get a lot of clarifying
+questions from some candidates,
+and some shocking code from a few candidates that both
+think unconventionally, and are either afraid to ask questions,
+or are so sure of themselves that they just do some bizarro thing
+like figure out which immediate child of the root node has the biggest
+tree.
+
+Of the more conventionally-minded candidates,
+or those candidates that understand the distinction between "data"
+and "data structure",
+this problem could potentially weed out those that don't know about
+binary trees.
+
+The lesson in this one for candidates is: ask clarifying questions.
+Do you understand what "largest node" means?
+What does "find the node" mean - return the node, return the value,
+or just output something when the code receives that node as argument?
 
 ---
 
@@ -1736,6 +1788,8 @@ and the range [4, 9],
 return 23 (5 + 4 + 6 + 8).
 
 #### Analysis
+
+I haven't done this one yet.
 #### Interview Analysis
 
 ---
