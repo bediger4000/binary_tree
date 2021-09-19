@@ -42,8 +42,8 @@ func PreorderTraverseVisit(node Node, fn VisitorFunc) {
 		return
 	}
 	fn(node)
-	InorderTraverseVisit(node.LeftChild(), fn)
-	InorderTraverseVisit(node.RightChild(), fn)
+	PreorderTraverseVisit(node.LeftChild(), fn)
+	PreorderTraverseVisit(node.RightChild(), fn)
 }
 
 // InorderTraverse prints nodes' values on stdout in order.
