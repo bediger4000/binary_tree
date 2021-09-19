@@ -34,6 +34,9 @@ func findDepth(root tree.Node) (maxDepth int, deepNode tree.Node) {
 
 	var depth int
 
+	// you could also implement a struct with depth and a Node element,
+	// "detach" a function using the "object.Method" syntax to get the
+	// correct function signature, and set that as the visitor functions.
 	preorderfun := func(node tree.Node) {
 		depth += 1
 	}
