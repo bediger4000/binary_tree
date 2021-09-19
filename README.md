@@ -80,6 +80,8 @@ should become:
 
 [Code #2](invert2.go)
 
+[Code #3](invertnode.go)
+
 For attempt #1,
 I had it create a binary search tree of random-valued
 nodes so that the inversion is obvious.
@@ -99,7 +101,10 @@ and "inverting a tree" seems less like a operation performed on
 a node, which would seem to need a method,
 and more like operating on the entire data structure.
 
-In both attempts, I found that checking for a nil node pointer
+Attempt #3 uses `tree.Node`  Go interface types to see if that's possible,
+and it is.
+
+In all attempts, I found that checking for a nil node pointer
 is best done in function or method `invert`,
 to avoid complicating the inversion function with 2 tests for nil
 children.
@@ -1714,6 +1719,8 @@ I haven't done this one yet.
 
 ### Daily Coding Problem: Problem #36
 
+Also: Daily Coding Problem: Problem #992 [Medium] 
+
 This problem was asked by Dropbox.
 
 Given the root to a binary search tree,
@@ -1736,6 +1743,8 @@ but the second-largest-value can be its parent or its left child.
 [My code](secondlargest.go) prints the largest and second-largest values.
 
 #### Interview Analysis
+
+This is relatively easy for a Daily Coding Problem "[Medium]" problem.
 
 The problem statement is problematic. 
 "Second largest node in the tree"
@@ -1764,10 +1773,13 @@ and "data structure",
 this problem could potentially weed out those that don't know about
 binary trees.
 
-The lesson in this one for candidates is: ask clarifying questions.
+One lesson in this one for candidates is: ask clarifying questions.
 Do you understand what "largest node" means?
 What does "find the node" mean - return the node, return the value,
 or just output something when the code receives that node as argument?
+
+Another lesson is that these coding problems aren't always well thought out,
+or even able to help an interviewer ascertain your skills. 
 
 ---
 
