@@ -27,11 +27,7 @@ func main() {
 // inordertraverse sets up tree.AllorderTraverseVisit for in-order
 // traverse of a tree.
 func inordertraverse(root *tree.NumericNode) {
-	tree.AllorderTraverseVisit(root, nonFunc, printnode, nonFunc)
-}
-
-// nonFunc does nothing, used in preorder and postorder visits
-func nonFunc(node tree.Node) {
+	tree.AllorderTraverseVisit(root, nil, printnode, nil)
 }
 
 func printnode(node tree.Node) {
