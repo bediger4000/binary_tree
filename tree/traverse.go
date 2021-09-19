@@ -23,16 +23,23 @@ func InorderTraverseVisit(node Node, fn VisitorFunc) {
 }
 
 // AllorderTraverseVisit does a traverse of a binary tree,
-// callling a function pre-order, in-order and post-order at every node
+// potentially callling a function pre-order, in-order and/or
+// post-order at every node
 func AllorderTraverseVisit(node Node, preorderfn, inorderfn, postorderfn VisitorFunc) {
 	if node.IsNil() {
 		return
 	}
-	preorderfn(node)
+	if preorderfn != nil {
+		preorderfn(node)
+	}
 	AllorderTraverseVisit(node.LeftChild(), preorderfn, inorderfn, postorderfn)
-	inorderfn(node)
+	if inorderfn != nil {
+		inorderfn(node)
+	}
 	AllorderTraverseVisit(node.RightChild(), preorderfn, inorderfn, postorderfn)
-	postorderfn(node)
+	if postorderfn != nil {
+		postorderfn(node)
+	}
 }
 
 // PreorderTraverseVisit does a traverse of a binary tree,
