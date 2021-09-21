@@ -169,6 +169,12 @@ Given the root of a binary tree, return a deepest node. For example, in the foll
 
 * First cut at [finding depth](tree_depth.go) of tree, carries a struct around.
 * Second cut at [finding depth](tree_depth2.go) of tree, completely recursive, returns deepest node.
+* Third cut at [finding depth](tree_depth_node.go) of tree. Uses `tree.Node` interface,
+`func tree.AllorderTraverseVisit`. No globals involved.
+
+The problem statement confuses data with data structure.
+The "deepest node" of the example isn't 'd', but 'd' is the value of the deepest node.
+Interviewers should be clear, in my opinion.
 
 This is a question for an entry-level position interview.
 It involves a traverse of a binary tree where the value of the
@@ -184,6 +190,9 @@ If the candidate were to suggest test cases,
 a single-node tree, left-heavy like the example,
 a complementary right-deep test,
 and some case in the middle might be in order.
+
+I did the third version as an exercize: see if visitor functions and
+interface type `tree.Node` could do the task.
 
 ---
 
