@@ -27,11 +27,28 @@ func main() {
 		log.Fatal(err)
 	}
 
+	root := createHeap(n)
+
+	if drawGraph {
+		fmt.Print("/* ")
+	}
+	tree.Print(root)
+	if drawGraph {
+		fmt.Print(" */")
+	}
+	fmt.Println()
+
+	if drawGraph {
+		tree.Draw(root)
+	}
+}
+
+func createHeap(n int) (root *tree.NumericNode) {
 	stack := &tree.Stack{}
 
 	count := n
 	n--
-	root := &tree.NumericNode{Data: (count - n)}
+	root = &tree.NumericNode{Data: (count - n)}
 
 	stack.Push(root)
 
@@ -47,16 +64,5 @@ func main() {
 		}
 	}
 
-	if drawGraph {
-		fmt.Print("/* ")
-	}
-	tree.Print(root)
-	if drawGraph {
-		fmt.Print(" */")
-	}
-	fmt.Println()
-
-	if drawGraph {
-		tree.Draw(root)
-	}
+	return root
 }
