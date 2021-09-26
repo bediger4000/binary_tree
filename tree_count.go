@@ -17,8 +17,8 @@ import (
 )
 
 func main() {
-	root := tree.CreateNumeric(os.Args[1:])
-	nodeCount := len(os.Args[1:])
+	root := tree.CreateNumericFromString(os.Args[1])
+	nodeCount := countNodes(root)
 
 	leftdepth := tree.LeftDepth(root)
 	rightdepth := tree.RightDepth(root)
@@ -147,4 +147,13 @@ func addAndHalf(t1, t2 turns) turns {
 		rt[i], tmp = tmp, rt[i]
 	}
 	return rt
+}
+
+func countNodes(node tree.Node) int {
+	if node.IsNil() {
+		return 0
+	}
+	l := countNodes(node.LeftChild())
+	r := countNodes(node.LeftChild())
+	return r + l + 1
 }
