@@ -3,6 +3,16 @@ package main
 /*
  * Print lisp-like serialized tree with heap property.
  * Creates binary tree of *tree.NumericNode, then prints it.
+ * With -g flag, prints GraphViz representation on stdout.
+ *
+ * Node data like this:
+ *            1
+ *           / \
+ *          2   3
+ *         / \
+ *        4   5
+ *
+ * Root is node with data 1, final node is node with data N.
  */
 
 import (
