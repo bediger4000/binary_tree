@@ -89,5 +89,5 @@ func main() {
 type StringSlice []string
 
 func (ss *StringSlice) appendString(node tree.Node) {
-	(*ss) = append(*ss, fmt.Sprintf("%s", node))
+	(*ss) = append(*ss, node.String())
 }

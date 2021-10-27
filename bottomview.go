@@ -112,7 +112,6 @@ func main() {
 	sort.Sort(NodeArray(nodeArray))
 
 	for _, node := range nodeArray {
-		// fmt.Printf("%d/%d\t%d\n", node.Distance, node.Depth, node.Data)
 		fmt.Printf("%d ", node.Data)
 	}
 	fmt.Println()

@@ -48,7 +48,7 @@ func main() {
 // findDepth returns the depth in the tree (root has depth 0)
 // of a node with data value of value (argument),
 // or -1 if value not found. Also return the value of the parent node.
-func findDepth(node *tree.NumericNode, value int, depth int) (int, int) {
+func findDepth(node *tree.NumericNode, value, depth int) (int, int) {
 	if node == nil {
 		return -1, 0
 	}
