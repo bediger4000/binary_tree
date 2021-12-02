@@ -1855,3 +1855,12 @@ Use the BST property to decide which subtree to move to.
 
 #### Interview Analysis
 ---
+### Daily Coding Problem: Problem #1057 [Easy]
+
+This problem was asked by Amazon.
+
+Given an integer N, construct all possible binary search trees with N nodes.
+
+### Analysis
+
+I haven't done this for a while, and not in this context.
