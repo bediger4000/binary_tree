@@ -668,7 +668,7 @@ I know "complete binary tree" as "tree having the heap property".
 
 Solutions easily found on the web don't do the actual work,
 the authors merely describe how to do it.
-It's harder to do it than wave your hands about it.
+It's harder to do it than to wave your hands about it.
 
 Suppose you number the child pointers, 0 for left child pointers,
 1 for right child pointers.
@@ -1861,6 +1861,40 @@ This problem was asked by Amazon.
 
 Given an integer N, construct all possible binary search trees with N nodes.
 
-### Analysis
+#### Analysis
 
-I haven't done this for a while, and not in this context.
+I haven't done this in a while, and not in this context.
+
+---
+### Daily Coding Problem: Problem #1072 [Easy]
+
+This problem was asked by Facebook.
+
+Given a binary tree, return the level of the tree with minimum sum.
+
+#### Analysis
+
+I haven't done this yet.
+
+The problem seems poorly phrased:
+it asks the candidate to assume numerically-valued nodes,
+but are they integer values or floating point?
+Summing floating point numbers of radically varying magnitude
+can have unintuitive results.
+
+---
+### Daily Coding Problem: Problem #1098 [Easy] 
+
+This problem was asked by Oracle.
+
+Given a binary search tree, find the floor and ceiling of a given integer.
+The floor is the highest element in the tree less than or equal to an integer,
+while the ceiling is the lowest element in the tree greater than or equal to an integer.
+
+If either value does not exist, return None.
+
+#### Analysis
+
+I haven't done this yet.
+
+The phrase "binary search tree" is undoubtedly important.
