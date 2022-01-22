@@ -157,7 +157,8 @@ maybe interviewers should use it only on entry-level candidates.
 
 This problem was asked by Google.
 
-Given the root of a binary tree, return a deepest node. For example, in the following tree, return d.
+Given the root of a binary tree, return a deepest node.
+For example, in the following tree, return d.
 
         a
        / \
@@ -171,6 +172,9 @@ Given the root of a binary tree, return a deepest node. For example, in the foll
 * Second cut at [finding depth](tree_depth2.go) of tree, completely recursive, returns deepest node.
 * Third cut at [finding depth](tree_depth_node.go) of tree. Uses `tree.Node` interface,
 `func tree.AllorderTraverseVisit`. No globals involved.
+* Fourth cut at [finding depth](tree_depth_chan.go) of tree, using Go channels.
+This is an example of Go-peculiar program structure,
+leveraging channels and goroutines.
 
 The problem statement confuses data with data structure.
 The "deepest node" of the example isn't 'd', but 'd' is the value of the deepest node.
@@ -193,6 +197,15 @@ and some case in the middle might be in order.
 
 I did the third version as an exercize: see if visitor functions and
 interface type `tree.Node` could do the task.
+
+I did the fourth version to show a Go-peculiar design pattern.
+Have a goroutine generate some plausible values,
+writing them to a channel.
+The main goroutine reads from the channel and filters the plausible values
+into desired value(s).
+Recursive functions are simplified,
+since the code for filtering the plausible values lives in the main goroutine,
+and nothing has to be returned: possible answers get written to a channel.
 
 ---
 
