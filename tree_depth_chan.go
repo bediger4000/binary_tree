@@ -16,6 +16,11 @@ import (
  *   b   c
  *  /
  * d
+ *
+ * A goroutine running a recursive func traverses the tree,
+ * sends back leaf nodes and their depths.
+ * main goroutine reads from channel, and keeps track of a
+ * the deepest leaf node that the recursive func finds.
  */
 
 type deepNode struct {
