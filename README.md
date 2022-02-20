@@ -1911,3 +1911,71 @@ If either value does not exist, return None.
 I haven't done this yet.
 
 The phrase "binary search tree" is undoubtedly important.
+---
+
+### Daily Coding Problem: Problem #1107 [Hard] 
+
+This problem was asked by Adobe.
+
+You are given a tree with an even number of nodes.
+Consider each connection between a parent and child node to be an "edge".
+You would like to remove some of these edges,
+such that the disconnected subtrees that remain each have an even number of nodes.
+
+For example, suppose your input was the following tree:
+
+```
+   1
+  / \ 
+ 2   3
+    / \ 
+   4   5
+ / | \
+6  7  8
+```
+
+In this case, removing the edge (3, 4) satisfies our requirement.
+
+Write a function that returns the maximum number of edges you can remove while
+still satisfying this requirement.
+
+#### Analysis
+
+I haven't done this yet.
+
+---
+
+### LC 114 [Medium] Flatten Binary Tree to Linked List
+
+
+Question: Given a binary tree, flatten it to a linked list in-place.
+
+For example, given the following tree:
+
+```
+    1
+   / \
+  2   5
+ / \   \
+3   4   6
+```
+
+    The flattened tree should look like:
+
+```
+1
+ \
+  2
+   \
+    3
+     \
+      4
+       \
+        5
+         \
+          6
+```
+
+#### Analysis
+
+I haven't done this yet.
