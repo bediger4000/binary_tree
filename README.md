@@ -1947,7 +1947,6 @@ I haven't done this yet.
 
 ### LC 114 [Medium] Flatten Binary Tree to Linked List
 
-
 Question: Given a binary tree, flatten it to a linked list in-place.
 
 For example, given the following tree:
@@ -1960,7 +1959,7 @@ For example, given the following tree:
 3   4   6
 ```
 
-    The flattened tree should look like:
+The flattened tree should look like:
 
 ```
 1
@@ -1978,4 +1977,60 @@ For example, given the following tree:
 
 #### Analysis
 
-I haven't done this yet.
+This problem loosely describes taking a binary tree as input
+and returning a linked list with numeric data items in pre-order traversal,
+The "right child" pointer of each tree node refers to
+the next list node.
+
+The example is (deliberately?) confusing.
+The binary tree given is almost a Binary Search Tree,
+while the linked list has nodes with numeric data in ascending order.
+You might get baffled by the example,
+and link the nodes by in-order-traversal of the tree.
+Maybe that's what the problem statement really wants,
+and the example is wrong:
+it's harder to convert a pre-order traverse into a linked list in order.
+I'm going to assume they want a pre-order-traverse-linked-list.
+
+The problem statement says to flatten the tree "in-place",
+which presumably rules out a pre-order traversal with a slice or array
+of tree elements that your program fills in,
+then walking the array to get linking pointers correct.
+
+I did this two ways:
+
+1. [Purely recursive](list_from_tree2.go]
+2. Go-style using [casual concurrency](list_from_tree.go)
+
+Both programs pass around pointers with abandon.
+The recursive program might as well be written in C,
+but the Go-style,
+casually concurrent version, could not be.
+The casually concurrent version has clearer recursion,
+It does have about 30% more lines than the recursive version,
+so this may be a wash.
+
+Both versions use the call stack to hold left and right child pointers
+of a tree node so that an arbitrary nodes `Left` and `Right` data elements
+can be set to nil or used as the "next" linked list pointer.
+This is key to getting the linked list in pre-order-traverse-order.
+
+#### Interview Analysis
+
+"Medium" might constitute a correct rating for this problem,
+but I think you could argue for "Hard".
+The candidate has to know pre-order traverse,
+and get some oddly tricky link-pointer manipulation correct.
+The problem statement and example seem less than straightforward.
+
+If I go this as an interview question, I would talk though my design,
+noting, perhaps with code comments, the places I wasn't sure of,
+or believed that experimentation would let me get correct.
+
+Test cases would be important to note: 1-element,
+complete binary tree, all-left-branch binary tree inputs would be good tests.
+Testing some arrangement of data values to prove pre-order-traversal would be good.
+
+The interviewer who posed this question should be ashamed of themselves.
+It's seems deliberately misleading.
+The example doesn't really add any information.
