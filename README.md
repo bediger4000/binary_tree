@@ -1999,7 +1999,7 @@ then walking the array to get linking pointers correct.
 
 I did this two ways:
 
-1. [Purely recursive](list_from_tree2.go]
+1. [Purely recursive](list_from_tree2.go)
 2. Go-style using [casual concurrency](list_from_tree.go)
 
 Both programs pass around pointers with abandon.
@@ -2014,6 +2014,10 @@ Both versions use the call stack to hold left and right child pointers
 of a tree node so that an arbitrary nodes `Left` and `Right` data elements
 can be set to nil or used as the "next" linked list pointer.
 This is key to getting the linked list in pre-order-traverse-order.
+If those pointer values don't get saved on the call stack,
+some other explicit stack would have to exist to hold them.
+Does either of these 2 solutions count as "in place" if they use the call
+stack to keep track of left/right child pointers and next list pointers?
 
 #### Interview Analysis
 
@@ -2024,7 +2028,7 @@ and get some oddly tricky link-pointer manipulation correct.
 The problem statement and example seem less than straightforward.
 
 If I go this as an interview question, I would talk though my design,
-noting, perhaps with code comments, the places I wasn't sure of,
+noting the places I wasn't sure of,
 or believed that experimentation would let me get correct.
 
 Test cases would be important to note: 1-element,
