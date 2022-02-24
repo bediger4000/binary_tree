@@ -450,8 +450,7 @@ The solution has 3 parts:
 
 1. Construct the tree
 2. Find depth of the "particular node".
-3. Find the parent of the "particular node".
-4. Traverse tree, printing out or otherwise collecting
+3. Traverse tree, printing out or otherwise collecting
 all nodes at the same depth as the "particular node"
 
 This is actually easier than the problem that I made up
@@ -1589,6 +1588,8 @@ and once as the sum of 2 + 5 - 5.
 
 #### Analysis
 
+I haven't done this one.
+
 ---
 
 ### Daily Coding Problem: Problem #750 [Medium]
@@ -1997,27 +1998,30 @@ which presumably rules out a pre-order traversal with a slice or array
 of tree elements that your program fills in,
 then walking the array to get linking pointers correct.
 
-I did this two ways:
+I did this three ways:
 
 1. [Purely recursive](list_from_tree2.go)
 2. Go-style using [casual concurrency](list_from_tree.go)
+3. [Iteratively](list_from_tree3.go), using an explicit stack for the pre-order traverse
 
-Both programs pass around pointers with abandon.
-The recursive program might as well be written in C,
+All programs pass around pointers with abandon.
+The recursive and iterative programs might as well be written in C,
 but the Go-style,
 casually concurrent version, could not be.
 The casually concurrent version has clearer recursion,
 It does have about 30% more lines than the recursive version,
 so this may be a wash.
 
-Both versions use the call stack to hold left and right child pointers
+Recursive and concurrent versions use the call stack to hold left and right child pointers
 of a tree node so that an arbitrary nodes `Left` and `Right` data elements
 can be set to nil or used as the "next" linked list pointer.
 This is key to getting the linked list in pre-order-traverse-order.
 If those pointer values don't get saved on the call stack,
-some other explicit stack would have to exist to hold them.
-Does either of these 2 solutions count as "in place" if they use the call
-stack to keep track of left/right child pointers and next list pointers?
+some other explicit stack would have to exist to hold them,
+as illustrated by the iterative version.
+Does either of the recursive or iterative solutions count as "in place"
+if they use the call stack
+to keep track of left/right child pointers and next list pointers?
 
 #### Interview Analysis
 
@@ -2025,6 +2029,7 @@ stack to keep track of left/right child pointers and next list pointers?
 but I think you could argue for "Hard".
 The candidate has to know pre-order traverse,
 and get some oddly tricky link-pointer manipulation correct.
+The problem deals with two different data structures.
 The problem statement and example seem less than straightforward.
 
 If I go this as an interview question, I would talk though my design,
