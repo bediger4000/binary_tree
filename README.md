@@ -530,7 +530,7 @@ because `prunable()` would have to recurse each node's two
 child sub-trees, and then you'd want to write code to recurse into
 each of the sub-trees.
 
-This is probably a pretty good interview question,
+This is a pretty good interview question,
 if you want to see if the candidate has that flash of intuition,
 which may not arrive during the pressure of a whiteboard question.
 
@@ -843,7 +843,7 @@ I declare this problem statement to be cunningly misleading.
 
 This isn't one of those "flash of insight necessary" problems.
 In that respect, it's a decent interview problem.
-The interviewer should probably tailor their expectations
+The interviewer should tailor their expectations
 for solutions based on what the candidate claims their experience is.
 Less senior developers would be lucky to write code that partially works.
 More senior developers might get a good analysis of the problem,
@@ -1062,7 +1062,7 @@ and the range [4, 9], return 23 (5 + 4 + 6 + 8).
 
 #### Analysis
 
-The obvious solution is to do a full traverse of the input tree, 
+The obvious solution is to do a traverse of the input tree, 
 carrying around a pointer to an int, the sum so far.
 At each node, check if the value is in the range [a, b],
 and add it to the pointed-to-int.
@@ -1077,7 +1077,7 @@ My thought is that any time a binary tree problem or puzzle
 says that the tree has the binary search property,
 it's worth considering how to make that problem faster
 using the BST property.
-Seeing a candidate recognize and use that property is probably
+Seeing a candidate recognize and use that property is
 what this question is all about, for an interviewer.
 
 The candidate should consider test cases,
@@ -1477,7 +1477,7 @@ My solution assumes that the interviewer wants to find binary search trees
 that go all the way to the leaf nodes.
 It's possible that the interviewer wanted a BST that encompasses only part of the entire tree.
 That would be a harder problem,
-but the candidate could probably do some elaborate checking on left and right
+but the candidate could do some elaborate checking on left and right
 child values even if they don't comprise roots of BSTs themselves.
 This seems kind of nonsensical, though.
 
@@ -1485,16 +1485,15 @@ It looks to me like the interviewer could watch a candidate reason out the
 recursive function,
 especially the "one nil, one non-nil child node" cases to see if the candidate
 has a good grasp of algorithms.
-There's enough code to write to ensure that the candidate can actually write
+Solving this problem requires enough code
+to ensure that the candidate can actually write
 programs in the language in question.
-The problem of finding sub-trees that have the BST property
-is probably not one
-that many candidates will have run into at work,
-so it'probably a good problem in the sense that nobody
-has a memorized solution.
+Not many candidates will have run into
+the problem of finding sub-trees that have the BST property
+at work, so nobody has a memorized solution.
 
 Compared to other "hard" problems, this one really isn't.
-It's probably just a "medium".
+I'd rate it just a "medium".
 
 ---
 
@@ -1545,6 +1544,7 @@ assert deserialize(serialize(node)).left.left.val == 'left.left'
 "Medium"!?! The serializing isn't particularly difficult,
 but deserializing any Lisp S-expression type representation will be tough.
 If you allow whitespace, it becomes a lot more difficult.
+Part of the difficulty of this problem is designing the serialized text representation.
 
 My `tree` package implements this in [create.go](tree/create.go).
 Specifically, functions `tree.CreateFromString`, `tree.CreateNumericFromString`
@@ -1634,9 +1634,9 @@ I failed this interview.
 * [Stackoverflow](https://stackoverflow.com/questions/49502112/construct-binary-tree-in-o1) solutions
 * [Daily Coding Problem](https://www.dailycodingproblem.com/blog/big-tree/https://www.dailycodingproblem.com/blog/big-tree/) blog solutions
 
-The consensus appears to be te solution is "generate the tree lazily".
+The consensus appears to be "generate the tree lazily".
 That is,
-node-generation only happens if and when a node gets accessed.
+node-generation happens if and when a node gets accessed.
 This strikes me as cheating.
 
 ### Interview Analysis
@@ -1912,6 +1912,7 @@ If either value does not exist, return None.
 I haven't done this yet.
 
 The phrase "binary search tree" is undoubtedly important.
+
 ---
 
 ### Daily Coding Problem: Problem #1107 [Hard] 
