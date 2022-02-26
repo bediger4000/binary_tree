@@ -46,8 +46,7 @@ func main() {
 	fmt.Println()
 }
 
-func flatten(node *tree.NumericNode) {
-	curr := node
+func flatten(curr *tree.NumericNode) {
 	for curr != nil {
 		if curr.Left != nil {
 			prev := curr.Left
