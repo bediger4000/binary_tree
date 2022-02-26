@@ -1999,11 +1999,13 @@ which presumably rules out a pre-order traversal with a slice or array
 of tree elements that your program fills in,
 then walking the array to get linking pointers correct.
 
-I did this three ways:
+I did this five ways:
 
 1. [Purely recursive](list_from_tree2.go)
 2. Go-style using [casual concurrency](list_from_tree.go)
 3. [Iteratively](list_from_tree3.go), using an explicit stack for the pre-order traverse
+4. [Different recursion](list_from_tree4.go), from [here](https://www.geeksforgeeks.org/flatten-a-binary-tree-into-linked-list/)
+5. [Iteratively](list_from_tree5.go) without a stack, from [here](https://www.topcoder.com/thrive/articles/flatten-binary-tree-to-linked-list)
 
 All programs pass around pointers with abandon.
 The recursive and iterative programs might as well be written in C,
