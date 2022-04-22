@@ -113,6 +113,9 @@ This has become a recurring motif.
 This has been at least 3 different "Daily Coding Problems",
 two rated "[Medium]"
 
+Found a [very good tutorial](https://kormosi.com/inverting-a-binary-tree-in-c/)
+walking through in detail how to do this problem in C.
+
 ---
 
 ### Daily Coding Problem: Problem #752 [Easy]
