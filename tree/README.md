@@ -78,7 +78,7 @@ I'm convinced that this style of use is the One True Way:
 	var root *tree.NumericNode
 
 	for i := range inputNumbers {
-		root = tree.Insert(inputNumbers[i], root)
+		root = tree.Insert(root, inputNumbers[i])
 	}
 ```
 
@@ -120,7 +120,7 @@ func CreateNumeric(numberRepr []string) (root *NumericNode)
 Creates a binary search tree of type `*NumericNode` from a slice of strings.
 The strings have to be representations of integers.
 
-### Creating a tree from a list of strings
+### Creating a tree from a string representation
 
 ```go
 func CreateFromString(stringrep string) (root *StringNode)
@@ -137,7 +137,9 @@ results in a tree like this:
       /  \     /  \
     gl   gr   gL   gR
 
-No error recovery, very brittle parsing, can't tolerate whitespace,
+No error recovery, very brittle parsing,
+you have to parenthesize every value,
+even single-value leaf nodes.
 you have to indicate nil left children with `()` if you have non-nil right children.
 `()` is optional for nil right children, due to mediocre parsing.
 
@@ -177,7 +179,7 @@ fmt.Printf("\n}\n") // close g1
 Your code has to "open" and "close" the individual cluster's
 GraphViz subgraphs.
 You can do more than 2 subgraphs.
-`func Draw` is implemented by callling `func DrawPrefixed`
+`func Draw` is implemented by calling `func DrawPrefixed`
 with hard-coded arguments.
 
 ## Traversing a Tree
@@ -228,8 +230,8 @@ got solved correctly.
 func Equals(t1, t2 Node) bool
 ```
 
-Do `t1` and `t2` have nodes with the same values,
-always in the same position in their respective trees?
+Do `t1` and `t2` have child nodes with the same values,
+in the same position in their respective trees?
 Return true.
 Otherwise, return false.
 ### Depth (or height) of tree
