@@ -131,11 +131,7 @@ The format of `stringrep` is something like a Lisp expression:
 An input string `(root(left(gl)(gr))(right(gL)(gR))`
 results in a tree like this:
 
-          root
-         /    \
-      left     right
-      /  \     /  \
-    gl   gr   gL   gR
+![tree resulting from (root(left(gl)(gr))(right(gL)(gR))](example_tree.png)
 
 No error recovery, very brittle parsing,
 you have to parenthesize every value,
