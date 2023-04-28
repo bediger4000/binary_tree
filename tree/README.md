@@ -142,8 +142,8 @@ you have to indicate nil left children with `()` if you have non-nil right child
 ### GraphViz drawing of a tree
 
 ```go
-func Draw(root drawable)
-func DrawPrefixed(out io.Writer, root drawable, prefix string)
+func Draw(root Node)
+func DrawPrefixed(out io.Writer, root Node, prefix string)
 ```
 
 Both of these accept the root of a binary tree,
