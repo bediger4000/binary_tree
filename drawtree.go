@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	root := tree.CreateNumeric(os.Args[1:])
+	root := tree.CreateFromString(os.Args[1])
 	tree.Draw(root)
 }
