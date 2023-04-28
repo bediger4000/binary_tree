@@ -1950,6 +1950,29 @@ I haven't done this yet.
 
 ---
 
+### Daily Coding Problem: Problem #1386 [Medium] 
+
+This problem was asked by Dropbox.
+
+Given the root to a binary search tree, find the second largest node in the tree.
+
+#### Analysis
+
+Haven't done this yet, but...
+
+The key is to note that it says "binary search tree".
+Also to ignore the semantic confusion in asking for the "second largest node",
+where they almost certainly want the _second largest value_  that a node in
+a binary search tree contains.
+
+The largest value of a node is going to be in the right-most node.
+The second largest value will be either the parent of the right-most node,
+or the value of the left child of that parent.
+I'm going to ignore the trivial case of a 1-node binary search tree,
+because it would have no second largest value.
+
+---
+
 ### LC 114 [Medium] Flatten Binary Tree to Linked List
 
 Question: Given a binary tree, flatten it to a linked list in-place.
