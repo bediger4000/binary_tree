@@ -1772,6 +1772,16 @@ but the second-largest-value can be its parent or its left child.
 
 [My code](secondlargest.go) prints the largest and second-largest values.
 
+I did this problem a second time, because I didn't remember doing it
+a first time. My [second attempt](bst_second.go) is quite close to
+my first attempt.
+
+The candidate would probably want to point out that test cases for
+all 3 tree shapes would be good.
+Asking about a single-node tree would be good.
+Technically a single-node tree is a binary search tree,
+but it wouldn't have a second largest value.
+
 #### Interview Analysis
 
 This is relatively easy for a Daily Coding Problem "[Medium]" problem.
@@ -1802,6 +1812,12 @@ or those candidates that understand the distinction between "data"
 and "data structure",
 this problem could potentially weed out those that don't know about
 binary trees.
+
+You could accomplish finding the second-largest-value several ways:
+
+* Traverse tree to find largest value. Do second traverse to find second largest value.
+* Travese tree in-order to produce a sorted array or list, find second largest value from the sorted array.
+* Some clever recursive solution, which is what I did. Twice.
 
 One lesson in this one for candidates is: ask clarifying questions.
 Do you understand what "largest node" means?
@@ -1836,6 +1852,7 @@ return 23 (5 + 4 + 6 + 8).
 #### Analysis
 
 I haven't done this one yet.
+
 #### Interview Analysis
 
 ---
@@ -1947,29 +1964,6 @@ still satisfying this requirement.
 #### Analysis
 
 I haven't done this yet.
-
----
-
-### Daily Coding Problem: Problem #1386 [Medium] 
-
-This problem was asked by Dropbox.
-
-Given the root to a binary search tree, find the second largest node in the tree.
-
-#### Analysis
-
-Haven't done this yet, but...
-
-The key is to note that it says "binary search tree".
-Also to ignore the semantic confusion in asking for the "second largest node",
-where they almost certainly want the _second largest value_  that a node in
-a binary search tree contains.
-
-The largest value of a node is going to be in the right-most node.
-The second largest value will be either the parent of the right-most node,
-or the value of the left child of that parent.
-I'm going to ignore the trivial case of a 1-node binary search tree,
-because it would have no second largest value.
 
 ---
 
