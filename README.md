@@ -1908,13 +1908,53 @@ Given a binary tree, return the level of the tree with minimum sum.
 
 #### Analysis
 
-I haven't done this yet.
-
 The problem seems poorly phrased:
 it asks the candidate to assume numerically-valued nodes,
 but are they integer values or floating point?
 Summing floating point numbers of radically varying magnitude
 can have unintuitive results.
+
+I'll assume integer value data of tree nodes.
+
+This could be done more than one way:
+
+1. Breadth-first traverse of the tree.
+I suppose you could keep track of the minimum sum of previous
+levels' nodes and quit doing work if the current level summed
+higher than the current minimum sum.
+2. Depth-first recursive traverse of the entire tree,
+tracking the level via another argument to the recursive function.
+You'd have to pass around a data structure of some type that
+would keep a sum of each level encountered.
+3. If you wrote the program in Go,
+you could have a goroutine traverse the tree,
+writing a struct with level and node value for each node it encounters.
+The main goroutine could keep sums keyed by level.
+
+I chose to organize the task using (3),
+but I wrote 2 programs.
+
+I chose to use a Go `map[int]int` for my [first program](level_sum1.go)
+where the level is key (level of root node is zero),
+and the value matching that key is the sum of all nodes' values at that level.
+
+I chose to use a slice of integers, Go `[]int` type, for my [second program](level_sum2.go).
+This takes advantage of the observation that the maximum level encountered
+is only 1 greater than the maximum level known before.
+This arises from the structure of binary trees.
+
+#### Interview Analysis
+
+"Easy" is a good rating for this problem,
+which constitutes knowing what a binary tree is,
+knowing how to program a traverse of a tree,
+and being able to select or design a data structure to keep track of
+the sums of nodes' values by level.
+
+I think that's about all that a candidate can show,
+except maybe by asking questions about the problem statement.
+It's definitely all that an interviewer can expect,
+without asking further questions about the problem.
 
 ---
 ### Daily Coding Problem: Problem #1098 [Easy] 
