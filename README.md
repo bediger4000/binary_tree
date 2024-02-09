@@ -1591,7 +1591,52 @@ and once as the sum of 2 + 5 - 5.
 
 #### Analysis
 
-I haven't done this one.
+[Code](subtree_sum.go)
+
+This is easily done recursively.
+A leaf node's sum is its value.
+An interior node's sum is its value plus the values of the left and right subtrees,
+if either.
+The tricks are:
+
+1. Stop recursing at a leaf node.
+2. Get the subtree sums to some place where you can figure out which one occurs most often.
+This is a little tricky for recursive functions.
+It requires either a global collector of sums,
+or extra arguments to the recursive function.
+3. Realize that the current node's subtree sum gets used
+as both a child's subtree sum, and its own subtree sum
+
+Since I wrote this program in Go, I chose to send a `chan int` in the arguments
+of the recursive function.
+Each invocation of the function checks to see if it should top recursing.
+If not, recurse on the left child, which returns the subtree sum,
+and recurse on the right child, which also returns a subtree sum.
+Add the current node's value to the subtree sums,
+write that sum to the pipe,
+and return it.
+
+If the recursive function runs in its own goroutine,
+the main thread can just collect subtree sums from the channel, and count them.
+The recursive function's return value gets used by callers,
+the channel gets used to count subtree sums.
+
+### Interview Analysis
+
+Whoever conceived of and used this as an interview problem was interested
+in seeing some algorithmic thinking.
+It's basically a post-order binary tree traversal,
+plus keeping track of, and sorting, subtree sums.
+
+I'll go with the "[Easy]" rating, but note that it's a decent problem
+for a whiteboard.
+The interviewer can indeed see some algorithmic thinking,
+and possibly a little program design.
+The way I did it is particular to Go,
+but it could be done in C or Java or Python with only a little
+modification.
+The candidate can exhibit coding skills and design skills,
+and show that they can reason about correct results.
 
 ---
 
