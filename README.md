@@ -748,7 +748,7 @@ and understand how integer division works in their favorite language.
 Letting a candidate analyze the problem out loud,
 skipping over some of the details might be the best way to learn
 if your candidate has problem solving abilities.
-The node-labels-as-pointer-following-directions trick is also fairly subtle.
+The leaf-node-labels-as-pointer-following-directions trick is also fairly subtle.
 I discovered it by accident.
 It's one of those "use a value as a number and also as something else" tricks
 that can make a speedy algorithm, and give clarity to an analysis,
