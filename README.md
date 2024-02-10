@@ -31,6 +31,17 @@ Build and test goes something like this:
     $ cd tree
     $ go test -v .
 
+Some of the programs aren't included in the `make all`.
+You'd build them like this:
+
+```
+$ go build secondlargest.go
+$ ./secondlargest '(3 (1 0 2) (5 4 6))'
+(3 (1 0 2) (5 4 6))
+Largest value 6
+Second largest value 5
+```
+
 A lot of the programs output [GraphViz](https://graphviz.org/) [dot-format](https://graphviz.gitlab.io/_pages/doc/info/lang.html) descriptions
 of the answers.
 That way you can visually check that the code does what it's supposed to do.
