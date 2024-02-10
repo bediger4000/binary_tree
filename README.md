@@ -1779,7 +1779,9 @@ like ANSI C.
 
 #### Interview Analysis
 
-Why is is one "[Medium]", yet #748 (count of subtrees' sums) an "[Easy]"?
+Why is is one "[Medium]",
+yet [#748 (count of subtrees' sums)](#daily-coding-problem-problem-748-easy)
+rated "[Easy]"?
 
 ---
 ### Daily Coding Problem: Problem #307
