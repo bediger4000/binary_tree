@@ -1800,7 +1800,7 @@ but does require some thinking.
 This problem was asked by Oracle.
 
 Given a binary search tree,
-find the floor and ceiling of a given integer.
+ind the floor and ceiling of a given integer.
 The floor is the highest element in the tree
 less than or equal to an integer,
 while the ceiling is the lowest element in the tree
@@ -2024,23 +2024,6 @@ I think that's about all that a candidate can show,
 except maybe by asking questions about the problem statement.
 It's definitely all that an interviewer can expect,
 without asking further questions about the problem.
-
----
-### Daily Coding Problem: Problem #1098 [Easy] 
-
-This problem was asked by Oracle.
-
-Given a binary search tree, find the floor and ceiling of a given integer.
-The floor is the highest element in the tree less than or equal to an integer,
-while the ceiling is the lowest element in the tree greater than or equal to an integer.
-
-If either value does not exist, return None.
-
-#### Analysis
-
-I haven't done this yet.
-
-The phrase "binary search tree" is undoubtedly important.
 
 ---
 
