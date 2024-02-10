@@ -1783,6 +1783,17 @@ Why is is one "[Medium]",
 yet [#748 (count of subtrees' sums)](#daily-coding-problem-problem-748-easy)
 rated "[Easy]"?
 
+This is at core a post-order traversal,
+where all the "work" gets done post-order.
+There's a wee bit of insight to see that the recursive function has
+to reset both left and right child pointers,
+and there's a tricky little bit of coding in deciding what to return,
+but it's not harder than #748.
+
+It might actually make a decent whiteboarding problem
+because it doesn't require too many lines of code,
+but does require some thinking.
+
 ---
 ### Daily Coding Problem: Problem #307
 
