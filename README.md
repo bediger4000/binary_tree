@@ -1761,15 +1761,26 @@ You should convert it to:
 
 #### Analysis
 
-I haven't done this one yet.
+[Code](full_tree.go)
 
 This can be solved recursively,
 by removing single-children from the bottom up.
 Recurse to leaf nodes,
 then on the way back up the tree,
-delete nodes with only 1 child.
+return the node itself if it has either no childred (leaf)
+or both children.
+Otherwise return the non-nil child node, or nil if the node is a leaf node.
+The recursive function will look like it's resetting both left and right
+child node pointers, but at max, only one gets reset.
+
+There's room to screw up by not freeing the node's pointer if
+it has only one child and you're working in a language without garbage collection,
+like ANSI C.
 
 #### Interview Analysis
+
+Why is is one "[Medium]", yet #748 (count of subtrees' sums) an "[Easy]"?
+
 ---
 ### Daily Coding Problem: Problem #307
 
