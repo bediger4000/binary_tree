@@ -677,6 +677,8 @@ or waste all their time trying to recreate something inobvious.
 
 ### Count nodes in less than linear time
 
+[Code](tree_count.go)
+
 This also appears as Daily Coding Problem: Problem #736 [Easy]
 
 Given a complete binary tree,
