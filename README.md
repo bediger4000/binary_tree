@@ -54,7 +54,7 @@ in its [own repo](https://github.com/bediger4000/postorder-tree-traversal)
 Still can't believe they marked that one "medium".
 
 * Create a [randomly valued](random.go) tree.
-* Create a GarphViz [drawing](drawtree.go) of a tree.
+* Create a GraphViz [drawing](drawtree.go) of a tree.
 This code creates a binary search tree (BST) by inserting values as they appear on the command line.
 I believe you can create a BST of any shape by inserting the values of
 nodes of a BST with the desired shape in breadth-first order.
@@ -209,7 +209,7 @@ a single-node tree, left-heavy like the example,
 a complementary right-deep test,
 and some case in the middle might be in order.
 
-I did the third version as an exercize: see if visitor functions and
+I did the third version as an exercise: see if visitor functions and
 interface type `tree.Node` could do the task.
 
 I did the fourth version to show a Go-peculiar design pattern.
@@ -413,7 +413,7 @@ find all cousins of that node.
 This solution doesn't meet the problem statement.
 See Cousin Nodes #2, below.
 I was misled by my intuition of what "cousins" means
-geneologically in the USA and by the example given.
+genealogically in the USA and by the example given.
 
 [My solution](cousins.go).
 
@@ -478,7 +478,7 @@ you can be pretty confident you've got the right answers.
 I'm less certain this is a good interview question.
 The heart of the difficulty is calling the nodes you want
 to find "cousin" nodes.
-"Cousin" has a well-defined familial or geneological meaning,
+"Cousin" has a well-defined familial or genealogical meaning,
 and it's not what this problem wants.
 The explanatory diagram is misleading,
 in that it implies that a biologically-inspired reading is correct.
@@ -633,7 +633,7 @@ The above image shows that the actual, discrete,
 tree heights follow a step function.
 Height of a tree is constant while filling in the bottom row of leaves.
 Complete binary trees have a height matching log<sub>2</sub>(N+1).
-Binary trees with one leaf in the bottom row of leaveshave a height matching log<sub>2</sub>(N+1)+1.
+Binary trees with one leaf in the bottom row of leaves have a height matching log<sub>2</sub>(N+1)+1.
 All other trees have a height between the two values.
 
 ---
@@ -677,7 +677,7 @@ or waste all their time trying to recreate something inobvious.
 
 ### Count nodes in less than linear time
 
-[Code](tree_count.go)
+[Incorrect code](tree_count.go)
 
 This also appears as Daily Coding Problem: Problem #736 [Easy]
 
@@ -690,13 +690,15 @@ is completely filled,
 and all nodes in the last level are as far left as possible.
 It can have between 1 and 2h nodes at the last level h.
 
-#### Analysis
+#### Incorrect Algorithm Analysis
 
 I know "complete binary tree" as "tree having the heap property".
 
 Solutions easily found on the web don't do the actual work,
 the authors merely describe how to do it.
 It's harder to do it than to wave your hands about it.
+
+**Here's one wrong way to do it**
 
 Suppose you number the child pointers, 0 for left child pointers,
 1 for right child pointers.
@@ -747,7 +749,22 @@ the rightmost node in the final level of the tree.
 A log<sub>2</sub>(N) curve fits the experimental count of node accesses very well.
 The constant factor here is about 9 - I just eyeballed that, I didn't curve fit.
 
+**Unfortunately, my algorithm is incorrect**
+
+If I had drawn a line, `y = x` on the graph, I would have observed that
+for `n < 45`, my algorithm touches more than `n` nodes:
+
+![close up of node access counts](node_accesses.png?raw=true)
+
+The count of node accesses includes a lot of nodes more than once.
+For example,
+the binary search accesses the two children of the root node many times.
+Each access is counted.
+
 #### Interview Analysis
+
+Since I would have failed this interview,
+you can take the following with a grain of salt.
 
 This isn't a bad interview question,
 if the interviewer is after a candidate's understanding of computer science.
@@ -779,7 +796,7 @@ of the two subtrees of any node never differ by more than one.
 
 [My code](ht_balanced.go).
 
-This is esssentially the tree depth (or tree height) problem
+This is essentially the tree depth (or tree height) problem
 framed differently.
 As such, it's prey to all of the tree depth problem's difficulties.
 The interview candidate might fall into the trap of trying to
@@ -1140,7 +1157,7 @@ It's weird that "locking" takes places in a single-threaded program
 with no need for actual locks or mutexes.
 I suspect this is to avoid all the ugliness of what needs to get locked, and when.
 
-The problem statment says:
+The problem statement says:
 
     A binary tree node can be locked or unlocked only if all of its descendants
     or ancestors are not locked.
@@ -1209,10 +1226,10 @@ can allow O(h) lock and unlocks by chasing those parent pointers.
 Chasing pointers might be unfamiliar to people who don't do C or Go
 any more. The C++ subculture is such that raw pointers seem to be
 considered taboo.
-Maybe this problem exists to seperate the pointer-familiar sheep,
+Maybe this problem exists to separate the pointer-familiar sheep,
 from the pointer-less goats.
 
-Perhaps the interviewer is supposed to be satisifed with a design,
+Perhaps the interviewer is supposed to be satisfied with a design,
 or a design and an implementation with some flaws that would get ironed out
 by a little testing.
 
@@ -1253,7 +1270,7 @@ $ .unival '(0 (1) (0 (1 (1) (1)) (0)))'
 
 #### Unival tree analysis
 
-I think I see the 5 unival subtress: 4 leaf nodes, which are vacuously unival trees, since all of their subtrees,
+I think I see the 5 unival subtrees: 4 leaf nodes, which are vacuously unival trees, since all of their subtrees,
 of which there are zero, have the same value.
 The final unival tree is the all-1-value subtree.
 
@@ -1266,8 +1283,8 @@ Leaf nodes have no children, therefore they have the same data
 value as their children.
 A leaf node is a unival tree.
 If the current node has the same value as its left and right children,
-and the child nodes are roots of unival subtress,
-the current node and its subtress form a unival subtree.
+and the child nodes are roots of unival subtrees,
+the current node and its subtrees form a unival subtree.
 You can do this in a post-order traverse,
 but there's a complicated decision about whether the
 current node is the root of a unival subtree.
@@ -1417,7 +1434,7 @@ Return the new node.
 This is 2 cases in the code, left tree nil, right tree non-nil,
 and vice versa.
 * If the merge function gets 2 non-nil nodes,
-ereate a new node with the sum of the input nodes' values,
+create a new node with the sum of the input nodes' values,
 call the merge function on the left children of each node
 to create the left child of the new node.
 Call the merge function on the right children of each node
@@ -1472,7 +1489,7 @@ BST in the sub-tree, and whether or not the node is the root of a BST.
 
 My faith in checking for nil pointers on entrance to the recursive function only grows.
 This lets you keep your code cleaner,
-without redundant left- and righ-child checks for nil that visually clutter the code.
+without redundant left- and right-child checks for nil that visually clutter the code.
 
 I think this algorithm runs in O(n) where n is the number of nodes in the whole tree.
 I don't think there's a better run time,
@@ -1780,7 +1797,7 @@ This can be solved recursively,
 by removing single-children from the bottom up.
 Recurse to leaf nodes,
 then on the way back up the tree,
-return the node itself if it has either no childred (leaf)
+return the node itself if it has either no children (leaf)
 or both children.
 Otherwise return the non-nil child node, or nil if the node is a leaf node.
 The recursive function will look like it's resetting both left and right
@@ -1898,7 +1915,7 @@ binary trees.
 You could accomplish finding the second-largest-value several ways:
 
 * Traverse tree to find largest value. Do second traverse to find second largest value.
-* Travese tree in-order to produce a sorted array or list, find second largest value from the sorted array.
+* Traverse tree in-order to produce a sorted array or list, find second largest value from the sorted array.
 * Some clever recursive solution, which is what I did. Twice.
 
 One lesson in this one for candidates is: ask clarifying questions.
