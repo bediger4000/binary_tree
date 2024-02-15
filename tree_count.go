@@ -154,6 +154,6 @@ func countNodes(node tree.Node) int {
 		return 0
 	}
 	l := countNodes(node.LeftChild())
-	r := countNodes(node.LeftChild())
+	r := countNodes(node.RightChild())
 	return r + l + 1
 }
