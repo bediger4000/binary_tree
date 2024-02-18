@@ -779,7 +779,11 @@ In the context of binary search the `h` is number of nodes in the bottom
 level of the tree, and the O() measures **comparisons** of node values,
 as is traditional for complexity analysis of search algorithms.
 
-If you work it all out, I think this algorithm is O(n+1), for a tree with n nodes.
+If you work it all out, I think this algorithm is
+O(log<sub>2</sub>(n+1)), for a tree with n nodes.
+
+I reckon that O(log<sub>2</sub>(n+1)) is less than O(n),
+so there must be a large constant in my actual code.
 
 #### Correct Algorithm Analysis
 
