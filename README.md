@@ -710,7 +710,7 @@ If you interpret the labels as binary numbers,
 the leaf nodes are labeled sequentially.
 Taking the bits of the binary numbers as instructions on which
 child pointer to choose,
-a node with a given label can be found in O(D) time.
+a node with a given label can be found in O(h) time.
 
 ![numbered binary tree](numberedtree.png?raw=true)
 
@@ -763,7 +763,7 @@ if the tree was full at the left-most depth.
 
 Each of the probes for the rightmost deepest node involves touching about as many
 nodes as the left depth of the tree.
-The `O()` in the binary search algorithm is usually the number of slots in a sorted array
+The O() in the binary search algorithm is usually the number of slots in a sorted array
 or list, not the number of nodes accessed.
 
 I forgot to consider that
@@ -772,12 +772,14 @@ during binary search for the rightmost bottom-row node
 touches a lot of nodes more than once.
 For example,
 the binary search accesses the two children of the root node many times.
-If I count each access, my method fails the `O(n)` criteria.
+If I count each access, my method fails the O(n) criteria.
 
-I was blinded by the `O(log<sub>2</sub>h)` complexity of binary search.
+I was blinded by the O(log<sub>2</sub>h) complexity of binary search.
 In the context of binary search the `h` is number of nodes in the bottom
-level of the tree, and the `O()` measures **comparisons** of node values,
+level of the tree, and the O() measures **comparisons** of node values,
 as is traditional for complexity analysis of search algorithms.
+
+If you work it all out, I think this algorithm is O(n+1), for a tree with n nodes.
 
 #### Correct Algorithm Analysis
 
