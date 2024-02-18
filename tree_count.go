@@ -12,12 +12,20 @@ package main
 import (
 	"binary_tree/tree"
 	"fmt"
+	"log"
 	"math"
 	"os"
+	"strconv"
 )
 
 func main() {
-	root := tree.CreateNumericFromString(os.Args[1])
+	m, err := strconv.Atoi(os.Args[1])
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	root := generateHeap(m)
+
 	nodeCount := countNodes(root)
 
 	leftdepth := tree.LeftDepth(root)
@@ -156,4 +164,33 @@ func countNodes(node tree.Node) int {
 	l := countNodes(node.LeftChild())
 	r := countNodes(node.RightChild())
 	return r + l + 1
+}
+
+func generateHeap(nodeCount int) *tree.NumericNode {
+
+	root := &tree.NumericNode{Data: nodeCount}
+	nodeCount--
+
+	q := &tree.Stack{}
+	q.Push(root)
+
+	for q != nil && nodeCount > 0 {
+		node := q.Dequeue().(*tree.NumericNode)
+
+		node.Left = &tree.NumericNode{Data: nodeCount}
+		nodeCount--
+		if nodeCount == 0 {
+			break
+		}
+		q.Push(node.Left)
+
+		node.Right = &tree.NumericNode{Data: nodeCount}
+		nodeCount--
+		if nodeCount == 0 {
+			break
+		}
+		q.Push(node.Right)
+	}
+
+	return root
 }
