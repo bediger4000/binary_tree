@@ -33,6 +33,10 @@ func main() {
 	fmt.Printf("%d nodes in tree, found %d, %d nodes accessed\n", nodeCount, n, nodesTouched)
 }
 
+// binarySubtreeCount returns count of nodes in subtree rooted at formal
+// argument named node, and the number of nodes accesses to get that count.
+// lDepth, rDepth are either -1 (calculate left and/or right depth) or the
+// left and/or right depth for formal argment node.
 func binarySubtreeCount(node *tree.NumericNode, lDepth, rDepth int) (int, int) {
 	if node == nil {
 		return 0, 0
@@ -40,16 +44,20 @@ func binarySubtreeCount(node *tree.NumericNode, lDepth, rDepth int) (int, int) {
 
 	touched := 0
 	if lDepth < 0 {
-		lDepth = tree.LeftDepth(node)
+		// find left depth from left child to avoid re-counting current node
+		lDepth = tree.LeftDepth(node.Left)
 		touched += lDepth
+		lDepth++
 	}
 	if rDepth < 0 {
-		rDepth = tree.RightDepth(node)
+		// find right depth from right child to avoid re-counting current node
+		rDepth = tree.RightDepth(node.Right)
 		touched += rDepth
+		rDepth++
 	}
 
 	if lDepth == rDepth {
-		// full binary tree rooted at node
+		// full binary tree rooted at node, 2^D-1 nodes in size
 		return (1 << lDepth) - 1, touched
 	}
 
