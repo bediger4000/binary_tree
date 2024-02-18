@@ -677,8 +677,6 @@ or waste all their time trying to recreate something inobvious.
 
 ### Count nodes in less than linear time
 
-[Incorrect code](tree_count.go)
-
 This also appears as Daily Coding Problem: Problem #736 [Easy]
 
 Given a complete binary tree,
@@ -690,7 +688,9 @@ is completely filled,
 and all nodes in the last level are as far left as possible.
 It can have between 1 and 2h nodes at the last level h.
 
-#### Incorrect Algorithm Analysis
+#### Incorrect Algorithm Analysis 1
+
+[Incorrect code](tree_count.go)
 
 I know "complete binary tree" as "tree having the heap property".
 
@@ -737,8 +737,8 @@ mid-point label to the left side of the binary search bracketing labels.
 When the added-and-shifted mid-point equals the left-bracketing-label,
 you've found the deepest rightmost node.
 
-That gets you a O(log<sub>2</sub>N) search for the deepest
-rightmost node.
+That gets you a O(log<sub>2</sub>m) search for the deepest rightmost node,
+where `m` is the number of nodes in the bottom-most rank of the tree.
 
 [My code](tree_count.go) does just such a binary search.
 It also counts the number of node accesses it does to find
@@ -753,13 +753,84 @@ The constant factor here is about 9 - I just eyeballed that, I didn't curve fit.
 
 If I had drawn a line, `y = x` on the graph, I would have observed that
 for `n < 45`, my algorithm touches more than `n` nodes:
+It's not just a large constant on log<sub>2</sub>m in the code.
 
 ![close up of node access counts](node_accesses.png?raw=true)
 
-The count of node accesses includes a lot of nodes more than once.
+The node-labeling algorithm is a O(log<sub>2</sub>m) search for the deepest rightmost node,
+where `m` is the number of nodes in the bottom-most rank of the tree,
+if the tree was full at the left-most depth.
+
+Each of the probes for the rightmost deepest node involves touching about as many
+nodes as the left depth of the tree.
+The `O()` in the binary search algorithm is usually the number of slots in a sorted array
+or list, not the number of nodes accessed.
+
+I forgot to consider that
+the count of node accesses 
+during binary search for the rightmost bottom-row node
+touches a lot of nodes more than once.
 For example,
 the binary search accesses the two children of the root node many times.
-Each access is counted.
+If I count each access, my method fails the `O(n)` criteria.
+
+I was blinded by the `O(log<sub>2</sub>h)` complexity of binary search.
+In the context of binary search the `h` is number of nodes in the bottom
+level of the tree, and the `O()` measures **comparisons** of node values,
+as is traditional for complexity analysis of search algorithms.
+
+#### Correct Algorithm Analysis
+
+If you search for this problem on the web,
+you'll find a clever alternate solution, which is usually poorly explained.
+
+Define a function something like this:
+
+```
+func countNodes(node *tree.Node, leftDepth, rightDepth) (nodeCount, nodeTouches in)
+```
+
+The `leftDepth` is the depth of the tree just
+following the left children.
+The `rightDepth` is the depth of the tree
+following only the right children.
+
+Left depth and right depth will either be numerically equal,
+or left depth will be one greater.
+
+If `leftDepth` evaluates to -1, find the left depth, this can
+be recursive or iterative. You've just touched `leftDepth` nodes.
+
+Do the same for the right depth if formal argument `rightDepth` is -1.
+
+If left depth and right depth equate numerically,
+the tree has 2<sup>D</sup> - 1 nodes.
+
+If left depth and right depth don't equate:
+
+1. Call the function recursively with the left child node as the formal argument `node`,
+pass `leftDepth` - 1 for the left depth argument, -1 for the right depth argument.
+2. Call the function recursively with the right child node as the formal argument `node`,
+pass -1  for the left depth argument, `rightDepth` - 1` for the right depth argument.
+
+This recurses until a subtree has equal right and left depths (which are pre-calculated),
+where the function can return a node count for the subtree without further touches.
+Because the function usually touches extra nodes to calculate one of left depth,
+or right depth, it minimizes the number of nodes it accesses
+
+By having left child nodes calculate right depth,
+and right child nodes calculate left depth,
+the function does a binary search for the leftmost node in the bottom rank of the tree.
+
+You must be careful how you calculate left and right depth for a given node.
+Find depths from left and right child nodes of the given node to avoid
+re-touching the given node.
+
+If you write code for this algorithm and follow all the "conservation of node access"
+techniques, you get an algorithm that is strictly less than `O(n)`,
+where `n` is the number of nodes in a complete (but maybe not "full") binary tree.
+
+![tree size versus node access count no. 2](node_access_count.png)
 
 #### Interview Analysis
 
@@ -772,12 +843,13 @@ If the interviewer is satisfied with a more-or-less handwaving explanation,
 or giving this as a take-home problem, it's fine.
 But it's not "easy" after the hand-waving
 It contains a lot of subtleties that would cause wasted time in a whiteboard coding experience.
-The candidate wouldn't demonstrate anything worthwhile,
+The candidate wouldn't demonstrate anything worthwhile on a whiteboard,
 just that they can puzzle over corner cases,
 and understand how integer division works in their favorite language.
 Letting a candidate analyze the problem out loud,
 skipping over some of the details might be the best way to learn
 if your candidate has problem solving abilities.
+
 The leaf-node-labels-as-pointer-following-directions trick is also fairly subtle.
 I discovered it by accident.
 It's one of those "use a value as a number and also as something else" tricks
