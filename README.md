@@ -862,6 +862,9 @@ It's one of those "use a value as a number and also as something else" tricks
 that can make a speedy algorithm, and give clarity to an analysis,
 but are usually hard to see without lengthy puzzling over the problem.
 
+If the candidate happens to know about the trick of using a variable-length
+array to store [heap-shaped binary trees](https://github.com/bediger4000/heapcount)
+
 ---
 
 ### Daily Coding Problem: Problem #502 [Easy]
