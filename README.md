@@ -698,7 +698,7 @@ Solutions easily found on the web don't do the actual work,
 the authors merely describe how to do it.
 It's harder to do it than to wave your hands about it.
 
-**Here's one wrong way to do it**
+**Here's one way to do it**
 
 Suppose you number the child pointers, 0 for left child pointers,
 1 for right child pointers.
@@ -749,11 +749,9 @@ the rightmost node in the final level of the tree.
 A log<sub>2</sub>(N) curve fits the experimental count of node accesses very well.
 The constant factor here is about 9 - I just eyeballed that, I didn't curve fit.
 
-**Unfortunately, my algorithm is incorrect**
-
-If I had drawn a line, `y = x` on the graph, I would have observed that
+If I drawn a line, `y = x` on the graph, I observe that
 for `n < 45`, my algorithm touches more than `n` nodes:
-It's not just a large constant on log<sub>2</sub>m in the code.
+There's a large constant on log<sub>2</sub>m in the code.
 
 ![close up of node access counts](node_accesses.png?raw=true)
 
@@ -772,7 +770,7 @@ during binary search for the rightmost bottom-row node
 touches a lot of nodes more than once.
 For example,
 the binary search accesses the two children of the root node many times.
-If I count each access, my method fails the O(n) criteria.
+If I count each access, my method fails a strict O(n) criteria.
 
 I was blinded by the O(log<sub>2</sub>h) complexity of binary search.
 In the context of binary search the `h` is number of nodes in the bottom
@@ -785,7 +783,7 @@ O(log<sub>2</sub>(n+1)), for a tree with n nodes.
 I reckon that O(log<sub>2</sub>(n+1)) is less than O(n),
 so there must be a large constant in my actual code.
 
-#### Correct Algorithm Analysis
+#### Another Algorithm Analysis
 
 If you search for this problem on the web,
 you'll find a clever alternate solution, which is usually poorly explained.
@@ -835,6 +833,9 @@ re-touching the given node.
 If you write code for this algorithm and follow all the "conservation of node access"
 techniques, you get an algorithm that is strictly less than `O(n)`,
 where `n` is the number of nodes in a complete (but maybe not "full") binary tree.
+I'm not sure exactly what the time complexity of this algorithm is,
+but it's got to be `O(log n)` or close:
+it often doesn't have to touch half the nodes in a sub tree.
 
 ![tree size versus node access count no. 2](node_access_count.png)
 
