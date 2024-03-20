@@ -1429,6 +1429,18 @@ Candidates who are asked to do this problem should reject that
 corporation's job offer. There's better environments to work in,
 don't take the job.
 
+I note that some *extremely sloppy* web pages have similar definitions
+of binary search trees:
+
+> the key in each node of a BST is greater than or equal to any key stored in the
+> left subtree and less than or equal to any key stored in the right subtree.
+
+If you have to have duplicate keys in your trees,
+you need to decide something like "left tree is less than or equal to
+and right tree is greater than" so that you don't have to examine every
+node to find a key.
+If you don't have duplicate keys, make the criteria strictly less than and strictly greater than.
+
 ---
 
 ### Daily Coding Problem: Problem #442 [Hard]  
@@ -2076,9 +2088,69 @@ This problem was asked by Amazon.
 
 Given an integer N, construct all possible binary search trees with N nodes.
 
+[Code](all_bst.go)
+
 #### Analysis
 
-I haven't done this in a while, and not in this context.
+The wording is odd.
+You almost have to assume that by "N nodes",
+whoever wrote and used this question meant "N unique valued nodes".
+If you allow BSTs with duplicate value nodes,
+you can't distinguish certain trees.
+
+I'm assuming that "N nodes" means "N nodes with unique integer values".
+
+If you construct BSTs by inserting values,
+the shape or configuration of the resulting tree depends on
+the order of the insertion.
+Even simple, 2-value trees, with nodes of value 1 and 2,
+can have different shapes:
+
+Inserting values 1 and 2 in that order gives you a tree like this:
+
+        1
+         \
+          2
+
+Inserting values 1 and 2 in the order 2, 1 gives you a tree like this:
+
+        2
+       /
+      1
+
+My solution finds all permutations of an array of N integers,
+values 1 through N,
+then constructs BSTs by inserting the array values in order.
+This should find all valid BSTs for N unique integers,
+because you can certainly order N integers and then map keys to them
+with values 1 through N.
+
+I used [Heap's Algorithm] to permute the array,
+constructing BSTs when Heap's algorithm recursion bottoms out.
+There are duplicate BSTs, so it can't just print a string representation
+of the BST.
+I have the code putting a string representation of the BSTs it constructs
+on a channel, and another goroutine outputting only unique string representations.
+
+This is of O(N!) time complexity because of the use of permutations to find
+all BSTs.
+
+#### Interview Analysis
+
+I do not see how this is "[Easy]".
+I'd call it more like "[Hard]".
+
+At the very least,
+the candidate who completes this
+has to have familiarity with binary trees,
+and what "binary search tree" means.
+Doing it with my O(N!) algorithm, you have to know a lot more,
+Heap's algorithm isn't blatantly obvious.
+
+If the candidate has done this sort of thing before,
+they know that the Nth [Catalan Number](https://oeis.org/A000108)
+is the count of number of BSTs containing N unique keys.
+This fact can be used to check if a program returns the right number of BSTs.
 
 ---
 ### Daily Coding Problem: Problem #1072 [Easy]
