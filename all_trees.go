@@ -51,9 +51,11 @@ func helper(start, end int) []*tree.StringNode {
 
 		for _, l := range leftList {
 			for _, r := range rightList {
-				root := new(tree.StringNode)
-				root.Data, root.Left, root.Right = "X", l, r
-				result = append(result, root)
+				result = append(result, &tree.StringNode{
+					Data:  "X",
+					Left:  l,
+					Right: r,
+				})
 			}
 		}
 	}
