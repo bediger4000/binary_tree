@@ -35,6 +35,7 @@ func main() {
 		fmt.Println()
 	}
 	fmt.Printf("Got back %d trees\n", len(treeList))
+	fmt.Printf("Should have found %d trees\n", catalanNumber(n))
 }
 
 func helper(start, end int) []*tree.StringNode {
@@ -57,4 +58,12 @@ func helper(start, end int) []*tree.StringNode {
 		}
 	}
 	return result
+}
+
+func catalanNumber(n int) int {
+	if n == 0 {
+		return 1
+	}
+	n--
+	return 2 * (2*n + 1) * catalanNumber(n) / (n + 2)
 }
