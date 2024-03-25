@@ -2241,6 +2241,37 @@ so I rate it "[Hard]", and I hope it never comes up in one of my job interviews.
 
 ---
 
+### Turn a tree into Wikipedia's "succinct" representation
+
+This isn't a problem I've ever seen come up,
+but it seems like something that could be an interview problem.
+
+A [succinct encoding](https://en.wikipedia.org/wiki/Binary_tree#Encodings)
+of a binary tree is one which occupies close to minimum possible space,
+as established by information theoretical lower bounds.
+The number of different binary trees of n nodes is C<sub>n</sub>,  the nth Catalan number
+(assuming we view trees with identical structure as identical).
+For large n  this is about 4<sup>n</sup>, thus we need at least about log<sub>2</sub>(4 n) = 2n bits to encode it.
+A succinct binary tree's shape therefore would occupy 2n bits.
+
+One simple representation which meets this bound is to visit the nodes of the tree in preorder,
+outputting "1" for an internal node and "0" for a leaf,
+This ignores nodes' data, representing only the trees' shapes.
+
+[Code](succint.go)
+
+#### Interview Analysis
+
+My phrasing of the problem statement may be overly specific,
+keeping candidates from demonstrating any algorithmic insight.
+
+"Leaf" node in this case is actually the null/nil pointer value of a data carrying node.
+What everyone else on earth would call a leaf node has two of these "leaf" node children,
+in the form of non-valued-pointers.
+That unusual terminology may spoil this as a good interview question.
+
+---
+
 ### Daily Coding Problem: Problem #1107 [Hard] 
 
 This problem was asked by Adobe.
