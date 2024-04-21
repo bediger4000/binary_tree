@@ -1589,8 +1589,10 @@ I think this algorithm runs in O(n) where n is the number of nodes in the whole 
 I don't think there's a better run time,
 given that the algorithm has to check every interior node's value against the values of the left and right child nodes.
 
+#### Interview Analysis
+
 As far as an interview problem goes,
-it's pretty good.
+this one is good.
 A candidate can solve it using the usual recursive algorithm reasoning,
 finding a base case (nil pointer or leaf node) as the formal argument node,
 then working through what the recursive function has to do to provide
