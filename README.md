@@ -1836,7 +1836,8 @@ candidate thinks.
 
 ### Daily Coding Problem: Problem #751 [Hard]
 
-Also, Daily Coding Problem: Problem #808 [Hard]
+Also, Daily Coding Problem: Problem #808 [Hard].
+And now, Daily Coding Problem: Problem #1784 [Hard].
 
 This problem was asked by Palantir.
 
@@ -2193,7 +2194,7 @@ writing a struct with level and node value for each node it encounters.
 The main goroutine could keep sums keyed by level.
 
 I chose to organize the task using (3),
-but I wrote 2 programs.
+but I wrote two programs.
 
 I chose to use a Go `map[int]int` for my [first program](level_sum1.go)
 where the level is key (level of root node is zero),
