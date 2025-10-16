@@ -1,6 +1,7 @@
 package tree
 
 import (
+	"bytes"
 	"reflect"
 	"testing"
 )
@@ -141,6 +142,68 @@ func TestCreateNumericFromString(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			if gotRoot := CreateNumericFromString(tt.args.stringrep); !reflect.DeepEqual(gotRoot, tt.wantRoot) {
 				t.Errorf("CreateNumericFromString() = %v, want %v", gotRoot, tt.wantRoot)
+			}
+		})
+	}
+}
+
+func TestPrintf(t *testing.T) {
+	tests := []struct {
+		name    string
+		arg     string
+		wantOut string
+	}{
+		{
+			name:    "root node only",
+			arg:     "(a)",
+			wantOut: "(a)",
+		},
+		{
+			name:    "root node, explicit nil left child",
+			arg:     "(a    ()  )",
+			wantOut: "(a)",
+		},
+		{
+			name:    "root node, explicit nil children",
+			arg:     "(a    ()  ())",
+			wantOut: "(a)",
+		},
+		{
+			name:    "left child only",
+			arg:     "(a (left))",
+			wantOut: "(a (left))",
+		},
+		{
+			name:    "right child only",
+			arg:     "(a ()     (right))",
+			wantOut: "(a () (right))",
+		},
+		{
+			name:    "both children",
+			arg:     "(a ( left )     (right))",
+			wantOut: "(a (left) (right))",
+		},
+		{
+			name:    "multiple levels",
+			arg:     "(root(left(leftleft)(leftright))(right(rightleft)(rightright)))",
+			wantOut: "(root (left (leftleft) (leftright)) (right (rightleft) (rightright)))",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			root := CreateFromString(tt.arg)
+			out := &bytes.Buffer{}
+			Printf(out, root)
+			var gotOut string
+			if gotOut = out.String(); gotOut != tt.wantOut {
+				t.Errorf("Printf() = %v, want %v", gotOut, tt.wantOut)
+			}
+			// recycle gotOut, ensure CreateFromString works on it
+			root2 := CreateFromString(gotOut)
+			out2 := &bytes.Buffer{}
+			Printf(out2, root2)
+			if gotOut2 := out2.String(); gotOut2 != gotOut {
+				t.Errorf("Printf() = %v, want %v", gotOut2, gotOut)
 			}
 		})
 	}
