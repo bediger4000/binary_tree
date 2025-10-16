@@ -1,11 +1,13 @@
 package tree
 
 import (
+	"errors"
 	"fmt"
 	"io"
 	"os"
 	"strconv"
 	"strings"
+	"unicode"
 )
 
 // CreateNumeric converts a []string to a binary search tree
@@ -78,27 +80,24 @@ func Print(node Node) {
 // Printf writes a tree on "out" in the format that CreateFromString or
 // CreateNumericFromString can turn into a tree.
 func Printf(out io.Writer, node Node) {
-	if node.IsNil() {
-		return
-	}
-	leaf := node.LeftChild().IsNil() && node.RightChild().IsNil()
-	if !leaf {
-		fmt.Fprint(out, "(")
-	}
-	fmt.Fprintf(out, "%s", node)
-	if !node.LeftChild().IsNil() {
-		fmt.Fprint(out, " ")
-	} else if !node.RightChild().IsNil() {
-		fmt.Fprint(out, " ()")
-	}
-	Printf(out, node.LeftChild())
-	if !node.RightChild().IsNil() {
-		fmt.Fprint(out, " ")
-	}
-	Printf(out, node.RightChild())
-	if !leaf {
-		fmt.Fprint(out, ")")
-	}
+	fmt.Fprintf(out, "(%s", node)
+
+	leftNil := node.LeftChild().IsNil()
+	rightNil := node.RightChild().IsNil()
+
+	if !leftNil && !rightNil {
+		out.Write([]byte(" "))
+		Printf(out, node.LeftChild())
+		out.Write([]byte(" "))
+		Printf(out, node.RightChild())
+	} else if !leftNil && rightNil {
+		out.Write([]byte(" "))
+		Printf(out, node.LeftChild())
+	} else if leftNil && !rightNil {
+		out.Write([]byte(" () "))
+		Printf(out, node.RightChild())
+	} // else both child nodes empty
+	out.Write([]byte(")"))
 }
 
 // GeneralCreateFromString uses a func argument to create a tree
@@ -107,63 +106,64 @@ func Printf(out io.Writer, node Node) {
 // sets up to call genericTreeFromString with details that the caller
 // shouldn't have to know.
 func GeneralCreateFromString(stringrep string, nc NodeCreatorFn) Node {
-	tokens := tokenize(stringrep)
-	root, _ := genericTreeFromString(tokens, 0, nc)
+	_, root, err := genericTreeFromString([]rune(strings.TrimSpace(stringrep)), nc)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "creating tree from string: %v\n", err)
+	}
 	return root
 }
 
-func genericTreeFromString(tokens []string, index int, nc NodeCreatorFn) (Node, int) {
-	l := len(tokens)
-	if index >= l || l == 0 {
-		return nil, index
-	}
+func genericTreeFromString(runes []rune, nc NodeCreatorFn) (int, Node, error) {
 
-	var n Node
-	looping := true
+	var value []rune
+	var left, right Node
 	setLeft := false
+	foundClosing := false
 
-	for looping && index < l {
-		switch tokens[index] {
-		case "(":
-			index++
-			child, nextindex := genericTreeFromString(tokens, index, nc)
-			index = nextindex
-			if n == nil {
-				n = child
-			} else if setLeft {
-				n.SetRightChild(child)
-			} else {
-				n.SetLeftChild(child)
+	max := len(runes)
+	consumed := 1 // skip opening parentheses
+
+loop:
+	for consumed < max {
+
+		switch runes[consumed] {
+		case '(':
+			c, n, e := genericTreeFromString(runes[consumed:], nc)
+			if e != nil {
+				return consumed, nil, e
+			}
+			consumed += c
+			if !setLeft {
+				left = n
 				setLeft = true
-			}
-		case ")":
-			looping = false
-			index++
-		default:
-			if n == nil {
-				n = nc(tokens[index])
 			} else {
-				// else, naked string child
-				child := nc(tokens[index])
-				if setLeft {
-					n.SetRightChild(child)
-				} else {
-					setLeft = true
-					n.SetLeftChild(child)
-				}
+				right = n
 			}
-			index++
+		case ')':
+			consumed++
+			foundClosing = true
+			break loop
+		default:
+			if unicode.IsSpace(runes[consumed]) {
+				consumed++
+				continue
+			}
+			value = append(value, runes[consumed])
+			consumed++
 		}
 	}
-	return n, index
-}
 
-func tokenize(str string) []string {
-	var tokens []string
-	for _, token := range strings.Split(strings.ReplaceAll(strings.ReplaceAll(str, "(", " ( "), ")", " ) "), " ") {
-		if token != "" {
-			tokens = append(tokens, token)
-		}
+	if !foundClosing {
+		return consumed, nil, errors.New("failed to find closing paren")
 	}
-	return tokens
+
+	if len(value) == 0 {
+		return consumed, nil, nil
+	}
+
+	newNode := nc(string(value))
+	newNode.SetLeftChild(left)
+	newNode.SetRightChild(right)
+
+	return consumed, newNode, nil
 }

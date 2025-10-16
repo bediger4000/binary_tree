@@ -75,7 +75,7 @@ func TestCreateFromString(t *testing.T) {
 		},
 		{
 			name: "big string tree with whitespace",
-			args: args{stringrep: " ( a ( b (d) (e (f)(g))) ( c ) ) "},
+			args: args{stringrep: " (a ( b ( d ) (e ( f) (g ))) ( c ) ) "},
 			wantRoot: &StringNode{Data: "a",
 				Left: &StringNode{Data: "b",
 					Left: &StringNode{Data: "d"},
