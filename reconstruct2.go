@@ -41,13 +41,16 @@ func insert(preorder, inorder []string) *tree.StringNode {
 func main() {
 
 	var orig, root *tree.StringNode
+	var err error
 
 	preorder := []string{"a", "b", "d", "e", "c", "f", "g"}
 	inorder := []string{"d", "b", "e", "a", "f", "c", "g"}
 
 	if len(os.Args) > 1 {
 		// A lisp-like string rep of a tree on command line.
-		orig = tree.CreateFromString(os.Args[1])
+		if orig, err = tree.CreateFromString(os.Args[1]); err != nil {
+			fmt.Fprintf(os.Stderr, "problem parsing %q: %v\n", os.Args[1], err)
+		}
 		// Create pre- and in-order arrays from tree
 		iorder := make(StringSlice, 0)
 		porder := make(StringSlice, 0)

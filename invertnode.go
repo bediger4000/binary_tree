@@ -37,11 +37,16 @@ func main() {
 
 	str := os.Args[1]
 	var root tree.Node
+	var err error
 	if str == "-n" {
 		str = os.Args[2]
-		root = tree.CreateNumericFromString(str)
+		root, err = tree.CreateNumericFromString(str)
 	} else {
-		root = tree.CreateFromString(str)
+		root, err = tree.CreateFromString(str)
+	}
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "parsing %q: %v\n", str, err)
+		return
 	}
 
 	if root != nil {

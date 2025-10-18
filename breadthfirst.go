@@ -23,7 +23,11 @@ import (
 
 func main() {
 
-	root := tree.CreateNumericFromString(os.Args[1])
+	root, err := tree.CreateNumericFromString(os.Args[1])
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "parsing %q: %v\n", os.Args[1], err)
+		return
+	}
 
 	stack := &tree.Stack{}
 

@@ -20,7 +20,11 @@ func main() {
 		stringrep = os.Args[2]
 	}
 
-	root := tree.CreateFromString(stringrep)
+	root, err := tree.CreateFromString(stringrep)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "parsing %q: %v\n", stringrep, err)
+		return
+	}
 	if outputGraphViz {
 		tree.Draw(root)
 		return

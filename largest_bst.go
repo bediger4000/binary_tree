@@ -17,7 +17,11 @@ func main() {
 		fmt.Printf("Usage: %s '(1(0)(2))'\n", os.Args[0])
 		return
 	}
-	root := tree.CreateNumericFromString(os.Args[1])
+	root, err := tree.CreateNumericFromString(os.Args[1])
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "parsing %q: %v\n", os.Args[1], err)
+		return
+	}
 	tree.Print(root)
 	fmt.Println()
 	n, _ := largestBST(root)

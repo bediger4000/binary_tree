@@ -19,7 +19,11 @@ of the two subtrees of any node never differ by more than one.
 // from traversing the tree and finding all the subtree heights?
 
 func main() {
-	root := tree.CreateFromString(os.Args[1])
+	root, err := tree.CreateFromString(os.Args[1])
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "parsing %q: %v\n", os.Args[1], err)
+		return
+	}
 
 	phrase := " not"
 	if Balanced(root) {

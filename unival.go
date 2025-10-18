@@ -19,7 +19,12 @@ func main() {
 		fmt.Printf("Usage: %s '(0 (1) (0 (1 (1) (1)) (0)))'\n", os.Args[0])
 		return
 	}
-	root := tree.CreateNumericFromString(os.Args[1])
+	root, err := tree.CreateNumericFromString(os.Args[1])
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "parsing %q: %v\n", os.Args[1], err)
+		return
+	}
+
 	cnt, _ := countUnival(root)
 	fmt.Printf("%d unival subtrees\n", cnt)
 }

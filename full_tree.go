@@ -44,7 +44,11 @@ func main() {
 		stringRep = os.Args[2]
 	}
 
-	root := tree.CreateNumericFromString(stringRep)
+	root, err := tree.CreateNumericFromString(stringRep)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "parsing %q: %v\n", stringRep, err)
+		return
+	}
 
 	root = convert(root)
 

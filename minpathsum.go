@@ -13,7 +13,12 @@ type PathKeeper struct {
 }
 
 func main() {
-	root := tree.CreateNumericFromString(os.Args[1])
+	root, err := tree.CreateNumericFromString(os.Args[1])
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "parsing %q: %v\n", os.Args[1], err)
+		return
+	}
+
 	pk := &PathKeeper{minSum: math.MaxInt32}
 
 	minPathSumTraverse(root, 0, []int{}, 0, pk)

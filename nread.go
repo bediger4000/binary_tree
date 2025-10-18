@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
 
 	"binary_tree/tree"
 )
@@ -18,7 +19,11 @@ func main() {
 
 	stringrep := flag.Args()[0]
 
-	root := tree.CreateNumericFromString(stringrep)
+	root, err := tree.CreateNumericFromString(stringrep)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "parsing %q: %v\n", stringrep, err)
+		return
+	}
 	fmt.Printf("/* Original:  %q\n", stringrep)
 	fmt.Print(`   As parsed: "`)
 	tree.Print(root)

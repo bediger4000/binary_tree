@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 )
 
 // A binary tree node can be locked or unlocked only if all of its
@@ -255,7 +256,11 @@ READLOOP:
 			if valueString == "" {
 				break
 			}
-			tmp := tree.GeneralCreateFromString(valueString, createLockNode)
+			_, tmp, err := tree.GeneralCreateFromString([]rune(strings.TrimSpace(valueString)), createLockNode)
+			if err != nil {
+				fmt.Fprintf(os.Stderr, "parsing %q: %v\n", valueString, err)
+				break
+			}
 			root = tmp.(*LockNode)
 			addParents(root)
 

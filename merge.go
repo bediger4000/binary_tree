@@ -24,8 +24,17 @@ func main() {
 	graphViz := flag.Bool("g", false, "GraphViz dot output on stdout")
 	flag.Parse()
 
-	root1 := tree.CreateNumericFromString(flag.Args()[0])
-	root2 := tree.CreateNumericFromString(flag.Args()[1])
+	root1, err := tree.CreateNumericFromString(flag.Args()[0])
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "parsing %q: %v\n", flag.Args()[0], err)
+		return
+	}
+
+	root2, err := tree.CreateNumericFromString(flag.Args()[1])
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "parsing %q: %v\n", flag.Args()[1], err)
+		return
+	}
 
 	merged := merge(root1, root2)
 

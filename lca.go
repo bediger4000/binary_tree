@@ -32,7 +32,11 @@ func main() {
 	valueW := os.Args[2]
 	stringrep := os.Args[3]
 	fmt.Printf("Find LCA of %q and %q in tree ", valueV, valueW)
-	root := tree.CreateFromString(stringrep)
+	root, err := tree.CreateFromString(stringrep)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "problem parsing %q: %v\n", stringrep, err)
+		return
+	}
 	tree.Print(root)
 	fmt.Println()
 

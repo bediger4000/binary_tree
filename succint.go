@@ -40,7 +40,12 @@ func main() {
 
 	if *encode {
 		stringRep := flag.Arg(0)
-		root := tree.CreateFromString(stringRep)
+		root, err := tree.CreateFromString(stringRep)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "parsing %q: %v\n", stringRep, err)
+			return
+		}
+
 		bitString := EncodeSuccint(root)
 		buf := &bytes.Buffer{}
 		tree.Printf(buf, root)

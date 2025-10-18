@@ -1,5 +1,5 @@
 all: reconstruct reconstruct2 invert rand tree_depth tree_depth2 tree_paths \
-	drawtree bous order search cousins readtree bous prune_tree \
+	drawtree bous order search cousins readtree prune_tree \
 	minimal_ht_tree minimal_ht_tree2 testmin lca nread bottomview \
 	ht_balanced
 

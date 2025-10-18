@@ -35,7 +35,11 @@ func main() {
 	// Construct BST from all the remaining command line values
 	// Using a BST because by entering nodes in bread-first order,
 	// I can get any shape tree I want.
-	root := tree.CreateNumericFromString(os.Args[2])
+	root, err := tree.CreateNumericFromString(os.Args[2])
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "parsing %q: %v\n", os.Args[2], err)
+		return
+	}
 
 	d, p := findDepth(root, targetNodeValue, 0)
 

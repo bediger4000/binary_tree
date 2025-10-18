@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"fmt"
 	"log"
+	"os"
 )
 
 /*
@@ -48,8 +49,11 @@ func main() {
 	tree.Printf(buf, root)
 	treeAsString := buf.String()
 	fmt.Printf("Tree as string: %q\n", treeAsString)
-	newroot := tree.CreateFromString(treeAsString)
-
+	newroot, err := tree.CreateFromString(treeAsString)
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "parsing %q: %v\n", treeAsString, err)
+		return
+	}
 	if newroot.Left.Left.Data != "left.left" {
 		log.Fatal("test failed")
 	}
