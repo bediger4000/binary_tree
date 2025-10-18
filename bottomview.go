@@ -6,6 +6,7 @@ import (
 	"os"
 	"sort"
 	"strconv"
+	"strings"
 )
 
 /*
@@ -94,7 +95,19 @@ func (n *ViewNode) String() string {
 func main() {
 
 	// create a tree of *ViewNode
-	root := tree.GeneralCreateFromString(os.Args[1], CreateViewNode)
+	runes := []rune(strings.TrimSpace(os.Args[1]))
+	consumed, root, err := tree.GeneralCreateFromString(runes, CreateViewNode)
+
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "parsing tree string rep: %v\n", err)
+		return
+	}
+
+	if consumed != len(runes) {
+		fmt.Fprintf(os.Stderr, "string representation of length %d, read %d\n",
+			len(runes), consumed)
+		return
+	}
 
 	// Decorate the tree with depth in tree and "horizontal distance"
 	decorate(root.(*ViewNode), 0, 0)
