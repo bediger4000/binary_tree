@@ -76,7 +76,7 @@ func TestCreateFromString(t *testing.T) {
 		},
 		{
 			name: "big string tree with whitespace",
-			args: args{stringrep: " (a ( b ( d ) (e ( f) (g ))) ( c ) ) "},
+			args: args{stringrep: "(a ( b ( d ) (e ( f) (g ))) ( c ) )"},
 			wantRoot: &StringNode{Data: "a",
 				Left: &StringNode{Data: "b",
 					Left: &StringNode{Data: "d"},
@@ -91,8 +91,12 @@ func TestCreateFromString(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if gotRoot := CreateFromString(tt.args.stringrep); !reflect.DeepEqual(gotRoot, tt.wantRoot) {
-				t.Errorf("CreateFromString() = %v, want %v", gotRoot, tt.wantRoot)
+			if gotRoot, err := CreateFromString(tt.args.stringrep); err != nil {
+				t.Errorf("CreateFromString() failed parse: %v", err)
+			} else {
+				if !reflect.DeepEqual(gotRoot, tt.wantRoot) {
+					t.Errorf("CreateFromString() = %v, want %v", gotRoot, tt.wantRoot)
+				}
 			}
 		})
 	}
@@ -134,14 +138,18 @@ func TestCreateNumericFromString(t *testing.T) {
 		},
 		{
 			name:     "arbitrary numeric tree with whitespace",
-			args:     args{stringrep: " ( 90 ( 12 () (3 ) )(6 (4) (90 ( )( 9 ) ) ) )"},
+			args:     args{stringrep: "( 90 ( 12 () (3 ) )(6 (4) (90 ( )( 9 ) ) ) )"},
 			wantRoot: &NumericNode{Data: 90, Left: &NumericNode{Data: 12, Right: &NumericNode{Data: 3}}, Right: &NumericNode{Data: 6, Left: &NumericNode{Data: 4}, Right: &NumericNode{Data: 90, Right: &NumericNode{Data: 9}}}},
 		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if gotRoot := CreateNumericFromString(tt.args.stringrep); !reflect.DeepEqual(gotRoot, tt.wantRoot) {
-				t.Errorf("CreateNumericFromString() = %v, want %v", gotRoot, tt.wantRoot)
+			if gotRoot, err := CreateNumericFromString(tt.args.stringrep); err != nil {
+				t.Errorf("CreateNumericFromString: parsing string rep: %v", err)
+			} else {
+				if !reflect.DeepEqual(gotRoot, tt.wantRoot) {
+					t.Errorf("CreateNumericFromString() = %v, want %v", gotRoot, tt.wantRoot)
+				}
 			}
 		})
 	}
@@ -191,7 +199,10 @@ func TestPrintf(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			root := CreateFromString(tt.arg)
+			root, err := CreateFromString(tt.arg)
+			if err != nil {
+				t.Errorf("TestPrintf - parse problem: %v", err)
+			}
 			out := &bytes.Buffer{}
 			Printf(out, root)
 			var gotOut string
@@ -199,7 +210,10 @@ func TestPrintf(t *testing.T) {
 				t.Errorf("Printf() = %v, want %v", gotOut, tt.wantOut)
 			}
 			// recycle gotOut, ensure CreateFromString works on it
-			root2 := CreateFromString(gotOut)
+			root2, err := CreateFromString(gotOut)
+			if err != nil {
+				t.Errorf("TestPrintf - re-parse problem: %v", err)
+			}
 			out2 := &bytes.Buffer{}
 			Printf(out2, root2)
 			if gotOut2 := out2.String(); gotOut2 != gotOut {
