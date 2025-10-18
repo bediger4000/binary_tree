@@ -6,7 +6,6 @@ import (
 	"io"
 	"os"
 	"strconv"
-	"strings"
 	"unicode"
 )
 
@@ -32,13 +31,26 @@ func CreateNumeric(numberRepr []string) (root *NumericNode) {
 // CreateFromString parses a single string
 // like "(abc(ghi()(jkl))(def(pork)(beans)))"
 // and turns it into a binary tree.
-func CreateFromString(stringrep string) (root *StringNode) {
-	generic := GeneralCreateFromString(stringrep, createStringNode)
+func CreateFromString(stringrep string) (root *StringNode, err error) {
+	runes := []rune(stringrep)
+	origLength := len(runes)
+
+	consumed, generic, err := GeneralCreateFromString(runes, createStringNode)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if consumed != origLength {
+		return nil, fmt.Errorf("string rep of length %d, consumed only %d runes",
+			origLength, consumed)
+	}
+
 	var ok bool
 	if root, ok = generic.(*StringNode); ok {
 		return
 	}
-	return nil
+	return nil, errors.New("created tree of incorrect node type")
 }
 
 func createStringNode(stringValue string) Node {
@@ -61,13 +73,22 @@ func createNumericNode(stringValue string) Node {
 // CreateNumericFromString parses a single string
 // like "(2(0()(12))(34(-2)(100)))"
 // and turns it into a binary tree of the given shape.
-func CreateNumericFromString(stringrep string) (root *NumericNode) {
-	generic := GeneralCreateFromString(stringrep, createNumericNode)
+func CreateNumericFromString(stringrep string) (root *NumericNode, err error) {
+	runes := []rune(stringrep)
+	origLength := len(runes)
+
+	consumed, generic, err := GeneralCreateFromString(runes, createNumericNode)
+
+	if consumed != origLength {
+		return nil, fmt.Errorf("string rep of length %d, consumed only %d runes",
+			origLength, consumed)
+	}
+
 	var ok bool
 	if root, ok = generic.(*NumericNode); ok {
 		return
 	}
-	return nil
+	return nil, errors.New("created tree of nodes of incorrect type")
 }
 
 // Print writes out a tree in the format that
@@ -102,18 +123,13 @@ func Printf(out io.Writer, node Node) {
 
 // GeneralCreateFromString uses a func argument to create a tree
 // of type Node. It returns the root Node, on which the caller should
-// do a type assertion to get the correct type. This func basically
-// sets up to call genericTreeFromString with details that the caller
-// shouldn't have to know.
-func GeneralCreateFromString(stringrep string, nc NodeCreatorFn) Node {
-	_, root, err := genericTreeFromString([]rune(strings.TrimSpace(stringrep)), nc)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "creating tree from string: %v\n", err)
-	}
-	return root
-}
+// do a type assertion to get the correct type. The int return is the
+// number of runes read from the front of the runes []rune argument.
+func GeneralCreateFromString(runes []rune, nc NodeCreatorFn) (int, Node, error) {
 
-func genericTreeFromString(runes []rune, nc NodeCreatorFn) (int, Node, error) {
+	if runes[0] != '(' {
+		return 0, nil, errors.New("first character not opening parenthesis")
+	}
 
 	var value []rune
 	var left, right Node
@@ -128,7 +144,7 @@ loop:
 
 		switch runes[consumed] {
 		case '(':
-			c, n, e := genericTreeFromString(runes[consumed:], nc)
+			c, n, e := GeneralCreateFromString(runes[consumed:], nc)
 			if e != nil {
 				return consumed, nil, e
 			}
@@ -158,6 +174,9 @@ loop:
 	}
 
 	if len(value) == 0 {
+		if setLeft {
+			return consumed, nil, errors.New("no data value with child node(s)")
+		}
 		return consumed, nil, nil
 	}
 
