@@ -18,7 +18,17 @@ func TestBstProperty(t *testing.T) {
 		},
 		{
 			name: "not balanced search tree",
-			args: args{root: CreateNumericFromString("(4(2(1)(3))(6(7)(5)))")},
+			args: args{root: &NumericNode{Data: 4,
+				Left: &NumericNode{Data: 2,
+					Left:  &NumericNode{Data: 1},
+					Right: &NumericNode{Data: 3},
+				},
+				Right: &NumericNode{Data: 6,
+					Left:  &NumericNode{Data: 7},
+					Right: &NumericNode{Data: 5},
+				},
+			},
+			},
 			want: false,
 		},
 	}
