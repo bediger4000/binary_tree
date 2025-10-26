@@ -53,6 +53,11 @@ func CreateFromString(stringrep string) (root *StringNode, err error) {
 	return nil, errors.New("created tree of incorrect node type")
 }
 
+// createStringNode fills in a struct StringNode
+// from a string argument, then returns a pointer to that StringNode.
+// The *StringNode gets returned as someting fitting interface Node,
+// so that func GeneralCreateFromString doesn't have to futz around
+// with different tree node element types.
 func createStringNode(stringValue string) Node {
 	return &StringNode{Data: stringValue}
 }
@@ -91,8 +96,8 @@ func CreateNumericFromString(stringrep string) (root *NumericNode, err error) {
 	return nil, errors.New("created tree of nodes of incorrect type")
 }
 
-// Print writes out a tree in the format that
-// CreateByParsing can turn into a tree.
+// Print writes out a tree in the format that CreateFromString or
+// CreateNumericFromString can turn into a tree.
 // Re-uses interface Node
 func Print(node Node) {
 	Printf(os.Stdout, node)
@@ -145,10 +150,10 @@ loop:
 		switch runes[consumed] {
 		case '(':
 			c, n, e := GeneralCreateFromString(runes[consumed:], nc)
+			consumed += c
 			if e != nil {
 				return consumed, nil, e
 			}
-			consumed += c
 			if !setLeft {
 				left = n
 				setLeft = true
@@ -160,12 +165,11 @@ loop:
 			foundClosing = true
 			break loop
 		default:
+			consumed++
 			if unicode.IsSpace(runes[consumed]) {
-				consumed++
 				continue
 			}
 			value = append(value, runes[consumed])
-			consumed++
 		}
 	}
 
