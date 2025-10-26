@@ -1,7 +1,5 @@
 package tree
 
-// This isn't general enough to hold *StringNode.
-
 // Stack constitutes a push-down stack of binary tree nodes
 type Stack struct {
 	array []Node
@@ -31,10 +29,7 @@ func (nq *Stack) Dequeue() (head Node) {
 // Empty returns true if the stack contains no Node elements,
 // false otherwise.
 func (nq *Stack) Empty() bool {
-	if len(nq.array) == 0 {
-		return true
-	}
-	return false
+	return len(nq.array) == 0
 }
 
 // Push enters a Node at the top of the stack
