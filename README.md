@@ -1927,7 +1927,7 @@ but does require some thinking.
 This problem was asked by Oracle.
 
 Given a binary search tree,
-ind the floor and ceiling of a given integer.
+find the floor and ceiling of a given integer.
 The floor is the highest element in the tree
 less than or equal to an integer,
 while the ceiling is the lowest element in the tree
@@ -2406,3 +2406,12 @@ Testing some arrangement of data values to prove pre-order-traversal would be go
 The interviewer who posed this question should be ashamed of themselves.
 It's seems deliberately misleading.
 The example doesn't really add any information.
+
+### Delete a binary tree without recursion in constant space
+
+As a challenge, a colleague of mine told me to find a non-recursive
+constant-space algorithm for deleting a binary tree.
+
+-- Raymond Chen, https://devblogs.microsoft.com/oldnewthing/20251105-00/?p=111765
+
+I haven't done this one yet.
